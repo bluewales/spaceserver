@@ -1,0 +1,70 @@
+# Todo List
+
+- User accounts
+  - &#10004; Saving the game
+  - &#10004; Login page
+  - &#10004; Account creation
+     - &#10004; New accounts get default ship
+     - &#10004; Reasonable error messages
+  - Source control for server side code
+- Interface
+  - Make it more obvious which wall you're interacting with, perhaps by highlighting the one you select or are hovering over
+  - Can deconstruction be more intuitive?
+  - It takes so much clicking!
+  - Add menu for viewing crew
+  - Address memory leak in menus
+  - Heads Up Display
+  - Instructions for basic controls
+- Construction
+  - Knowing where to build walls
+  - Building hatches and doors
+  - Disallowing deconstruction that would disconnect the ship
+  - Build floors above or bellow floors as well as beside floors
+  - Building furniture
+  - Building should consumer materials which must be brought to the site by crew
+- Robot charging pad
+  - Robot runs out of charge
+  - Robot returns to pad when low on energy
+  - Will the robot be stuck forever if it doesn't charge in time?
+- Trading
+  - Ship has a certain amount of money
+  - Show which items are for sale and their prices
+  - Deliver purchased items to ship by shuttle
+  - Delivered items must be stored by crew
+  - Sold items need to be picked up
+  - Crew must take sold items to shuttle
+  - How the heck do shuttles work?
+- Production server
+- Atmosphere
+  - Pressure and composition, maybe saved as attributes on the graph
+  - Spreading throughout a chamber.
+     - Pressure should equalize almost immediately,
+     - Composition should take a little longer to propagate
+  - Escaping into space
+  - Maintained by machine(s)
+     - Unwanted gasses must be removed (carbon dioxide, ammonia, acetone)
+     - Keep all necessary gasses at correct levels
+     - Decide whether to have a lot of filters and tanks, or just one machine
+     that monitors everything
+     - There needs to be some sort of ventilation management system.  Should air just go through doors?  Does every room need an atmosphere monitoring machine?  Are there vents?
+  - Leaks through open doors
+     - Enough atmosphere should escape through a door while a crew member is passing through to empty a room
+  - If atmosphere can't move through closed doors normally, then we need some other kind of ventilation
+  - Rooms and groups of rooms are hydrostatically connected nodes that should have the same air pressure, composition, and temperature
+- Temperature should conduct through walls.
+- Airlocks.  How do they work? Are they a special piece of furniture, or are they a collection of walls and doors that somehow function as an airlock?
+  - Since pathfinding will ignore locked doors, how does a crew member decide to use an airlock?  At least one of the doors should be locked all the time.
+- Fluid storage, tanks of liquids and gasses
+  - Oxygen and nitrogen for atmosphere management
+  - Water for everything
+  - Fuel and oxygen for propellant and power generation
+  - All those same substances and more as cargo to sell at the next port. Maybe even dangerous chemicals like acids or explosives
+- Find a way to draw lower levels.  I'd like to make them darker.
+- &#10004; Some scheme for marking items done on this list
+- &#10004; Open/Close animations for doors and hatches
+  - &#10004; Hatches spin open like a mechanical iris
+     - &#10004; Create new vector art for hatches, replace sprite
+  - &#10004; Doors open for crew, crew do not open doors.  The crew doesn't need to check if the door is open, only if it is unlocked
+  - &#10004; Invent doors (create art for doors)
+     - &#10004; Doors should have the same profile as walls
+     - &#10004; Doors slide open like grocery store doors
