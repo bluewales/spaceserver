@@ -154,8 +154,6 @@ function save_user_state($user_id, $data) {
 		$sql = "insert into " . $db_table_prefix . "_game_states (user_id,state) values('" . $user_id . "','" . $data . "')";
 	}
 
-	file_put_contents("log/debug.txt", $sql, FILE_APPEND);
-
 	$result = mysql_query($sql);
 }
 ?>

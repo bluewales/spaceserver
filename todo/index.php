@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html lang="en">
 <head>
-  <title>Todo - Space Planets</title>
+  <title>Todo - Safiina</title>
   <meta charset="utf-8" />
   <link rel="stylesheet" href="/css/style.css">
 </head>

@@ -5,8 +5,10 @@
     $path = getcwd();
 		$data = get_user_state($user_id);
 		if(!$data) {
-	    $data = file_get_contents("http://spaceplanets.net/spacegame/dat/sample_ship6.json");
+	    $data = file_get_contents("http://spaceplanets.net/spacegame/dat/sample_ship10.json");
 		}
+
+		$data = json_decode ($data);
 
 
 

@@ -1,27 +1,26 @@
 # Todo List
 
-- User accounts
-  - &#10004; Saving the game
-  - &#10004; Login page
-  - &#10004; Account creation
-     - &#10004; New accounts get default ship
-     - &#10004; Reasonable error messages
-  - Source control for server side code
-- Interface
-  - Make it more obvious which wall you're interacting with, perhaps by highlighting the one you select or are hovering over
-  - Can deconstruction be more intuitive?
-  - It takes so much clicking!
-  - Add menu for viewing crew
-  - Address memory leak in menus
-  - Heads Up Display
-  - Instructions for basic controls
+- Loose materials are scooped up my crew and stored in crates
 - Construction
-  - Knowing where to build walls
-  - Building hatches and doors
-  - Disallowing deconstruction that would disconnect the ship
-  - Build floors above or bellow floors as well as beside floors
-  - Building furniture
-  - Building should consumer materials which must be brought to the site by crew
+   - Knowing where to build things
+      - &#10004; Not where there is already a thing
+      - Floors and walls must be connected to other floors or walls
+      - Furniture must be built on floors
+      - Allow when the only connection is planned but unfinished structure
+   - &#10004; Building hatches and doors
+   - &#10004; Building furniture
+   - &#10004; Building should consumer materials which must be brought to the site by crew
+      - &#10004; Materials are claimed by the job at the time the structure is planned
+      - &#10004; If materials are not available, the structure is not planned
+   - Deconstruct structures
+      - Don't allow when it would disconnect the ship
+      - Cancel construction jobs that are in progress
+      - Spawn materials that were used to create the structure
+- Saving
+  - &#10004; Jobs should be saved
+  - Cards, which ones are active and their current location
+  - &#10004; A button to force a save
+  - An indication that saving is happening
 - Robot charging pad
   - Robot runs out of charge
   - Robot returns to pad when low on energy
@@ -68,3 +67,24 @@
   - &#10004; Invent doors (create art for doors)
      - &#10004; Doors should have the same profile as walls
      - &#10004; Doors slide open like grocery store doors
+- &#10004; User accounts
+ - &#10004; Saving the game
+ - &#10004; Login page
+ - &#10004; Account creation
+    - &#10004; New accounts get default ship
+    - &#10004; Reasonable error messages
+ - &#10004; Source control for server side code
+- &#10004; Interface
+ - &#10004; Heads Up Display
+    - &#10004; Level indicator top, center, and big
+    - &#10004; Top and bottom bars for buttons
+ - &#10004; Card system
+    - &#10004; Cards pop up and disappear
+    - &#10004; Cards can be pinned
+    - &#10004; Cards can be moved
+    - &#10004; Cards are pinned when they are moved
+    - &#10004; Cards disappear when unfocused, unless they are pinned
+    - &#10004; Pinned cards move to top of other cards when focused
+    - &#10004; Active cards should be kept on screen after a resize
+  - &#10004; Make it more obvious which wall you're interacting with, perhaps by highlighting the one you select or are hovering over
+  - &#10004; Instructions for basic controls

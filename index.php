@@ -13,7 +13,7 @@
     <li><a href="/journal">Journal</a></li>
     <li><a href="/todo">To-do List</a></li>
   </ul>
-  <p>This is hobby project of mine.  It's going to be a computer game with space ships.</p>
+  <p>This is hobby project of mine.  It's going to be a computer game about a space ship.</p>
 </div>
 
 

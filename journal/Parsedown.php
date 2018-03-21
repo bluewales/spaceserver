@@ -131,6 +131,11 @@ class Parsedown
                 continue;
             }
 
+            $count = 1;
+            while($count > 0) $line = preg_replace('/\~([^\~]*)\~/', '<sub>${1}${2}</sub>', $line, 1, &$count);
+            $count = 1;
+            while($count > 0) $line = preg_replace('/\^([^\^]*)\^/', '<sup>${1}${2}</sup>', $line, 1, &$count);
+
             if (strpos($line, "\t") !== false)
             {
                 $parts = explode("\t", $line);

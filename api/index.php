@@ -126,7 +126,7 @@ function write_log($result, $params) {
   global $l_log_file;
   if(strlen($l_log_file) > 0) {
     $log_string = JSON_from_array($result, false) . " " . JSON_from_array($params, false) . "\n";
-    file_put_contents($l_log_file, $log_string, FILE_APPEND);
+    //file_put_contents($l_log_file, $log_string, FILE_APPEND);
   }
 }
 

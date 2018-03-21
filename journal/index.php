@@ -1,13 +1,13 @@
 <!DOCTYPE HTML>
 <html lang="en">
 <head>
-  <title>Journal - Space Planets</title>
+  <title>Journal - Safiina</title>
   <meta charset="utf-8" />
   <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
 <div id="main">
-  <h1>Space Planets</h1>
+  <h1>Safiina</h1>
   <h1>Journal</h1>
 <?php
 
