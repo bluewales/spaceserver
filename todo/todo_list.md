@@ -1,24 +1,29 @@
 # Todo List
 
-- Loose materials are scooped up my crew and stored in crates
+- Clicking on things should bring up an info card
+  - &#10004; Distinguish between clicking on cells and clicking on walls
+  - &#10004; Highlight the thing that was clicked on
+  - &#10004; Clear highlights on new click
+  - &#10004; Give the name of what is highlighted
+  - &#10004; Reposition card to mouse
+  - Option to deconstruct structures
+  - Displays contents of crates
+  - Displays progress of planned construction and deconstruction jobs
+  - Option to cancel planned construction
 - Construction
-   - Knowing where to build things
-      - &#10004; Not where there is already a thing
-      - Floors and walls must be connected to other floors or walls
-      - Furniture must be built on floors
-      - Allow when the only connection is planned but unfinished structure
-   - &#10004; Building hatches and doors
-   - &#10004; Building furniture
-   - &#10004; Building should consumer materials which must be brought to the site by crew
-      - &#10004; Materials are claimed by the job at the time the structure is planned
-      - &#10004; If materials are not available, the structure is not planned
-   - Deconstruct structures
-      - Don't allow when it would disconnect the ship
-      - Cancel construction jobs that are in progress
-      - Spawn materials that were used to create the structure
+  - &#10004; Knowing where to build things
+     - &#10004; Not where there is already a thing
+     - &#10004; Furniture must be built on floors
+  - &#10004; Building hatches and doors
+  - &#10004; Building furniture
+  - &#10004; Building should consumer materials which must be brought to the site by crew
+     - &#10004; Materials are claimed by the job at the time the structure is planned
+     - &#10004; If materials are not available, the structure is not planned
+  - Deconstruct structures
+     - Cancel construction jobs that are in progress
+     - Spawn materials that were used to create the structure
 - Saving
   - &#10004; Jobs should be saved
-  - Cards, which ones are active and their current location
   - &#10004; A button to force a save
   - An indication that saving is happening
 - Robot charging pad
@@ -34,6 +39,7 @@
   - Crew must take sold items to shuttle
   - How the heck do shuttles work?
 - Production server
+- Keep the ship connected.  Structure building, planning, and deconstruction need to keep the ship in one piece at all times.
 - Atmosphere
   - Pressure and composition, maybe saved as attributes on the graph
   - Spreading throughout a chamber.
@@ -52,12 +58,16 @@
   - Rooms and groups of rooms are hydrostatically connected nodes that should have the same air pressure, composition, and temperature
 - Temperature should conduct through walls.
 - Airlocks.  How do they work? Are they a special piece of furniture, or are they a collection of walls and doors that somehow function as an airlock?
-  - Since pathfinding will ignore locked doors, how does a crew member decide to use an airlock?  At least one of the doors should be locked all the time.
+  - Since pathfinding will ignore locked doors, how does a crew member decide to use an airlock?
 - Fluid storage, tanks of liquids and gasses
   - Oxygen and nitrogen for atmosphere management
   - Water for everything
   - Fuel and oxygen for propellant and power generation
   - All those same substances and more as cargo to sell at the next port. Maybe even dangerous chemicals like acids or explosives
+- Power generation and consumption.
+- Time management
+  - Pause time
+  - Let time advance at different speeds
 - Find a way to draw lower levels.  I'd like to make them darker.
 - &#10004; Some scheme for marking items done on this list
 - &#10004; Open/Close animations for doors and hatches
@@ -68,17 +78,17 @@
      - &#10004; Doors should have the same profile as walls
      - &#10004; Doors slide open like grocery store doors
 - &#10004; User accounts
- - &#10004; Saving the game
- - &#10004; Login page
- - &#10004; Account creation
+  - &#10004; Saving the game
+  - &#10004; Login page
+  - &#10004; Account creation
     - &#10004; New accounts get default ship
     - &#10004; Reasonable error messages
- - &#10004; Source control for server side code
+  - &#10004; Source control for server side code
 - &#10004; Interface
- - &#10004; Heads Up Display
+  - &#10004; Heads Up Display
     - &#10004; Level indicator top, center, and big
     - &#10004; Top and bottom bars for buttons
- - &#10004; Card system
+  - &#10004; Card system
     - &#10004; Cards pop up and disappear
     - &#10004; Cards can be pinned
     - &#10004; Cards can be moved
@@ -88,3 +98,5 @@
     - &#10004; Active cards should be kept on screen after a resize
   - &#10004; Make it more obvious which wall you're interacting with, perhaps by highlighting the one you select or are hovering over
   - &#10004; Instructions for basic controls
+- &#10004; Loose items are scooped up my crew and stored in crates
+- &#10004; Click and drag to pan
