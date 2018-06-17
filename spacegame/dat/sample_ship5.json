@@ -1,0 +1,101 @@
+{
+	"structure": {
+		"walls": {
+			"0": [
+				"╔═══╗",
+				"║...║",
+				"║...║",
+				"║...║",
+				"╚═══╝"
+			],
+			"1": [
+				"╔═══╗",
+				"║...║",
+				"║...║",
+				"║...║",
+				"╚═══╝"
+			]
+		},
+		"floors": {
+			"0": [
+				"XXXXX",
+				"XXXXX",
+				"XXXXX",
+				"XXXXX",
+				"XXXXX"
+			],
+			"1": [
+				"XXXXX",
+				"XXXXX",
+				"XXXXX",
+				"XhXXX",
+				"XXXXX"
+			],
+			"2": [
+				"XXXXX",
+				"XXXXX",
+				"XXXXX",
+				"XXXXX",
+				"XXXXX"
+			]
+		}
+	},
+	"crew": [{
+		"sprite": "builder_crew",
+		"name": "constructor bot",
+		"location": {
+			"x": 1,
+			"y": 1,
+			"z": 1
+		}
+	}],
+	"furniture": [{
+			"sprite": "crate",
+			"location": {
+				"x": 2,
+				"y": 1,
+				"z": 1
+			}
+		},
+		{
+			"sprite": "crate",
+			"location": {
+				"x": 2,
+				"y": 3,
+				"z": 1
+			}
+		},
+		{
+			"sprite": "barrel",
+			"location": {
+				"x": 3,
+				"y": 3,
+				"z": 0
+			}
+		},
+		{
+			"sprite": "barrel",
+			"location": {
+				"x": 3,
+				"y": 1,
+				"z": 0
+			}
+		},
+		{
+			"sprite": "barrel",
+			"location": {
+				"x": 1,
+				"y": 2,
+				"z": 0
+			}
+		},
+		{
+			"sprite": "barrel",
+			"location": {
+				"x": 3,
+				"y": 2,
+				"z": 0
+			}
+		}
+	]
+}
