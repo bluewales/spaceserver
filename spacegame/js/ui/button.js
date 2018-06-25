@@ -13,6 +13,7 @@ class Button extends createjs.Container {
 
     this.text.textAlign = "center";
     this.text.y = this.height/2 - this.text_hight/2;
+    this.text.x = this.width/2;
     if(config.card) {
       this.card = config.card;
       this.card.button = this;
@@ -22,17 +23,19 @@ class Button extends createjs.Container {
 
 
     this.box = new createjs.Shape();
-    this.box.graphics.beginFill(this.background_color).drawRect(-this.width/2, 0, this.width, this.height).endFill();
+    this.box.graphics.beginFill(this.background_color).drawRect(0, 0, this.width, this.height).endFill();
 
     this.addEventListener("mousedown", function(event) {
-      this.box.graphics.clear().beginFill(menu_palette[2]).drawRect(-this.width/2, 0, this.width, this.height).endFill();
+      this.box.graphics.clear().beginFill(menu_palette[2]).drawRect(0, 0, this.width, this.height).endFill();
     }.bind(this));
 
     this.addEventListener("pressup", function(event) {
-      this.box.graphics.clear().beginFill(this.background_color).drawRect(-this.width/2, 0, this.width, this.height).endFill();
+      this.box.graphics.clear().beginFill(this.background_color).drawRect(0, 0, this.width, this.height).endFill();
     }.bind(this));
 
     this.addEventListener("click", function(event) {
+
+
       this.active = !this.active;
       this.debounce = 10;
       if(this.on_click) {
@@ -53,7 +56,7 @@ class Button extends createjs.Container {
     } else {
       this.background_color = menu_palette[0];
     }
-    this.box.graphics.clear().beginFill(this.background_color).drawRect(-this.width/2, 0, this.width, this.height).endFill();
+    this.box.graphics.clear().beginFill(this.background_color).drawRect(0, 0, this.width, this.height).endFill();
   }
 
   get active() {
@@ -61,6 +64,7 @@ class Button extends createjs.Container {
   }
 
   tick() {
+
     if(this.debounce > 0) {
       this.debounce -= 1;
     }

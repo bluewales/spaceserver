@@ -11,8 +11,14 @@ var type_lookup = {
   "Steel": Steel,
   "Construct": Construct,
   "Patrol": Patrol,
-  "PutAway": PutAway
+  "PutAway": PutAway,
+  "Deconstruct": Deconstruct
 };
+
+function get_constructor(type) {
+  console.log(type);
+  return eval(type);
+}
 
 
 

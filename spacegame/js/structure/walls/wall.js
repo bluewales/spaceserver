@@ -10,7 +10,7 @@ class Wall extends Structure {
     super.start(raw, objects);
   }
   deconstruct() {
-    console.log("deconstruct " + this.name + " " + this.pos.x + "," + this.pos.y + "," + this.pos.z);
+    console.log("deconstruct " + this.label + " " + this.pos.x + "," + this.pos.y + "," + this.pos.z);
     this.ship.remove_wall(this.pos, this.ori);
   }
   get_raw(callback) {

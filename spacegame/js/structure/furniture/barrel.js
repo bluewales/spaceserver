@@ -7,7 +7,7 @@ class Barrel extends Furniture {
     super.init(raw, objects);
 
     this.sprite = "barrel";
-    this.name = "Barrel";
+    this.label = "Barrel";
 
     this.addChild(new createjs.Sprite(game.sprites[this.sprite].sprite, this.sprite));
   }

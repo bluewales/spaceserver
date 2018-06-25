@@ -15,6 +15,10 @@ class CardFrame extends createjs.Container {
     this.width = width;
     this.height = height;
 
+    this.foreground_color = menu_palette[0];
+    this.background_color = menu_palette[1];
+    this.contrast_color = menu_palette[4];
+
     this.title = new createjs.Text(this.parent.name, (this.header_width-this.border_width*2) + "px Arial", menu_palette[0]);
     this.title.x = this.border_width;
     this.title.y = -this.header_width;
@@ -24,8 +28,8 @@ class CardFrame extends createjs.Container {
     this.addChild(this.ex);
 
     this.ex.on("click", function(event) {this.parent.active=false; event.stopPropagation();}.bind(this));
-    this.ex.on("mousedown", function(event) {this.draw_ex(menu_palette[1], menu_palette[3]); event.stopPropagation();}.bind(this));
-    this.ex.on("pressup", function(event) {this.draw_ex(menu_palette[0], menu_palette[4]); event.stopPropagation();}.bind(this));
+    this.ex.on("mousedown", function(event) {this.draw_ex(this.background_color, menu_palette[3]); event.stopPropagation();}.bind(this));
+    this.ex.on("pressup", function(event) {this.draw_ex(this.foreground_color, menu_palette[4]); event.stopPropagation();}.bind(this));
     this.ex.on("pressmove", function(event) {event.stopPropagation();}.bind(this));
 
 
@@ -47,9 +51,9 @@ class CardFrame extends createjs.Container {
     this.parent.y += event.stageY - this.drag_start[1];
     this.drag_start = [event.stageX, event.stageY];
   }
-  draw_ex(background, foreground) {
+  draw_ex() {
     this.ex.graphics.clear();
-    this.ex.graphics.beginFill(background).drawRect(
+    this.ex.graphics.beginFill(this.foreground_color).drawRect(
       0,
       0,
       this.ex_width,
@@ -58,7 +62,7 @@ class CardFrame extends createjs.Container {
 
     this.ex.graphics
       .setStrokeStyle(this.border_width)
-      .beginStroke(foreground)
+      .beginStroke(this.contrast_color)
       .moveTo(this.border_width, this.border_width)
       .lineTo(this.ex_width-this.border_width, this.ex_width-this.border_width)
       .moveTo(this.ex_width-this.border_width, this.border_width)
@@ -67,32 +71,32 @@ class CardFrame extends createjs.Container {
 
   draw_box() {
     this.box.graphics.clear();
-    this.box.graphics.beginFill(menu_palette[0]).drawRect(
+    this.box.graphics.beginFill(this.foreground_color).drawRect(
       -this.border_width,
       -this.border_width*2 - this.header_width,
-      this._width+this.border_width*2,
-      this._height+this.border_width*3 + this.header_width
+      this._width+this.border_width*4,
+      this._height+this.border_width*4 + this.header_width
     ).endFill();
 
-    this.box.graphics.beginFill(menu_palette[1]).drawRect(
+    this.box.graphics.beginFill(this.background_color).drawRect(
       0,
       -this.header_width - this.border_width,
-      this._width,
-      this._height + this.header_width + this.border_width
+      this._width+this.border_width*2,
+      this._height + this.header_width + this.border_width*2
     ).endFill();
 
-    this.box.graphics.beginFill(menu_palette[0]).drawRect(
+    this.box.graphics.beginFill(this.foreground_color).drawRect(
       this.border_width,
       -this.border_width,
-      this._width - this.border_width*2,
+      this._width,
       this.border_width
     ).endFill();
 
     this.ex_width = this.header_width-this.border_width*2;
-    this.ex.x = this._width + this.border_width - this.header_width;
+    this.ex.x = this._width + this.border_width - this.header_width+this.border_width*2;
     this.ex.y = -this.header_width;
 
-    this.draw_ex(menu_palette[0], menu_palette[4]);
+    this.draw_ex();
   }
 
   set width(value) {

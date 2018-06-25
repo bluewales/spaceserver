@@ -77,7 +77,7 @@ class BottomBar extends createjs.Container {
     for(var i = 0; i < buttons.length; i++) {
       var button = buttons[i];
       var half = buttons.length/2;
-      button.x = width/2 - this.button_width*(half - i - 0.5);
+      button.x = width/2 - this.button_width*(half - i);
       button.y = height - this.button_height;
     }
   }

@@ -21,7 +21,7 @@ class Hatch extends Floor {
 
     this.drawing = new createjs.Container();
     this.addChild(this.drawing);
-    this.name = "Hatch";
+    this.label = "Hatch";
   }
   start(raw, objects) {
     super.start(raw, objects);

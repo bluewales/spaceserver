@@ -7,7 +7,7 @@ class Door extends Wall {
     super.init(raw, objects);
 
     this.open = 0;
-    this.name = "Door";
+    this.label = "Door";
   }
   start(raw, objects) {
     super.start(raw, objects);
@@ -19,7 +19,7 @@ class Door extends Wall {
     return this.progress < 100 ? 1 : (this.passable ? 1 : 0);
   }
   get_menu_item() {
-    return {"name":this.name, "list":[{
+    return {"name":this.label, "list":[{
       "name":"deconstruct",
       "list":[{"name":"deconstruct", "handle":this.deconstruct.bind(this)}]
     }]};

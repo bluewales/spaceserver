@@ -15,7 +15,7 @@ class FloorPlate extends Floor {
     this.addChild(this.skirt);
     this.addChild(new createjs.Sprite(game.sprites[this.sprite_key].sprite, this.sprite_key));
 
-    this.name = "Floor";
+    this.label = "Floor";
   }
   start(raw, objects) {
     super.start(raw, objects);

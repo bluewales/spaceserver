@@ -10,7 +10,7 @@ class Furniture extends Structure {
     super.start(raw, objects);
   }
   deconstruct() {
-    console.log("deconstruct " + this.name + " " + this.pos.x + ","+this.pos.y + "," + this.pos.z);
+    console.log("deconstruct " + this.label + " " + this.pos.x + ","+this.pos.y + "," + this.pos.z);
     this.ship.remove_furniture(this.pos);
   }
   get_raw(callback) {

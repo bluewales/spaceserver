@@ -13,8 +13,8 @@ class BuildCard extends Card {
     var item_width = 48;
     var item_margin = 6;
 
-    var width = item_width*2 + item_margin*3;
-    var height = Math.ceil(items.length/2) * (item_width + item_margin) + item_margin;
+    var width = item_width*2 + item_margin;
+    var height = Math.ceil(items.length/2) * (item_width + item_margin);
     var name = "Build";
     super(name, width, height);
 
@@ -28,7 +28,7 @@ class BuildCard extends Card {
     this.item_margin = item_margin;
 
     for(var i = 0; i < this.items.length; i++) {
-      var x = (i%2) * (this.item_width + this.item_margin) + this.item_margin + this.item_width/2;
+      var x = (i%2) * (this.item_width + this.item_margin) + this.item_margin;
       var y = Math.floor(i/2) * (this.item_width + this.item_margin) + this.item_margin;
 
       var button_config = {

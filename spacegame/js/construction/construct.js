@@ -1,49 +1,12 @@
-/**
- * Created by ldavidson on 7/13/2017.
- */
-
-
-function construct_structure(type, pos) {
-  if(!type.can_build(pos)) {
-    return;
-  }
-  var raw = type.generate_raw(pos);
-  var materials = type.materials;
-  var items = [];
-
-  var store = game.ship.item_store;
-
-  for(var i = 0; i < materials.length; i++) {
-    var item = store.claim_item(materials[i]);
-    if(!item) break;
-    items.push(item);
-  }
-  if(items.length != materials.length) {
-    for(var i = 0; i < items.length; i++) {
-      store.add_item(items[i]);
-    }
-    return;
-  }
-
-
-  var structure = new type();
-  structure.init(raw);
-  structure.start(raw);
-  game.ship.add_structure(structure);
-  var job = new Construct(structure, items);
-  job.on_complete = function(){game.ship.graph.update_pos(structure.pos);};
-
-  game.ship.jobs.create_job(job);
-
-  console.log("build " + raw.type + " at " + pos_to_index(pos));
-}
-
-
 class Construct extends Job {
   constructor(structure, materials) {
     super();
+    this.label = "Constructing";
+    this.percent = 0;
     if(structure) {
       this.structure = structure;
+      if(this.structure.job) console.log("JOB ERROR, structure already has a job.");
+      this.structure.job = this;
       this.pos = this.structure.pos;
       this.materials = materials;
       for(var i = 0; i < materials.length; i++) {
@@ -54,6 +17,9 @@ class Construct extends Job {
   init(raw, objects) {
     super.init(raw, objects);
     this.structure = objects[raw.structure];
+    this.percent = this.structure.progress;
+    if(this.structure.job) console.log("JOB ERROR, structure already has a job.");
+    this.structure.job = this;
     this.pos = this.structure.pos;
 
     this.materials = [];
@@ -84,6 +50,7 @@ class Construct extends Job {
       crew.move_towards(this.pos);
     } else {
       this.structure.progress = this.structure.progress+1;
+      this.percent = this.structure.progress;
       if(this.structure.progress >= 100) {
         this.structure.progress = 100;
         return true;
@@ -93,7 +60,9 @@ class Construct extends Job {
   }
 
   on_complete() {
-    this.structure.ship.graph.init_node(this.structure.pos);
+    console.log(this);
+    this.structure.ship.graph.update_pos(this.structure.pos);
+    this.structure.job = undefined;
   }
 
   get_raw(callback) {

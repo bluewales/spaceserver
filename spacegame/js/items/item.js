@@ -1,8 +1,18 @@
 class Item extends createjs.Container {
-  constructor() {
+  constructor(pos, container) {
     super();
 
     this.uid = getUID("Item");
+    if(pos) {
+      this.pos = pos;
+      this.ship = game.ship;
+      this.container = container;
+      this.claimed = false;
+
+      this.ship.item_store.add_item(this);
+      this.x = this.ship.position_transform(this.pos.x);
+      this.y = this.ship.position_transform(this.pos.y);
+    }
   }
   init(raw, objects) {
 
@@ -11,9 +21,7 @@ class Item extends createjs.Container {
     this.pos = raw.pos;
 
     if(objects === undefined) {
-      this.ship = game.ship;
-      this.container = game.ship;
-      this.claimed = false;
+
     } else {
       this.ship = objects[raw.ship];
       this.container = objects[raw.container];
@@ -26,8 +34,10 @@ class Item extends createjs.Container {
 
     this.ship.item_store.add_item(this);
 
-    this.x = this.ship.position_transform(this.pos.x);
-    this.y = this.ship.position_transform(this.pos.y);
+    if(this.pos) {
+      this.x = this.ship.position_transform(this.pos.x);
+      this.y = this.ship.position_transform(this.pos.y);
+    }
   }
   start(raw, objects) {
   }
@@ -57,17 +67,20 @@ class Item extends createjs.Container {
       return this._interaction_card;
     }
 
-    this._interaction_card = new InteractionCard(this.name);
+    this._interaction_card = new InteractionCard(this.label);
 
     return this._interaction_card;
   }
   get_raw(callback) {
     this.raw = {};
-    this.raw.pos = copy_pos(this.pos);
+    if(this.pos) this.raw.pos = copy_pos(this.pos);
     this.raw.type = this.type;
     this.raw.ship = this.ship.id;
     this.raw.container = this.container.id;
     if(this.claimed) this.raw.claimed = this.claimed.id;
     callback(this, this.raw);
+  }
+  set_highlight(highlight) {
+    this.highlight = highlight;
   }
 }

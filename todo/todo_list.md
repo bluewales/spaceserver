@@ -6,9 +6,9 @@
   - &#10004; Clear highlights on new click
   - &#10004; Give the name of what is highlighted
   - &#10004; Reposition card to mouse
-  - Option to deconstruct structures
+  - &#10004; Option to deconstruct structures
   - Displays contents of crates
-  - Displays progress of planned construction and deconstruction jobs
+  - &#10004; Displays progress of planned construction and deconstruction jobs
   - Option to cancel planned construction
 - Construction
   - &#10004; Knowing where to build things
@@ -21,7 +21,9 @@
      - &#10004; If materials are not available, the structure is not planned
   - Deconstruct structures
      - Cancel construction jobs that are in progress
-     - Spawn materials that were used to create the structure
+     - &#10004; Spawn materials that were used to create the structure
+     - Deconstruction job is saved
+     - Crates and structures with contents spawn all contents when deconstructed
 - Saving
   - &#10004; Jobs should be saved
   - &#10004; A button to force a save

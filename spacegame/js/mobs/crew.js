@@ -41,9 +41,6 @@ class Crew extends createjs.Container {
     this.speed = 1;
 
     this.name = raw.name;
-
-    // handle click
-    this.on('click', this.handle_click.bind(this));
   }
   start(raw, objects) {
   }
@@ -63,7 +60,6 @@ class Crew extends createjs.Container {
     }
   }
   grab(item) {
-    console.log("Grab " + item.type);
 
     if(walled_distance(this.pos, item.pos) !== 0) {
       console.log("ERROR cannot grab item.  It's too far away.");
@@ -76,7 +72,7 @@ class Crew extends createjs.Container {
     this.carried_item = item;
     item.container = this;
     item.x = item.y = 0;
-    item.pos = this.pos;
+    delete item.pos;
     this.addChild(item);
   }
   remove_item(item) {
@@ -104,7 +100,6 @@ class Crew extends createjs.Container {
       } else if(distance == 1 && path_weight > 0) {
           this.ship.change_position_crew(this, t);
           this.pos = t;
-          if(this.carried_item) this.carried_item.pos = this.pos;
           this.cooldown = 24 * path_weight;
           this.speed = 1 / path_weight;
       } else {
@@ -142,9 +137,6 @@ class Crew extends createjs.Container {
     this.path = undefined;
     this.path_progress = 0;
   }
-  handle_click(event) {
-    console.log("crew clicked");
-  }
   get_raw(callback) {
     this.raw = {};
     this.raw.pos = copy_pos(this.pos);
@@ -172,5 +164,8 @@ class Crew extends createjs.Container {
     }
     this._interaction_card = new InteractionCard(this.name);
     return this._interaction_card;
+  }
+  set_highlight(highlight) {
+    this.highlight = highlight;
   }
 }

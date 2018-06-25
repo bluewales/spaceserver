@@ -20,7 +20,7 @@ class WallPanel extends Wall {
 
     this.addChild(this.drawing);
 
-    this.name = "Wall Panel";
+    this.label = "Wall Panel";
   }
   start(raw, objects) {
     super.start(raw, objects);

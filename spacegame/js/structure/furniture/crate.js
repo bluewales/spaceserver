@@ -14,7 +14,7 @@ class Crate extends Furniture {
     super.init(raw, objects);
 
     this.sprite = "crate";
-    this.name = "Crate";
+    this.label = "Crate";
 
     this.addChild(new createjs.Sprite(game.sprites[this.sprite].sprite, this.sprite));
 

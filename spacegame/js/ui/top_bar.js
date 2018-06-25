@@ -75,7 +75,7 @@ class TopBar extends createjs.Container {
     for(var i = 0; i < buttons.length; i++) {
       var button = buttons[i];
       var half = Math.round(buttons.length/2)
-      button.x = width/2 - this.button_width*(half - i) - 50 + (i>=half?this.button_width+100:0);
+      button.x = width/2 - this.button_width*(half - i + 0.5) - 50 + (i>=half?this.button_width+100:0);
     }
   }
 

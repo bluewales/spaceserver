@@ -30,7 +30,7 @@ class Ship extends createjs.Container {
     super();
 
     this.grid_width = 24;
-    this.padding = 1;
+    this.padding = 1.5;
 
     this.floor_layer = 0;
     this.wall_layer = 1;
@@ -186,6 +186,7 @@ class Ship extends createjs.Container {
         return undefined;
     }
   }
+
   add_structure(structure) {
     var layer = this.get_layer_from_string(structure.layer);
     var place = this.get_place_from_string(structure.layer);
@@ -193,32 +194,25 @@ class Ship extends createjs.Container {
     this.graph.update_pos(structure.pos);
     return structure;
   }
+  remove_structure(structure) {
+    var layer = this.get_layer_from_string(structure.layer);
+    var place = this.get_place_from_string(structure.layer);
+    console.log(structure.pos);
+    this.remove_thing(structure.pos, place, structure, layer);
+    this.graph.update_pos(structure.pos);
+    if(this.current_selection === structure) {
+      this.clear_selection();
+    }
+  }
+
   get_floor(pos) {
     return get_3d(this.floors, pos);
-  }
-  remove_floor(pos) {
-    var floor = get_3d(this.floors, pos);
-    this.levels[pos.z].remove(floor, this.floor_layer);
-    set_3d(this.floors, pos, undefined);
-    this.graph.update_pos(pos);
   }
   get_wall(pos) {
     return get_3d(this.walls, pos);
   }
   get_furniture(pos) {
     return get_3d(this.furniture, pos);
-  }
-  remove_wall(pos) {
-    var floor = get_3d(this.walls, pos);
-    this.levels[pos.z].remove(wall, this.wall_layer);
-    set_3d(this.walls, pos, undefined);
-    this.graph.update_pos(pos);
-  }
-  remove_furniture(pos) {
-    var furniture = get_3d(this.furniture, pos);
-    this.levels[pos.z].remove(furniture, this.furniture_layer);
-    set_3d(this.furniture, pos, undefined);
-    this.graph.update_pos(pos);
   }
 
 
@@ -234,6 +228,9 @@ class Ship extends createjs.Container {
     if(crew_member.pos.z != p.z) {
       this.levels[crew_member.pos.z].remove(crew_member, this.crew_layer);
       this.add_thing(p, this.crew, crew_member, this.crew_layer);
+      if(this.current_selection === crew_member) {
+        this.clear_selection();
+      }
     }
   }
 
@@ -249,6 +246,29 @@ class Ship extends createjs.Container {
     this.levels[item.pos.z].remove(item, this.item_layer);
     this.items[item.uid] = undefined;
     delete this.items[item.uid];
+    if(this.current_selection === item) {
+      this.clear_selection();
+    }
+  }
+
+  spawn_item(type, pos) {
+    if(pos.ori) {
+
+      var new_pos = {x:pos.x, y:pos.y, z:pos.z};
+      if(Math.random() < 0.5) {
+        if(pos.ori == "|") {
+          new_pos.x += 1;
+        } else {
+          new_pos.y += 1;
+        }
+      }
+      pos = new_pos;
+    }
+
+    var item = new type_lookup[type](pos, this);
+    console.log(item);
+    console.log(item.pos);
+    this.add_item(item);
   }
 
   select(selected) {
@@ -266,12 +286,14 @@ class Ship extends createjs.Container {
 
     this.interaction_card = selected.interaction_card;
 
-    var x_offset = this.interaction_card.frame.border_width + 1;
+    var x_offset = this.interaction_card.frame.border_width + 25;
     this.interaction_card.x = this.getStage().mouseX + x_offset;
     this.interaction_card.y = this.getStage().mouseY;
 
     this.interaction_card.active = true;
     this.draw_highlight(selected.pos);
+
+    this.current_selection.set_highlight(this.highlight_shape);
   }
 
   clear_selection() {
@@ -279,6 +301,7 @@ class Ship extends createjs.Container {
       return;
     }
     this.clear_highlight();
+    this.current_selection.set_highlight(undefined);
 
     this.interaction_card.active = false;
     this.interaction_card = null;
@@ -290,15 +313,22 @@ class Ship extends createjs.Container {
   draw_highlight(pos) {
 
     var grid = this.grid_width + this.padding*2;
+    var pad = this.padding;
 
     if(!this.highlight) {
       this.highlight = {};
 
+      function corner(shape, x1, x2, x3, y1, y2, y3) {
+        create_polygon('red', [[x1, y1], [x3,y1], [x3,y2], [x2,y2], [x2, y3], [x1, y3]], shape);
+      }
+
       this.highlight["square"] = new createjs.Shape();
       this.highlight["square"].is_highlight = true;
-      this.highlight["square"].graphics
-        .beginStroke('orange')
-        .drawRect(-this.padding, -this.padding, grid, grid);
+
+      corner(this.highlight["square"], -2*pad, -pad, grid/4, -2*pad, -pad, grid/4);
+      corner(this.highlight["square"], -2*pad, -pad, grid/4, grid, grid-pad, grid-grid/4-2*pad);
+      corner(this.highlight["square"], grid, grid-pad, grid-grid/4-2*pad, grid, grid-pad, grid-grid/4-2*pad);
+      corner(this.highlight["square"], grid, grid-pad, grid-grid/4-2*pad, -2*pad, -pad, grid/4);
 
       this.highlight["|"] = new createjs.Shape();
       this.highlight["|"].is_highlight = true;
