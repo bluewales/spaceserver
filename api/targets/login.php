@@ -11,7 +11,7 @@
 		$auth_token = randomString($h_token_length);
 		mysql_db_save_session_token($user_id, $auth_token);
 
-		setcookie ( "auth_token", $auth_token );
+		setcookie ("auth_token", $auth_token, 0 , "/");
 		return array("success"=>"true","auth_token"=>$auth_token,"logged_in"=>"true");
 	}
 ?>
