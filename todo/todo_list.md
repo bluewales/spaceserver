@@ -1,104 +1,107 @@
 # Todo List
 
-- Clicking on things should bring up an info card
-  - &#10004; Distinguish between clicking on cells and clicking on walls
-  - &#10004; Highlight the thing that was clicked on
-  - &#10004; Clear highlights on new click
-  - &#10004; Give the name of what is highlighted
-  - &#10004; Reposition card to mouse
-  - &#10004; Option to deconstruct structures
-  - Displays contents of crates
-  - &#10004; Displays progress of planned construction and deconstruction jobs
-  - Option to cancel planned construction
-- Construction
-  - &#10004; Knowing where to build things
+ - &#10004; Clicking on things should bring up an info card
+   - &#10004; Distinguish between clicking on cells and clicking on walls
+   - &#10004; Highlight the thing that was clicked on
+   - &#10004; Clear highlights on new click
+   - &#10004; Give the name of what is highlighted
+   - &#10004; Reposition card to mouse
+   - &#10004; Option to deconstruct structures
+   - &#10004; Displays contents of crates
+   - &#10004; Show current job of crew
+   - &#10004; Show item crew is carrying
+   - &#10004; Displays progress of planned construction and deconstruction jobs
+   - &#10004; Option to cancel planned construction
+ - Construction
+   - &#10004; Knowing where to build things
      - &#10004; Not where there is already a thing
      - &#10004; Furniture must be built on floors
-  - &#10004; Building hatches and doors
-  - &#10004; Building furniture
-  - &#10004; Building should consumer materials which must be brought to the site by crew
+   - &#10004; Building hatches and doors
+   - &#10004; Building furniture
+   - &#10004; Building should consumer materials which must be brought to the site by crew
      - &#10004; Materials are claimed by the job at the time the structure is planned
      - &#10004; If materials are not available, the structure is not planned
-  - Deconstruct structures
-     - Cancel construction jobs that are in progress
+   - Deconstruct structures
      - &#10004; Spawn materials that were used to create the structure
-     - Deconstruction job is saved
-     - Crates and structures with contents spawn all contents when deconstructed
-- Saving
-  - &#10004; Jobs should be saved
-  - &#10004; A button to force a save
-  - An indication that saving is happening
-- Robot charging pad
-  - Robot runs out of charge
-  - Robot returns to pad when low on energy
-  - Will the robot be stuck forever if it doesn't charge in time?
-- Trading
-  - Ship has a certain amount of money
-  - Show which items are for sale and their prices
-  - Deliver purchased items to ship by shuttle
-  - Delivered items must be stored by crew
-  - Sold items need to be picked up
-  - Crew must take sold items to shuttle
-  - How the heck do shuttles work?
-- Production server
-- Keep the ship connected.  Structure building, planning, and deconstruction need to keep the ship in one piece at all times.
-- Atmosphere
-  - Pressure and composition, maybe saved as attributes on the graph
-  - Spreading throughout a chamber.
+     - &#10004; Deconstruction job is saved
+     - Structures with contents (crates) spawn all contents when deconstructed
+   - Cancel construction jobs that are in progress
+ - Saving
+   - &#10004; Jobs should be saved
+   - &#10004; A button to force a save
+   - An indication that saving is happening
+ - Robot charging pad
+   - Robot runs out of charge
+   - Robot returns to pad when low on energy
+   - Will the robot be stuck forever if it doesn't charge in time?
+ - Trading
+   - Ship has a certain amount of money
+   - Some way to tell what items are on the ship
+   - Show which items are for sale and their prices
+   - Deliver purchased items to ship by shuttle
+   - Delivered items must be stored by crew
+   - Sold items need to be picked up by the shuttle
+   - Crew must take sold items to shuttle
+   - How the heck do shuttles work?
+ - Production server
+ - Keep the ship connected.  Structure building, planning, and deconstruction need to keep the ship in one piece at all times.
+ - Atmosphere
+   - Pressure and composition, maybe saved as attributes on the graph
+   - Spreading throughout a chamber.
      - Pressure should equalize almost immediately,
      - Composition should take a little longer to propagate
-  - Escaping into space
-  - Maintained by machine(s)
+   - Escaping into space
+   - Maintained by machine(s)
      - Unwanted gasses must be removed (carbon dioxide, ammonia, acetone)
      - Keep all necessary gasses at correct levels
      - Decide whether to have a lot of filters and tanks, or just one machine
      that monitors everything
      - There needs to be some sort of ventilation management system.  Should air just go through doors?  Does every room need an atmosphere monitoring machine?  Are there vents?
-  - Leaks through open doors
+   - Leaks through open doors
      - Enough atmosphere should escape through a door while a crew member is passing through to empty a room
-  - If atmosphere can't move through closed doors normally, then we need some other kind of ventilation
-  - Rooms and groups of rooms are hydrostatically connected nodes that should have the same air pressure, composition, and temperature
-- Temperature should conduct through walls.
-- Airlocks.  How do they work? Are they a special piece of furniture, or are they a collection of walls and doors that somehow function as an airlock?
-  - Since pathfinding will ignore locked doors, how does a crew member decide to use an airlock?
-- Fluid storage, tanks of liquids and gasses
-  - Oxygen and nitrogen for atmosphere management
-  - Water for everything
-  - Fuel and oxygen for propellant and power generation
-  - All those same substances and more as cargo to sell at the next port. Maybe even dangerous chemicals like acids or explosives
-- Power generation and consumption.
-- Time management
-  - Pause time
-  - Let time advance at different speeds
-- Find a way to draw lower levels.  I'd like to make them darker.
-- &#10004; Some scheme for marking items done on this list
-- &#10004; Open/Close animations for doors and hatches
-  - &#10004; Hatches spin open like a mechanical iris
+   - If atmosphere can't move through closed doors normally, then we need some other kind of ventilation
+   - Rooms and groups of rooms are hydrostatically connected nodes that should have the same air pressure, composition, and temperature
+ - Temperature should conduct through walls.
+ - Airlocks.  How do they work? Are they a special piece of furniture, or are they a collection of walls and doors that somehow function as an airlock?
+   - Since pathfinding will ignore locked doors, how does a crew member decide to use an airlock?
+ - Fluid storage, tanks of liquids and gasses
+   - Oxygen and nitrogen for atmosphere management
+   - Water for everything
+   - Fuel and oxygen for propellant and power generation
+   - All those same substances and more as cargo to sell at the next port. Maybe even dangerous chemicals like acids or explosives
+ - Power generation and consumption.
+ - Time management
+   - Pause time
+   - Let time advance at different speeds
+ - Find a way to draw lower levels.  I'd like to make them darker.
+ - &#10004; Some scheme for marking items done on this list
+ - &#10004; Open/Close animations for doors and hatches
+   - &#10004; Hatches spin open like a mechanical iris
      - &#10004; Create new vector art for hatches, replace sprite
-  - &#10004; Doors open for crew, crew do not open doors.  The crew doesn't need to check if the door is open, only if it is unlocked
-  - &#10004; Invent doors (create art for doors)
+   - &#10004; Doors open for crew, crew do not open doors.  The crew doesn't need to check if the door is open, only if it is unlocked
+   - &#10004; Invent doors (create art for doors)
      - &#10004; Doors should have the same profile as walls
      - &#10004; Doors slide open like grocery store doors
-- &#10004; User accounts
-  - &#10004; Saving the game
-  - &#10004; Login page
-  - &#10004; Account creation
-    - &#10004; New accounts get default ship
-    - &#10004; Reasonable error messages
-  - &#10004; Source control for server side code
-- &#10004; Interface
-  - &#10004; Heads Up Display
-    - &#10004; Level indicator top, center, and big
-    - &#10004; Top and bottom bars for buttons
-  - &#10004; Card system
-    - &#10004; Cards pop up and disappear
-    - &#10004; Cards can be pinned
-    - &#10004; Cards can be moved
-    - &#10004; Cards are pinned when they are moved
-    - &#10004; Cards disappear when unfocused, unless they are pinned
-    - &#10004; Pinned cards move to top of other cards when focused
-    - &#10004; Active cards should be kept on screen after a resize
-  - &#10004; Make it more obvious which wall you're interacting with, perhaps by highlighting the one you select or are hovering over
-  - &#10004; Instructions for basic controls
-- &#10004; Loose items are scooped up my crew and stored in crates
-- &#10004; Click and drag to pan
+ - &#10004; User accounts
+   - &#10004; Saving the game
+   - &#10004; Login page
+   - &#10004; Account creation
+     - &#10004; New accounts get default ship
+     - &#10004; Reasonable error messages
+   - &#10004; Source control for server side code
+ - &#10004; Interface
+   - &#10004; Heads Up Display
+     - &#10004; Level indicator top, center, and big
+     - &#10004; Top and bottom bars for buttons
+   - &#10004; Card system
+     - &#10004; Cards pop up and disappear
+     - &#10004; Cards can be pinned
+     - &#10004; Cards can be moved
+     - &#10004; Cards are pinned when they are moved
+     - &#10004; Cards disappear when unfocused, unless they are pinned
+     - &#10004; Pinned cards move to top of other cards when focused
+     - &#10004; Active cards should be kept on screen after a resize
+   - &#10004; Make it more obvious which wall you're interacting with, perhaps by highlighting the one you select or are hovering over
+   - &#10004; Instructions for basic controls
+ - &#10004; Loose items are scooped up my crew and stored in crates
+ - &#10004; Click and drag to pan

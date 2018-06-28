@@ -1,4 +1,3 @@
-.remote-sync.json
 visualize.py
 visualize.html
 checkin.php
@@ -6,5 +5,5 @@ check_lines.py
 matrix.py
 /scavenger
 /api/log
-.vscode
-test
+/.vscode
+/test

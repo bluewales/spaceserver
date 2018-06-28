@@ -5,7 +5,7 @@ class Structure extends createjs.Container {
 
   init(raw, objects) {
 
-    if(objects === undefined) {
+    if (objects === undefined) {
       this.ship = game.ship;
     } else {
       this.ship = objects[raw.ship];
@@ -15,7 +15,7 @@ class Structure extends createjs.Container {
     this.pos = raw.pos;
 
     this.progress = raw.progress;
-    if(raw.progress === undefined)
+    if (raw.progress === undefined)
       this.progress = 0;
 
     this.x = this.ship.position_transform(this.pos.x);
@@ -26,33 +26,15 @@ class Structure extends createjs.Container {
 
   }
 
-  create_interaction_card() {
-    this._interaction_card = new InteractionCard(this.label);
+  deconstruct() {
+    // This is a stub, base classes should implement it if they want
   }
 
-  update_interaction_card() {
-    if(!this._interaction_card) {
-      return;
-    }
 
-    this._interaction_card.clear_lines();
-
-    if(this.current_job) {
-      this._interaction_card.add_text(this.current_job.label);
-      this._interaction_card.add_progress_bar(this.current_job.percent);
-      this._interaction_card.add_button("Cancel", this.current_job.cancel);
-    } else {
-      this._interaction_card.add_text("Status: OK");
-      this._interaction_card.add_button("Deconstruct", function() {
-        deconstruct_structure(this);
-      }.bind(this));
-    }
-    this._interaction_card.add_text("Position: " + pos_to_index(this.pos));
-  }
 
   set progress(value) {
     this._progress = value;
-    this.alpha = value >= 100 ? 1 : 0.4 + value/250;
+    this.alpha = value >= 100 ? 1 : 0.4 + value / 250;
 
     this.update_interaction_card();
   }
@@ -69,11 +51,31 @@ class Structure extends createjs.Container {
     return this.current_job;
   }
 
-  get interaction_card() {
-    if(!this._interaction_card) {
-      this.create_interaction_card();
+  update_interaction_card() {
+    if (!this._interaction_card) {
+      return;
     }
-    this.update_interaction_card();
+
+    this._interaction_card.clear_lines();
+
+    if (this.current_job) {
+      this._interaction_card.add_text(this.current_job.label);
+      this._interaction_card.add_progress_bar(this.current_job.percent);
+      this._interaction_card.add_button("Cancel", this.current_job.cancel);
+    } else {
+      this._interaction_card.add_text("Status: OK");
+      this._interaction_card.add_button("Deconstruct", function () {
+        deconstruct_structure(this);
+      }.bind(this));
+    }
+    this._interaction_card.add_text("Position: " + pos_to_index(this.pos));
+  }
+
+  get interaction_card() {
+    if (!this._interaction_card) {
+      this._interaction_card = new InteractionCard(this.label);
+      this.update_interaction_card();
+    }
     return this._interaction_card;
   }
 
@@ -82,11 +84,10 @@ class Structure extends createjs.Container {
     this.raw.progress = this.progress;
     this.raw.type = this.type;
     this.raw.ship = this.ship.id;
-    if(callback) callback(this, this.raw);
+    if (callback) callback(this, this.raw);
   }
 
   set_highlight(highlight) {
     this.highlight = highlight;
   }
-
 }

@@ -8,10 +8,6 @@ class Floor extends Structure {
   start(raw, objects) {
     super.start(raw, objects);
   }
-  deconstruct() {
-    console.log("deconstruct " + this.label + " " + this.pos.x + ","+this.pos.y + "," + this.pos.z);
-    this.ship.remove_floor(this.pos);
-  }
   get_raw(callback) {
     super.get_raw(null);
     this.raw.pos = {x:this.pos.x, y:this.pos.y, z:this.pos.z};

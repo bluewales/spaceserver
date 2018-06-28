@@ -18,12 +18,6 @@ class Door extends Wall {
   get traverse_weight() {
     return this.progress < 100 ? 1 : (this.passable ? 1 : 0);
   }
-  get_menu_item() {
-    return {"name":this.label, "list":[{
-      "name":"deconstruct",
-      "list":[{"name":"deconstruct", "handle":this.deconstruct.bind(this)}]
-    }]};
-  }
   tick(event) {
     var pos = {x:this.pos.x, y:this.pos.y, z:this.pos.z};
     var other_pos = {x:this.pos.x+(this.pos.ori=="|"?1:0),y:this.pos.y+(this.pos.ori=="-"?1:0), z:this.pos.z};

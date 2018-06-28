@@ -1,3 +1,5 @@
+
+
 class Crate extends Furniture {
 
   constructor() {
@@ -19,9 +21,9 @@ class Crate extends Furniture {
     this.addChild(new createjs.Sprite(game.sprites[this.sprite].sprite, this.sprite));
 
     var items = raw.item;
-    if(!items) items = [];
+    if (!items) items = [];
 
-    for(var i = 0; i < items.length; i++) {
+    for (var i = 0; i < items.length; i++) {
       var item = objects[items[i]];
       this.add_item(item);
     }
@@ -29,23 +31,60 @@ class Crate extends Furniture {
 
   start(raw, objects) {
     super.start(raw, objects);
+
+  }
+
+  deconstruct() {
+    // This structure is dying, time to spew it's contents into the world
+    for (var key in this.ship.items) {
+      var item = this.ship.items[key];
+      item.pos = this.pos;
+      this.ship.add_item(item);
+    }
   }
 
   tick() {
-
-    if(this.item_count + this.pending_items < this.inventory_size) {
-      if(Math.random()*1000 < 1) {
+    if (Math.random() * 1000 < 1) {
+      if (this.item_count + this.pending_items < this.inventory_size) {
         for (var key in this.ship.items) {
           var item = this.ship.items[key];
-          if(item === undefined) continue;
-          console.log(item);
-          if(item.claimed === false) {
+          if (item === undefined) continue;
+          if (item.claimed === false) {
             var job = new PutAway(this, item);
             this.ship.jobs.create_job(job);
             break;
           }
         }
       }
+    }
+  }
+
+
+  update_interaction_card() {
+    if (!this._interaction_card) {
+      return;
+    }
+
+    super.update_interaction_card();
+
+    var item_summary = {};
+    for (var key in this.items) {
+      var label = (this.items[key].label);
+      if (item_summary[label]) {
+        item_summary[label] += 1;
+      } else {
+        item_summary[label] = 1;
+      }
+    }
+
+
+    if (Object.keys(item_summary).length > 0) {
+      this._interaction_card.add_text("Contents:");
+    } else {
+      this._interaction_card.add_text("Empty");
+    }
+    for (var label in item_summary) {
+      this._interaction_card.add_text(item_summary[label] + "x " + label);
     }
   }
 
@@ -56,11 +95,12 @@ class Crate extends Furniture {
 
     item.container = this;
     item.pos = this.pos;
+
+    this.update_interaction_card();
   }
 
-
   remove_item(item) {
-    if(!this.items[item.uid]) {
+    if (!this.items[item.uid]) {
       console.log("ERROR cannot remove item.  It's not here.");
       //console.trace();
       return;
@@ -68,6 +108,8 @@ class Crate extends Furniture {
     this.item_count--;
     this.items[item.uid] = undefined;
     delete this.items[item.uid];
+
+    this.update_interaction_card();
   }
 
 
@@ -79,7 +121,7 @@ class Crate extends Furniture {
       this.raw.item.push(this.items[key].id);
       this.items[key].get_raw(callback);
     }
-    if(callback) callback(this, this.raw);
+    if (callback) callback(this, this.raw);
   }
 
   static generate_raw(pos) {
@@ -98,7 +140,7 @@ class Crate extends Furniture {
 class PutAway extends Job {
   constructor(crate, item) {
     super();
-    if(crate) {
+    if (crate) {
       this.crate = crate;
       this.pos = item.pos;
       this.item = item;
@@ -107,6 +149,8 @@ class PutAway extends Job {
 
       this.crate.pending_items++;
     }
+
+    this.label = "PutAway";
   }
   init(raw, objects) {
     super.init(raw, objects);
@@ -124,12 +168,12 @@ class PutAway extends Job {
   work(crew) {
     var p = crew.pos;
 
-    if(!this.take_item_to(crew, this.item, this.crate.pos)) return false;
+    if (!this.take_item_to(crew, this.item, this.crate.pos)) return false;
 
     this.item.claimed = false;
     this.crate.add_item(this.item);
 
-    if(this.crate.pending_items <= 0) {
+    if (this.crate.pending_items <= 0) {
       console.log("ERROR! negative pending items!")
     }
     this.crate.pending_items--;
@@ -147,6 +191,6 @@ class PutAway extends Job {
     this.raw.item = this.item.id;
     this.raw.type = "PutAway";
 
-    if(callback) callback(this, this.raw);
+    if (callback) callback(this, this.raw);
   }
 }

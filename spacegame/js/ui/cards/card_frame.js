@@ -19,7 +19,7 @@ class CardFrame extends createjs.Container {
     this.background_color = menu_palette[1];
     this.contrast_color = menu_palette[4];
 
-    this.title = new createjs.Text(this.parent.name, (this.header_width-this.border_width*2) + "px Arial", menu_palette[0]);
+    this.title = new createjs.Text(this.parent.name, (this.header_width - this.border_width * 2) + "px Arial", menu_palette[0]);
     this.title.x = this.border_width;
     this.title.y = -this.header_width;
     this.addChild(this.title);
@@ -27,10 +27,10 @@ class CardFrame extends createjs.Container {
 
     this.addChild(this.ex);
 
-    this.ex.on("click", function(event) {this.parent.active=false; event.stopPropagation();}.bind(this));
-    this.ex.on("mousedown", function(event) {this.draw_ex(this.background_color, menu_palette[3]); event.stopPropagation();}.bind(this));
-    this.ex.on("pressup", function(event) {this.draw_ex(this.foreground_color, menu_palette[4]); event.stopPropagation();}.bind(this));
-    this.ex.on("pressmove", function(event) {event.stopPropagation();}.bind(this));
+    this.ex.on("click", function (event) { this.parent.active = false; event.stopPropagation(); }.bind(this));
+    this.ex.on("mousedown", function (event) { this.draw_ex(this.background_color, menu_palette[3]); event.stopPropagation(); }.bind(this));
+    this.ex.on("pressup", function (event) { this.draw_ex(this.foreground_color, menu_palette[4]); event.stopPropagation(); }.bind(this));
+    this.ex.on("pressmove", function (event) { event.stopPropagation(); }.bind(this));
 
 
     this.on("click", this.click.bind(this));
@@ -64,25 +64,25 @@ class CardFrame extends createjs.Container {
       .setStrokeStyle(this.border_width)
       .beginStroke(this.contrast_color)
       .moveTo(this.border_width, this.border_width)
-      .lineTo(this.ex_width-this.border_width, this.ex_width-this.border_width)
-      .moveTo(this.ex_width-this.border_width, this.border_width)
-      .lineTo(this.border_width, this.ex_width-this.border_width);
+      .lineTo(this.ex_width - this.border_width, this.ex_width - this.border_width)
+      .moveTo(this.ex_width - this.border_width, this.border_width)
+      .lineTo(this.border_width, this.ex_width - this.border_width);
   }
 
   draw_box() {
     this.box.graphics.clear();
     this.box.graphics.beginFill(this.foreground_color).drawRect(
       -this.border_width,
-      -this.border_width*2 - this.header_width,
-      this._width+this.border_width*4,
-      this._height+this.border_width*4 + this.header_width
+      -this.border_width * 2 - this.header_width,
+      this._width + this.border_width * 4,
+      this._height + this.border_width * 4 + this.header_width
     ).endFill();
 
     this.box.graphics.beginFill(this.background_color).drawRect(
       0,
       -this.header_width - this.border_width,
-      this._width+this.border_width*2,
-      this._height + this.header_width + this.border_width*2
+      this._width + this.border_width * 2,
+      this._height + this.header_width + this.border_width * 2
     ).endFill();
 
     this.box.graphics.beginFill(this.foreground_color).drawRect(
@@ -92,8 +92,8 @@ class CardFrame extends createjs.Container {
       this.border_width
     ).endFill();
 
-    this.ex_width = this.header_width-this.border_width*2;
-    this.ex.x = this._width + this.border_width - this.header_width+this.border_width*2;
+    this.ex_width = this.header_width - this.border_width * 2;
+    this.ex.x = this._width + this.border_width - this.header_width + this.border_width * 2;
     this.ex.y = -this.header_width;
 
     this.draw_ex();
@@ -115,11 +115,10 @@ class CardFrame extends createjs.Container {
     return this._height;
   }
 
-
   set pinned(value) {
-    if(this._pinned === value) return;
+    if (this._pinned === value) return;
     this._pinned = value;
-    if(this._pinned) {
+    if (this._pinned) {
       this.removeChild(this.un_pinned);
       //this.addChild(this.is_pinned);
     } else {
@@ -130,5 +129,4 @@ class CardFrame extends createjs.Container {
   get pinned() {
     return this._pinned;
   }
-
 }

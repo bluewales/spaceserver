@@ -58,6 +58,7 @@ class Job {
   on_complete(){}
 
 
+
   take_item_to(crew, item, dest) {
     if(crew.carried_item !== item) {
       if(walled_distance(crew.pos, item.pos) > 0) {
