@@ -27,7 +27,7 @@ function construct_structure(type, pos) {
   game.ship.add_structure(structure);
   var job = new Construct(structure, items);
 
-  game.ship.jobs.create_job(job);
+  game.ship.jobs.register_job(job);
 
   console.log("build " + raw.type + " at " + pos_to_index(pos));
 }
@@ -36,7 +36,7 @@ function deconstruct_structure(structure) {
 
   var job = new Deconstruct(structure);
 
-  game.ship.jobs.create_job(job);
+  game.ship.jobs.register_job(job);
 
   console.log("deconstruct " + structure.label + " at " + pos_to_index(structure.pos));
 }

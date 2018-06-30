@@ -98,7 +98,7 @@ class Ship extends createjs.Container {
     var jobs = raw.jobs;
     if (!jobs) jobs = [];
     for (var i = 0; i < jobs.length; i++) {
-      this.jobs.create_job(objects[jobs[i]]);
+      this.jobs.register_job(objects[jobs[i]]);
     }
   }
 
@@ -135,6 +135,9 @@ class Ship extends createjs.Container {
       for (var thing of iterate_3d(this.places[i])) {
         if (thing.tick) thing.tick(event);
       }
+    }
+    for (var key in this.items) {
+      this.items[key].tick(event);
     }
   }
 
@@ -264,9 +267,7 @@ class Ship extends createjs.Container {
       pos = new_pos;
     }
 
-    var item = new type_lookup[type](pos, this);
-    console.log(item);
-    console.log(item.pos);
+  var item = new type_lookup[type](pos, this);
     this.add_item(item);
   }
 

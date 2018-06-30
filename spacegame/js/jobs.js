@@ -3,7 +3,7 @@ class Jobs {
     this.queue = [];
   }
 
-  create_job(job) {
+  register_job(job) {
     this.queue.push(job);
     job.job_queue = this;
   }
@@ -26,7 +26,12 @@ class Jobs {
     }
   }
 
-  complete_job(job) {
+  abandon_job(job) {
+    job.active = false;
+  }
+
+  remove_job(job) {
+    job.active = false;
     for(var i = this.queue.length-1; i >= 0; i--) {
       if(this.queue[i] === job) {
         this.queue.splice(i, 1);
@@ -52,10 +57,19 @@ class Job {
   // leave this one alone, it belongs to the super class
   complete() {
     this.on_complete();
-    this.job_queue.complete_job(this);
+    this.job_queue.remove_job(this);
   }
   // overwrite this one, it's supposed to be overwritten by the child class
   on_complete(){}
+
+  cancel() {
+    console.log("Cancel " + this.label + " job.");
+    this.job_queue.remove_job(this);
+    this.cancelled = true;
+
+    this.work = function() { return true;};
+    this.on_complete = function() {};
+  }
 
 
 

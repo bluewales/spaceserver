@@ -17,6 +17,11 @@ class TopBar extends createjs.Container {
         "name":"Controls",
         "card": new ControlsCard()
       },{
+        "name":"Pause",
+        "on_click": function(event) {
+          game.pause(this.active);
+        }
+      },{
         "name":"Save",
         "on_click": function(event) {
           game.save();

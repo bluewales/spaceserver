@@ -65,6 +65,26 @@ class Construct extends Job {
     this.structure.job = undefined;
   }
 
+  cancel() {
+    super.cancel();
+
+    this.structure.progress = 0;
+/*
+    // Spawn materials now
+    var materials = this.structure.constructor.materials;
+    for (var i = 0; i < this.materials.length; i++) {
+      var item = this.materials[i];
+      item.claimed = false;
+      if (item.container === this) {
+        item.pos = this.structure.pos;
+        this.structure.ship.add_item(materials[i]);
+      }
+    }
+*/
+    // Remove Structure from ship
+    this.structure.ship.remove_structure(this.structure);
+  }
+
   get_raw(callback) {
     this.raw = {};
     this.raw.structure = this.structure.id;

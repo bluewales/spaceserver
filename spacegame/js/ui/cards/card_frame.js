@@ -40,7 +40,8 @@ class CardFrame extends createjs.Container {
     this.pinned = true;
   }
   click(event) {
-    game.card_table.focus(this.parent);
+    if(this.parent.active)
+      game.card_table.focus(this.parent);
   }
   mousedown(event) {
     this.drag_start = [event.stageX, event.stageY];

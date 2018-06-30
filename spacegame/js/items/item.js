@@ -3,6 +3,7 @@ class Item extends createjs.Container {
     super();
 
     this.uid = getUID("Item");
+    console.log(this.uid);
     if(pos) {
       this.pos = pos;
       this.ship = game.ship;
@@ -10,8 +11,6 @@ class Item extends createjs.Container {
       this.claimed = false;
 
       this.ship.item_store.add_item(this);
-      this.x = this.ship.position_transform(this.pos.x);
-      this.y = this.ship.position_transform(this.pos.y);
     }
   }
   init(raw, objects) {
@@ -34,10 +33,7 @@ class Item extends createjs.Container {
 
     this.ship.item_store.add_item(this);
 
-    if(this.pos) {
-      this.x = this.ship.position_transform(this.pos.x);
-      this.y = this.ship.position_transform(this.pos.y);
-    }
+ 
   }
   start(raw, objects) {
   }
@@ -82,5 +78,11 @@ class Item extends createjs.Container {
   }
   set_highlight(highlight) {
     this.highlight = highlight;
+  }
+  tick() {
+    if(this.pos) {
+      this.x = this.ship.position_transform(this.pos.x);
+      this.y = this.ship.position_transform(this.pos.y);
+    }
   }
 }

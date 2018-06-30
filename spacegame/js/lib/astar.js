@@ -128,9 +128,7 @@ var astar = {
   // See list of heuristics: http://theory.stanford.edu/~amitp/GameProgramming/Heuristics.html
   heuristics: {
     manhattan: function(pos0, pos1) {
-      var d1 = Math.abs(pos1.x - pos0.x);
-      var d2 = Math.abs(pos1.y - pos0.y);
-      return d1 + d2;
+      return walled_distance(pos0, pos1);
     },
     diagonal: function(pos0, pos1) {
       var D = 1;

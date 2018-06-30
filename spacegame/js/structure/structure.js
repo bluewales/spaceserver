@@ -61,7 +61,7 @@ class Structure extends createjs.Container {
     if (this.current_job) {
       this._interaction_card.add_text(this.current_job.label);
       this._interaction_card.add_progress_bar(this.current_job.percent);
-      this._interaction_card.add_button("Cancel", this.current_job.cancel);
+      this._interaction_card.add_button("Cancel", this.current_job.cancel.bind(this.current_job));
     } else {
       this._interaction_card.add_text("Status: OK");
       this._interaction_card.add_button("Deconstruct", function () {

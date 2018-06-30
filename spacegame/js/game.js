@@ -372,7 +372,9 @@ class Game {
     if(this.currentlyPressedKeys[83]) this.pan(0, 5);
     if(this.currentlyPressedKeys[87]) this.pan(0, -5);
 
-    this.ship.tick(event);
+    if(!this.paused) {
+      this.ship.tick(event);
+    }
 
 
     this.stage.update(event);
@@ -574,6 +576,10 @@ class Game {
       "ori": ori
     };
     return pos;
+  }
+
+  pause(mode) {
+    this.paused = mode;
   }
 
   save() {

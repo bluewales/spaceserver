@@ -1,11 +1,3 @@
-/**
- * Created by Luke on 7/18/2017.
- */
-
-function p_to_s(p) {
-  return pos_to_index(p);
-}
-
 class Crew extends createjs.Container {
   constructor() {
     super();
@@ -46,8 +38,8 @@ class Crew extends createjs.Container {
   start(raw, objects) {
   }
   move_towards(p) {
-    //console.log(p_to_s(this.pos) + " move toward " + p_to_s(p));
-    this.path = get_path(this.pos, { x: p.x, y: p.y, z: p.z });
+    //console.log(pos_to_index(this.pos) + " move toward " + pos_to_index(p));
+    this.path = get_path(this.pos, { x: p.x, y: p.y, z: p.z }); // need to steralize ori from p
     if (p.ori) {
       var other_p = { x: p.x + (p.ori == "|" ? 1 : 0), y: p.y + (p.ori == "-" ? 1 : 0), z: p.z };
       var other_path = get_path(this.pos, other_p);
@@ -57,7 +49,7 @@ class Crew extends createjs.Container {
     }
     if (this.path.length == 0) {
       this.clear_path();
-      console.log("Path failed, we probably need to cancel this job. " + p_to_s(p));
+      console.log("Path failed, we probably need to cancel this job. " + pos_to_index(p));
     }
   }
   grab(item) {
@@ -117,6 +109,10 @@ class Crew extends createjs.Container {
         this.update_interaction_card();
       }
     } else {
+      if(this.carried_item) {
+        this.carried_item.pos = copy_pos(this.pos);
+        this.ship.add_item(this.carried_item);
+      }
       this.current_job = this.ship.jobs.get_job(this);
 
       this.update_interaction_card();
@@ -128,7 +124,6 @@ class Crew extends createjs.Container {
       this.x += this.speed * dx / Math.abs(dx);
     } else {
       this.x = this.ship.position_transform(this.pos.x);
-
     }
     if (Math.abs(dy) > this.speed) {
       this.y += this.speed * dy / Math.abs(dy);
@@ -175,7 +170,6 @@ class Crew extends createjs.Container {
 
     if (this.current_job) {
       this._interaction_card.add_text(this.current_job.label);
-      this._interaction_card.add_button("Cancel", this.current_job.cancel);
     } else {
       this._interaction_card.add_text("Idle");
     }

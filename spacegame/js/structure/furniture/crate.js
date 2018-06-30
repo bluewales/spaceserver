@@ -51,7 +51,7 @@ class Crate extends Furniture {
           if (item === undefined) continue;
           if (item.claimed === false) {
             var job = new PutAway(this, item);
-            this.ship.jobs.create_job(job);
+            this.ship.jobs.register_job(job);
             break;
           }
         }
