@@ -12,7 +12,7 @@
    - &#10004; Show item crew is carrying
    - &#10004; Displays progress of planned construction and deconstruction jobs
    - &#10004; Option to cancel planned construction
- - Construction
+ - &#10004; Construction
    - &#10004; Knowing where to build things
      - &#10004; Not where there is already a thing
      - &#10004; Furniture must be built on floors
@@ -21,11 +21,11 @@
    - &#10004; Building should consumer materials which must be brought to the site by crew
      - &#10004; Materials are claimed by the job at the time the structure is planned
      - &#10004; If materials are not available, the structure is not planned
-   - Deconstruct structures
+   - &#10004; Deconstruct structures
      - &#10004; Spawn materials that were used to create the structure
      - &#10004; Deconstruction job is saved
-     - Structures with contents (crates) spawn all contents when deconstructed
-   - Cancel construction jobs that are in progress
+     - &#10004; Structures with contents (crates) spawn all contents when deconstructed
+   - &#10004; Cancel construction jobs that are in progress
  - Saving
    - &#10004; Jobs should be saved
    - &#10004; A button to force a save
@@ -44,10 +44,10 @@
    - Crew must take sold items to shuttle
    - How the heck do shuttles work?
  - Production server
- - Keep the ship connected.  Structure building, planning, and deconstruction need to keep the ship in one piece at all times.
+ - Keep the ship connected.  Structure building, planning, and deconstruction need to keep the ship in one piece at all times
  - Atmosphere
    - Pressure and composition, maybe saved as attributes on the graph
-   - Spreading throughout a chamber.
+   - Spreading throughout a chamber
      - Pressure should equalize almost immediately,
      - Composition should take a little longer to propagate
    - Escaping into space
@@ -61,7 +61,7 @@
      - Enough atmosphere should escape through a door while a crew member is passing through to empty a room
    - If atmosphere can't move through closed doors normally, then we need some other kind of ventilation
    - Rooms and groups of rooms are hydrostatically connected nodes that should have the same air pressure, composition, and temperature
- - Temperature should conduct through walls.
+ - Temperature should conduct through walls
  - Airlocks.  How do they work? Are they a special piece of furniture, or are they a collection of walls and doors that somehow function as an airlock?
    - Since pathfinding will ignore locked doors, how does a crew member decide to use an airlock?
  - Fluid storage, tanks of liquids and gasses
@@ -69,11 +69,12 @@
    - Water for everything
    - Fuel and oxygen for propellant and power generation
    - All those same substances and more as cargo to sell at the next port. Maybe even dangerous chemicals like acids or explosives
- - Power generation and consumption.
+ - Power generation and consumption
  - Time management
-   - Pause time
+   - &#10004; Pause time
+   - A concept of absolute time that is saved
    - Let time advance at different speeds
- - Find a way to draw lower levels.  I'd like to make them darker.
+ - Find a way to draw lower levels.  I'd like to make them darker
  - &#10004; Some scheme for marking items done on this list
  - &#10004; Open/Close animations for doors and hatches
    - &#10004; Hatches spin open like a mechanical iris

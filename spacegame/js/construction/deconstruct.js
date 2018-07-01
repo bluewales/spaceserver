@@ -37,7 +37,6 @@ class Deconstruct extends Job {
         this.structure.progress = 0;
 
         // Spawn materials now
-        console.log("Need to spawn materials");
         var materials = this.structure.constructor.materials;
         for(var i = 0; i < materials.length; i++) {
           this.structure.ship.spawn_item(materials[i], this.structure.pos);
@@ -45,6 +44,8 @@ class Deconstruct extends Job {
 
         // Remove Structure from ship
         this.structure.ship.remove_structure(this.structure);
+
+        this.structure.deconstruct();
 
         return true;
       }

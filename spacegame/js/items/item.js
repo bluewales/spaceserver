@@ -3,7 +3,6 @@ class Item extends createjs.Container {
     super();
 
     this.uid = getUID("Item");
-    console.log(this.uid);
     if(pos) {
       this.pos = pos;
       this.ship = game.ship;

@@ -69,7 +69,7 @@ class Construct extends Job {
     super.cancel();
 
     this.structure.progress = 0;
-/*
+
     // Spawn materials now
     var materials = this.structure.constructor.materials;
     for (var i = 0; i < this.materials.length; i++) {
@@ -80,7 +80,7 @@ class Construct extends Job {
         this.structure.ship.add_item(materials[i]);
       }
     }
-*/
+
     // Remove Structure from ship
     this.structure.ship.remove_structure(this.structure);
   }

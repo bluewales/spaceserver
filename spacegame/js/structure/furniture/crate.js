@@ -35,9 +35,10 @@ class Crate extends Furniture {
   }
 
   deconstruct() {
+
     // This structure is dying, time to spew it's contents into the world
-    for (var key in this.ship.items) {
-      var item = this.ship.items[key];
+    for (var key in this.items) {
+      var item = this.items[key];
       item.pos = this.pos;
       this.ship.add_item(item);
     }
