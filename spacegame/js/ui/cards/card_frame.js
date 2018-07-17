@@ -19,7 +19,7 @@ class CardFrame extends createjs.Container {
     this.background_color = menu_palette[1];
     this.contrast_color = menu_palette[4];
 
-    this.title = new createjs.Text(this.parent.name, (this.header_width - this.border_width * 2) + "px Arial", menu_palette[0]);
+    this.title = new createjs.Text(this.parent.label, (this.header_width - this.border_width * 2) + "px Arial", menu_palette[0]);
     this.title.x = this.border_width;
     this.title.y = -this.header_width;
     this.addChild(this.title);

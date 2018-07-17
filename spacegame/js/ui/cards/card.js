@@ -1,8 +1,8 @@
 class Card extends createjs.Container {
-  constructor(name, width, height) {
+  constructor(label, width, height) {
     super();
 
-    this._name = name;
+    this._label = label;
 
     this.frame = new CardFrame(this, width, height);
     this.addChild(this.frame);
@@ -52,13 +52,13 @@ class Card extends createjs.Container {
     return this.frame.height;
   }
 
-  set name(value) {
-    this._name = value;
+  set label(value) {
+    this._label = value;
     if(this.frame)
       this.frame.title.text = value;
   }
-  get name() {
-    return this._name;
+  get label() {
+    return this._label;
   }
 
   set pinned(value) {

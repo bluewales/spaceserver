@@ -17,7 +17,7 @@ class InteractionCard extends Card {
 
     this.line_height = 20;
 
-    this.name = title;
+    this.label = title;
 
     this.button_width = 120;
 

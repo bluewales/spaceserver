@@ -12,7 +12,7 @@ class LoginPrompt extends InteractionCard {
 
   initial_choice() {
 
-    this.name = "Please login";
+    this.label = "Please login";
 
     this.clear_lines();
     this.add_text("You need an account to save.");
@@ -27,7 +27,7 @@ class LoginPrompt extends InteractionCard {
   }
 
   switch_to_login() {
-    this.name = "Login";
+    this.label = "Login";
 
     this.clear_lines();
     this.add_text("This doesn't work yet.");
@@ -42,7 +42,7 @@ class LoginPrompt extends InteractionCard {
   }
 
   switch_to_create() {
-    this.name = "Create Account";
+    this.label = "Create Account";
 
     this.clear_lines();
     this.add_text("This doesn't work yet.");
