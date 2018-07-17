@@ -1,5 +1,6 @@
 <?php
 	require_once "db_utils.php";
+	require_once "login.php";
 	function createuser ($username, $password1, $password2) {
 
 		// Verify username
@@ -42,11 +43,9 @@
 						"success" => "false");
 		}
 
-		// Create new login
-		$auth_token = randomString($h_token_length);
-		mysql_db_save_session_token($user_id, $auth_token);
+		// Login the user
+		$login_result = login($username, $password1);
 
-		setcookie ( "auth_token", $auth_token );
-		return array("success"=>"true","auth_token"=>$auth_token,"logged_in"=>"true");
+		return array("success"=>"true","logged_in"=>$login_result);
 	}
 ?>

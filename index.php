@@ -3,7 +3,7 @@
 <head>
   <title>Safiina</title>
   <meta charset="utf-8" />
-  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" type="text/css" href="/css/style.css">
 </head>
 <body>
 <div id="main">

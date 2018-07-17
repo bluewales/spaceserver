@@ -29,7 +29,7 @@ class API {
   }
   login(callback, last_error=false) {
 
-    login_prompt((function(username, password) {
+    game.login((function(username, password) {
       this.make_call(
         {"method": "login", "username": username, "password": password},
         (function(response){
@@ -53,8 +53,8 @@ class API {
       false
     );
   }
-  upload_save_state(state) {
-    this.make_call({"data": state,"method": "set_save"});
+  upload_save_state(state, try_login=true) {
+    this.make_call({"data": state,"method": "set_save"}, undefined, try_login);
   }
   download_save_state(callback) {
     this.make_call( {"method": "get_save"}, (function(response){if(callback)callback(response['data']);}).bind(this));

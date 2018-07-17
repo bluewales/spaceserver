@@ -3,7 +3,6 @@
 
 		global $h_token_length;
 
-		echo "logging out";
 		global $db_address, $db_user, $db_password, $db_database, $db_table_prefix;
 
 		$auth_token = randomString($h_token_length+5);

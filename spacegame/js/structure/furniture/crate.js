@@ -10,15 +10,17 @@ class Crate extends Furniture {
     this.pending_items = 0;
 
     this.uid = getUID("Crate");
-  }
-
-  init(raw, objects) {
-    super.init(raw, objects);
 
     this.sprite = "crate";
     this.label = "Crate";
 
     this.addChild(new createjs.Sprite(game.sprites[this.sprite].sprite, this.sprite));
+  }
+
+  init(raw, objects) {
+    super.init(raw, objects);
+
+
 
     var items = raw.item;
     if (!items) items = [];

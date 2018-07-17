@@ -62,6 +62,7 @@ class Game {
       /* Furniture */
       "crate": {"sources": ["img/sliced/world_sliced/images/oryx_16bit_scifi_world_679.png"]},
       "barrel": {"sources": ["img/sliced/world_sliced/images/oryx_16bit_scifi_world_708.png"]},
+      "charging_pad": {"sources": ["img/sliced/world_sliced/images/oryx_16bit_scifi_world_306.png"]},
 
       /* Background */
       "background": {"sources": ["img/mars.jpg"]},
@@ -116,6 +117,7 @@ class Game {
       "deconstruct": {"source": "js/construction/deconstruct.js"},
       "controls_card": {"source": "js/ui/cards/controls_card.js"},
       "crate": {"source": "js/structure/furniture/crate.js"},
+      "charging_pad": {"source": "js/structure/furniture/charging_pad.js"},
       "crew": {"source": "js/mobs/crew.js"},
       "d3": {"source": "js/lib/d3.js"},
       "wall": {"source": "js/structure/walls/wall.js"},
@@ -127,7 +129,6 @@ class Game {
       "hud": {"source": "js/ui/hud.js"},
       "palettes": {"source": "js/palettes.js"},
       "pathfinding": {"source": "js/pathfinding.js"},
-      "prompt": {"source": "js/ui/prompt.js"},
       "rooms": {"source": "js/rooms.js"},
       "ship": {"source": "js/ship.js"},
       "top_bar": {"source": "js/ui/top_bar.js"},
@@ -138,6 +139,8 @@ class Game {
       "serialization": {"source": "js/serialization.js"},
       "item_store": {"source": "js/item_store.js"},
       "interaction_card": {"source": "js/ui/cards/interaction_card.js"},
+      "login_prompt": {"source": "js/ui/cards/login_prompt.js"},
+      "canvas_input": {"source": "js/lib/CreateJSTextInput.js"},
     };
 
 
@@ -167,35 +170,38 @@ class Game {
 
     var loading_div = d3.select("body")
       .style("width", this.width + "px")
-      .style("height", this.height + "px")
+      .style("background-color", "white")
         .append("div")
-        .attr("id", "loading")
-        .style("color", "black")
-        .style("margin", "auto")
-        .style("width", "300px")
-        .style("height", "50%");
+          .attr("id", "loading")
+          .style("color", "#333")
+          .style("top", (this.height/2-150) + "px")
+          .style("position", "absolute")
+          .style("margin", "auto")
+          .style("width", this.width + "px");
 
     loading_div.append("h1")
-      .style("color", "black")
+      .style("color", "#333")
       .text("Safiina")
       .style("margin", "auto")
       .style("position", "static")
-      .style("font-size", "200%")
+      .style("text-align", "center")
       .style("padding", "20px");
 
     loading_div.append("p")
-        .style("color", "black")
+        .style("color", "#333")
         .text("Loading")
+        .style("text-align", "center")
         .style("margin", "auto");
 
     loading_div.append("div")
       .attr("id", "loading_box")
-      .style("border", "1px solid black")
+      .style("border", "1px solid #333")
+      .style("margin", "auto")
       .style("width", "300px")
       .style("height", "25px")
         .append("div")
           .attr("id", "loading_bar")
-          .style("background-color", "black")
+          .style("background-color", "#333")
           .style("width", "0px")
           .style("height", "25px");
 
@@ -215,6 +221,8 @@ class Game {
     this.api = new API();
 
     this.api.download_save_state((function(game_state){
+      var loading_div = d3.select("#loading").remove();
+
       this.game_state=game_state;
       this.start_game();
     }).bind(this));
@@ -381,7 +389,7 @@ class Game {
 
     if(this.now - this.last_save > 5 * 60) {
       this.last_save = this.now;
-      this.save();
+      this.save(false);
     }
 
     if(this.cell_cursor || this.wall_cursor) {
@@ -490,6 +498,10 @@ class Game {
     var x = event.stageX;
     var y = event.stageY;
 
+    if(this.login_prompt) {
+      this.login_prompt.active = false;
+    }
+
     if(this.cell_cursor) {
       var pos = this.pos_from_coord(x, y);
       this.cell_cursor(pos);
@@ -582,9 +594,18 @@ class Game {
     this.paused = mode;
   }
 
-  save() {
+  save(try_login=true) {
     this.game_state = serialize(this.ship);
     console.log(this.game_state);
-    this.api.upload_save_state(this.game_state);
+    this.api.upload_save_state(this.game_state, try_login);
+  }
+
+  login() {
+    if(!this.login_prompt) {
+      this.login_prompt = new LoginPrompt();
+    }
+
+    this.login_prompt.initial_choice();
+    this.login_prompt.active = true;
   }
 }

@@ -5,6 +5,7 @@ var type_lookup = {
   "Hatch": Hatch,
   "FloorPlate": FloorPlate,
   "Crate": Crate,
+  "ChargingPad": ChargingPad,
   "Barrel": Barrel,
   "Ship": Ship,
   "Crew": Crew,

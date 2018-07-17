@@ -34,10 +34,8 @@ class Button extends createjs.Container {
     }.bind(this));
 
     this.addEventListener("click", function(event) {
-
-
       this.active = !this.active;
-      this.debounce = 10;
+      this.debounce = 5;
       if(this.on_click) {
         this.on_click(event);
       }

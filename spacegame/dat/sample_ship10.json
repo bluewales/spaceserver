@@ -78,7 +78,7 @@
     {"pos": {"x": -2, "y": 1, "z": 1, "ori": "|"}, "progress": 100, "type": "WallPanel", "ship": 98},
     {"pos": {"x": 1, "y": -1, "z": 0}, "progress": 100, "ship": 98, "type": "Barrel"},
     {"pos": {"x": 0, "y": 1, "z": 0}, "progress": 100, "ship": 98, "type": "Barrel"},
-    {"pos": {"x": -1, "y": -1, "z": -1}, "progress": 100, "ship": 98, "type": "Crate", "item": []},
+    {"pos": {"x": -1, "y": -1, "z": -1}, "progress": 100, "ship": 98, "type": "ChargingPad", "item": []},
     {"pos": {"x": 0, "y": -1, "z": -1}, "progress": 100, "ship": 98, "type": "Crate", "item": []},
     {"pos": {"x": 1, "y": 0, "z": -1}, "progress": 100, "ship": 98, "type": "Crate", "item": []},
     {"pos": {"x": 1, "y": 1, "z": -1}, "progress": 100, "ship": 98, "type": "Crate", "item": []},

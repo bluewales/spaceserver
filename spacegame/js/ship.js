@@ -300,12 +300,15 @@ class Ship extends createjs.Container {
     if (!this.interaction_card) {
       return;
     }
+
+
     this.clear_highlight();
     this.current_selection.set_highlight(undefined);
-
-    this.interaction_card.active = false;
-    this.interaction_card = null;
     this.current_selection = null;
+
+    var card = this.interaction_card;
+    this.interaction_card = null;
+    card.active = false;
   }
 
 

@@ -30,10 +30,10 @@ $targets = array (
 	"get_save" => array (
 		"function" => "get_save",
 		"file" => "get_save.php",
-		"required_params" => array (
+		"required_params" => array (),
+		"optional_params" => array (
 			"auth_token"
-		),
-		"optional_params" => array ()
+		)
 	),
 	"set_save" => array (
 		"function" => "set_save",

@@ -8,7 +8,7 @@
 <body>
 <div id="main">
   <h1>Safiina</h1>
-  <h1>Journal</h1>
+  <h2>Journal</h2>
 <?php
 
 $path = "entries";
@@ -30,7 +30,7 @@ $entries = array_reverse($entries);
 foreach($entries as $file) {
   $file_path = $path . "/" . $file;
   echo "<hr/>";
-  echo "<h3> Space Date " . str_replace(".md","",$file) . "</h3>";
+  echo "<h4> Space Date " . str_replace(".md","",$file) . "</h4>";
   echo $Parsedown->text(file_get_contents($file_path));
 }
 

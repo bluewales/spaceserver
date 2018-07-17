@@ -2,7 +2,7 @@ class Card extends createjs.Container {
   constructor(name, width, height) {
     super();
 
-    this.name = name;
+    this._name = name;
 
     this.frame = new CardFrame(this, width, height);
     this.addChild(this.frame);
@@ -34,6 +34,9 @@ class Card extends createjs.Container {
       if(this.on_close) this.on_close();
     }
   }
+  get active() {
+    return this._active;
+  }
 
   set width(value) {
     this.frame.width = value;
@@ -47,6 +50,15 @@ class Card extends createjs.Container {
   }
   get height() {
     return this.frame.height;
+  }
+
+  set name(value) {
+    this._name = value;
+    if(this.frame)
+      this.frame.title.text = value;
+  }
+  get name() {
+    return this._name;
   }
 
   set pinned(value) {

@@ -194,9 +194,26 @@ if (isset($_REQUEST['method']) && array_key_exists ($_REQUEST['method'], $target
   }
   foreach ($target['optional_params'] as $param) {
     if (!isset($_REQUEST[$param])) {
-      $params[$param] = "";
+
+      if($param == "auth_token") {
+        $params["user_id"] = "";
+        $result["logged_in"] = "false";
+      } else {
+        $params[$param] = "";
+      }
     } else {
-      $params[$param] = $_REQUEST[$param];
+      if($param == "auth_token") {
+        $user_id = mysql_db_user_id_from_session_token($_REQUEST[$param]);
+        if($user_id) {
+          $params["user_id"] = $user_id;
+          $result["logged_in"] = "true";
+        } else {
+          $params["user_id"] = "";
+          $result["logged_in"] = "false";
+        }
+      } else {
+        $params[$param] = $_REQUEST[$param];
+      }
     }
   }
   $partial_result = call_user_func_array($function,$params);

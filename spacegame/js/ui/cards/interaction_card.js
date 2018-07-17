@@ -19,12 +19,26 @@ class InteractionCard extends Card {
 
     this.name = title;
 
+    this.button_width = 120;
+
     this.addChild(this.line1_1);
+  }
+
+  set active(value) {
+    for(var i = 0; i < this.lines.length; i++) {
+      if(value) {
+        if(this.lines[i].show) this.lines[i].show();
+      } else {
+        if(this.lines[i].hide) this.lines[i].hide();
+      }
+    }
+    super.active = value;
   }
 
   clear_lines() {
     for(var i = 0; i < this.lines.length; i++) {
       this.removeChild(this.lines[i]);
+      if(this.lines[i].hide) this.lines[i].hide();
     }
     this.line_count = 0;
     this.height = this.default_height;
@@ -72,23 +86,38 @@ class InteractionCard extends Card {
   }
 
   add_button(label, callback) {
-    var button
+    var button;
     if (this.lines.length > this.line_count && this.lines[this.line_count].type == "button") {
       button = this.lines[this.line_count];
       button.text.text = label;
       button.on_click = callback;
+      button.active = false;
     } else {
-      var button_width = 120;
       var button_config = {
-        "width": button_width,
+        "width": this.button_width,
         "height": this.line_height + this.margin * 2,
         "text": label,
-        "on_click": callback
+        "on_click": callback,
+        "mode": "reset"
       };
       button = new Button(button_config);
       button.type = "button";
     }
     this.add_line(button);
+  }
+
+  add_input(placeHolder) {
+    var input;
+    if (this.lines.length > this.line_count && this.lines[this.line_count].type == "input") {
+      input = this.lines[this.line_count];
+      input.placeHolder = placeHolder;
+    } else {
+      var input = new TextInput(placeHolder);
+      input.update();
+      input.type = "input";
+    }
+
+    this.add_line(input);
   }
 
   add_line(line) {
@@ -105,13 +134,18 @@ class InteractionCard extends Card {
     if(line.width > this.width) {
       this.width = line.width;
     }
+    for(var i = 0; i < this.lines.length; i++) {
+      this.lines[i].x = this.width/2 - this.lines[i].width/2;
+    }
+    if(this.active && line.show) line.show();
   }
 
   on_close() {
     game.ship.clear_selection();
   }
   tick() {
-
-
+    for(var i = 0; i < this.lines.length; i++) {
+      if(this.lines[i].tick) this.lines[i].tick();
+    }
   }
 }

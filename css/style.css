@@ -1,6 +1,37 @@
+@font-face {
+    font-family: Potra;
+    src: url(/fonts/Potra.ttf);
+    font-weight:100;
+}
+
+
+@font-face {
+    font-family: Horizon;
+    src: url(/fonts/Horizon.otf);
+    font-weight:1;
+}
+
+@font-face {
+    font-family: Elasis;
+    src: url(/fonts/Elasis.ttf);
+    font-weight:1;
+}
+
+
+
+
 body {
   background-color: #333;
+  font-family: Helvetica, Arial, sans-serif;
+  color: #333;
 }
+h1 {
+    font-family: Elasis, Helvetica, Arial, sans-serif;
+    font-size: 500%;
+    padding:0;
+    margin:0;
+}
+
 #main {
   width: 600px;
   margin: 0 auto;
@@ -26,8 +57,4 @@ ul#navigation li a {
 }
 ul#navigation li a:hover {
     background-color: #111;
-}
-
-li {
-  
 }
