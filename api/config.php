@@ -10,7 +10,7 @@ $db_table_prefix = "dev";
 
 // account settings
 $a_username_max_length = 30;  // must be greater than 0
-$a_username_min_length = 3;
+$a_username_min_length = 3;   // What if there were a zero length username?  Would that work?  Who would have it?  What problems does it cause?  Disallowing very small usernames is probably safer
 $a_password_max_length = 0;  // 0 indicates no restriction
 $a_password_min_length = 0;
 $a_skeleton_key = "";  // if the the user sets their auth_token to this value, they do not need to authenticate to do many things, set as empty string to disable

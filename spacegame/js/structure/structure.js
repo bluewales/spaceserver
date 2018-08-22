@@ -16,7 +16,7 @@ class Structure extends createjs.Container {
 
     this.progress = raw.progress;
     if (raw.progress === undefined)
-      this.progress = 0;
+      this.progress = 100;
 
     this.x = this.ship.position_transform(this.pos.x);
     this.y = this.ship.position_transform(this.pos.y);
@@ -81,7 +81,7 @@ class Structure extends createjs.Container {
 
   get_raw(callback) {
     this.raw = {};
-    this.raw.progress = this.progress;
+    if(this.progress != 100) this.raw.progress = this.progress;
     this.raw.type = this.type;
     this.raw.ship = this.ship.id;
     if (callback) callback(this, this.raw);

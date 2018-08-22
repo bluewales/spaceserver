@@ -4,8 +4,8 @@
 		$_password = str_rot13($_password);
 		$_password = $_password.$_salt;
 		for($i = 0; $i < 100; $i++) {
-			$_password = hash("sha512",$_password,false);
-			$_password = hash("whirlpool",$_password,false);
+			$_password = hash("sha512", $_password, false);
+			$_password = hash("whirlpool", $_password, false);
 		}
 		$_password = base64_encode($_password);
 		
@@ -30,7 +30,8 @@
 	}
 
 	function randomString($length=32, $chars='0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz#$%&@~{|}!()*+,-.:;<=>?[]^_`') {
-		$randomBytes = array_map('ord', str_split(getRandomBytes(max($length,32))));
+		$num_bytes = max($length, 32);
+		$randomBytes = array_map('ord', str_split(getRandomBytes($num_bytes)));
 
 		$alphabet = $chars;
 		while(strlen($alphabet) <= 128) $alphabet .= $alphabet;
@@ -42,7 +43,7 @@
 			$j = $i;
 			$a = $randomBytes[$i];
 			while($a >= $alphabet_length) {
-				$j = ($j+1) % $length;
+				$j = ($j+1) % $num_bytes;
 				$a = $randomBytes[$i] ^ $randomBytes[$j];
 			}
 			$result .= $alphabet[$a];

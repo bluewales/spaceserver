@@ -1,5 +1,16 @@
 # Todo List
 
+ - Rework login prompt
+   - On load dialog box works
+     - *Login button*
+     - *Create Account* button
+     - *Continue Without Login* button
+   - Note indicating that you can't save unless you're logged in
+   - If you're not logged in, give options to Login/Create Account in game
+   - Note indicating that if you login while playing, you'll load your last save and loose your current progress
+   - &#10004; Cards like login prompt should be able to pause the game and disable everything in the background
+ - Put logo in top bar and level indicator in bottom bar
+ - Make the top and bottom bar instances of the same class since there's so much similar code between them 
  - &#10004; Clicking on things should bring up an info card
    - &#10004; Distinguish between clicking on cells and clicking on walls
    - &#10004; Highlight the thing that was clicked on
@@ -54,13 +65,12 @@
    - Maintained by machine(s)
      - Unwanted gasses must be removed (carbon dioxide, ammonia, acetone)
      - Keep all necessary gasses at correct levels
-     - Decide whether to have a lot of filters and tanks, or just one machine
-     that monitors everything
+     - Decide whether to have a lot of filters and tanks, or just one machine that monitors everything
      - There needs to be some sort of ventilation management system.  Should air just go through doors?  Does every room need an atmosphere monitoring machine?  Are there vents?
    - Leaks through open doors
      - Enough atmosphere should escape through a door while a crew member is passing through to empty a room
    - If atmosphere can't move through closed doors normally, then we need some other kind of ventilation
-   - Rooms and groups of rooms are hydrostatically connected nodes that should have the same air pressure, composition, and temperature
+   - Rooms and groups of rooms are hydrostatically connected nodes that should have single values for air pressure, composition, and temperature
  - Temperature should conduct through walls
  - Airlocks.  How do they work? Are they a special piece of furniture, or are they a collection of walls and doors that somehow function as an airlock?
    - Since pathfinding will ignore locked doors, how does a crew member decide to use an airlock?
@@ -74,6 +84,7 @@
    - &#10004; Pause time
    - A concept of absolute time that is saved
    - Let time advance at different speeds
+ - Travel
  - Find a way to draw lower levels.  I'd like to make them darker
  - &#10004; Some scheme for marking items done on this list
  - &#10004; Open/Close animations for doors and hatches
@@ -104,5 +115,5 @@
      - &#10004; Active cards should be kept on screen after a resize
    - &#10004; Make it more obvious which wall you're interacting with, perhaps by highlighting the one you select or are hovering over
    - &#10004; Instructions for basic controls
- - &#10004; Loose items are scooped up my crew and stored in crates
+ - &#10004; Loose items are scooped up by crew and stored in crates
  - &#10004; Click and drag to pan

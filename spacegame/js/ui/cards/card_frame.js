@@ -72,6 +72,14 @@ class CardFrame extends createjs.Container {
 
   draw_box() {
     this.box.graphics.clear();
+
+    if(this.blocking) {
+      var w = game.width * 100;
+      this.box.graphics.beginFill("rgba(0,0,0,0.85)").drawRect(
+        -w, -w, 2 * w, 2 * w
+      ).endFill();
+    }
+
     this.box.graphics.beginFill(this.foreground_color).drawRect(
       -this.border_width,
       -this.border_width * 2 - this.header_width,
@@ -121,13 +129,19 @@ class CardFrame extends createjs.Container {
     this._pinned = value;
     if (this._pinned) {
       this.removeChild(this.un_pinned);
-      //this.addChild(this.is_pinned);
     } else {
       this.removeChild(this.is_pinned);
-      //this.addChild(this.un_pinned);
     }
   }
   get pinned() {
     return this._pinned;
+  }
+
+  set blocking(value) {
+    this._blocking = value;
+    this.draw_box();
+  }
+  get blocking() {
+    return this._blocking;
   }
 }

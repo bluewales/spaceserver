@@ -17,8 +17,6 @@ class Crew extends createjs.Container {
     this.x = this.ship.position_transform(this.pos.x);
     this.y = this.ship.position_transform(this.pos.y);
 
-
-
     this.cooldown = (raw.cooldown !== undefined) ? raw.cooldown : 0;
     this.path_progress = (raw.path_progress !== undefined) ? raw.path_progress : 0;
     this.path = raw.path;

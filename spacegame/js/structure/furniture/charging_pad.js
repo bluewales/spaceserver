@@ -18,16 +18,13 @@ class ChargingPad extends Furniture {
   
     start(raw, objects) {
       super.start(raw, objects);
-  
     }
   
     deconstruct() {
-  
     }
   
     tick() {
     }
-  
   
     update_interaction_card() {
       if (!this._interaction_card) {
@@ -37,46 +34,15 @@ class ChargingPad extends Furniture {
       super.update_interaction_card();
   
     }
-  
-    add_item(item) {
-      this.items[item.uid] = item;
-  
-      this.item_count++;
-  
-      item.container = this;
-      item.pos = this.pos;
-  
-      this.update_interaction_card();
-    }
-  
-    remove_item(item) {
-      if (!this.items[item.uid]) {
-        console.log("ERROR cannot remove item.  It's not here.");
-        //console.trace();
-        return;
-      }
-      this.item_count--;
-      this.items[item.uid] = undefined;
-      delete this.items[item.uid];
-  
-      this.update_interaction_card();
-    }
-  
-  
+
     get_raw(callback) {
       super.get_raw(null);
-  
-      this.raw.item = [];
-      for (var key in this.items) {
-        this.raw.item.push(this.items[key].id);
-        this.items[key].get_raw(callback);
-      }
       if (callback) callback(this, this.raw);
     }
   
     static generate_raw(pos) {
       return {
-        "type": "Crate",
+        "type": "ChargingPad",
         "pos": pos,
         "progress": 0
       };

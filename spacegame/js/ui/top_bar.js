@@ -27,6 +27,12 @@ class TopBar extends createjs.Container {
           game.save();
         },
         "mode": "reset"
+      }, {
+        "name": "Logout",
+        "on_click": function (event) {
+          game.logout();
+        },
+        "mode": "reset"
       }
     ];
 
@@ -79,7 +85,7 @@ class TopBar extends createjs.Container {
 
     for(var i = 0; i < buttons.length; i++) {
       var button = buttons[i];
-      var half = Math.round(buttons.length/2)
+      var half = Math.floor(buttons.length/2)
       button.x = width/2 - this.button_width*(half - i + 0.5) - 50 + (i>=half?this.button_width+100:0);
     }
   }

@@ -2,6 +2,7 @@
 
 class API {
   constructor() {
+    this.logged_in = false;
 
   }
   make_call(data, callback, try_login=true) {
@@ -11,6 +12,7 @@ class API {
 
     var on_complete = (function(text) {
       var response = JSON.parse(text);
+      this.logged_in = response.logged_in == "true";
       if(response.success === "false" && response.logged_in === "false" && try_login) {
         this.login((function() {this.make_call(data, callback, try_login=false);}).bind(this), response.message);
       } else {
@@ -29,15 +31,15 @@ class API {
   }
   login(callback, last_error=false) {
 
-    game.login((function(username, password) {
-      this.make_call(
-        {"method": "login", "username": username, "password": password},
-        (function(response){
-          this.token = response.auth_token;
-          if(callback) callback();
-        }).bind(this)
-      );
-    }).bind(this), last_error);
+    game.login(false, (function(username, password) {
+
+      function c(response) {
+        this.token = response.auth_token;
+        if (callback) callback();
+      }
+
+      this.submit_login(username, password, c.bind(this));
+    }).bind(this));
   }
   create_account(username, password, callback) {
     this.make_call(
@@ -53,10 +55,16 @@ class API {
       false
     );
   }
+  submit_login(username, password, callback) {
+    this.make_call({ "method": "login", "username": username, "password": password }, callback, try_login, false);
+  }
   upload_save_state(state, try_login=true) {
     this.make_call({"data": state,"method": "set_save"}, undefined, try_login);
   }
   download_save_state(callback) {
-    this.make_call( {"method": "get_save"}, (function(response){if(callback)callback(response['data']);}).bind(this));
+    this.make_call({ "method": "get_save" }, (function (response) { if (callback) callback(response['data'], response['default_data']);}).bind(this));
+  }
+  logout() {
+    this.make_call({ "method": "logout" }, undefined, false);
   }
 }

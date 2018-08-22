@@ -14,10 +14,15 @@ function JSON_from_array($array, $pretty) {
 
   header('Content-type: application/json');
 
+
   $json = json_encode($array);
-  if($pretty) {
+  if($pretty !== false) {
     require_once "json_utils.php";
-    $json = indent($json);
+    if(is_numeric($pretty)) {
+      $json = pretty_json_from_array($array, $pretty);
+    } else {
+      $json = pretty_json_from_array($array);
+    }
   }
   return $json;
 }
@@ -116,7 +121,7 @@ function done($result, $params) {
     echo plist_from_array($result);
   } else {
     header('Content-Type: application/json');
-    echo JSON_from_array($result, isset($_GET['pretty']));
+    echo JSON_from_array($result, isset($_GET['pretty'])?$_GET['pretty']:false);
   }
   exit(0);
 }

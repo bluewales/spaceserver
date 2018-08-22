@@ -220,11 +220,14 @@ class Game {
   on_asset_load() {
     this.api = new API();
 
-    this.api.download_save_state((function(game_state){
+    this.api.download_save_state((function(game_state, is_default){
       var loading_div = d3.select("#loading").remove();
 
       this.game_state=game_state;
       this.start_game();
+      if(is_default) {
+        this.login(true);
+      }
     }).bind(this));
   }
 
@@ -473,8 +476,6 @@ class Game {
   start_drag(event) {
     this.dragX = event.stageX;
     this.dragY = event.stageY;
-
-
   }
 
   handle_drag(event) {
@@ -600,12 +601,18 @@ class Game {
     this.api.upload_save_state(this.game_state, try_login);
   }
 
-  login() {
+  login(initial_dialogue = false) {
     if(!this.login_prompt) {
       this.login_prompt = new LoginPrompt();
     }
 
-    this.login_prompt.initial_choice();
+    console.log(initial_dialogue);
+
+    if(initial_dialogue) {
+      this.login_prompt.initial_dialogue();
+    } else {
+      this.login_prompt.login_dialogue();
+    }
     this.login_prompt.active = true;
   }
 }

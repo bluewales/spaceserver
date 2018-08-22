@@ -61,4 +61,34 @@ function indent($json) {
 
       return $result;
   }
+
+
+function pretty_json_from_array($array, $pretty=120, $indent="") {
+  $assoc = isAssoc($array);
+
+  $next_indent = "  ".$indent;
+  $new_line = "\n";
+
+  $json = json_encode($array);
+  if(strlen($json) < $pretty) return $json;
+
+  $result = ($assoc?("{"):("[")).$new_line;
+
+  $first = true;
+  foreach ($array as $i => $value) {
+    if(!$first) $result .= ",".$new_line;
+    $first = false;
+
+    $result .= $next_indent.($assoc?("\"".$i."\": "):"");
+    if(is_array($value)) {
+      $result .= pretty_json_from_array($value,$pretty,$next_indent);
+    } else if(is_int($value)) {
+      $result .= $value;
+    } else {
+      $result .= "\"".$value."\"";
+    }
+  }
+  $result .= $new_line.$indent.($assoc?("}"):("]"));
+  return $result;
+}
 ?>

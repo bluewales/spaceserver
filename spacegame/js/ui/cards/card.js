@@ -67,6 +67,12 @@ class Card extends createjs.Container {
   get pinned() {
     return this.frame.pinned;
   }
+  set blocking(value) {
+    this.frame.blocking = value;
+  }
+  get blocking() {
+    return this.frame.blocking;
+  }
   tick() {
 
   }

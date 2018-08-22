@@ -10,12 +10,12 @@
 			$default_data = true;
 		}
 
-		$data = json_decode ($data);
+		$data = json_decode($data, true);
 
 		return array(
 			"success"=>"true",
-			"data"=>$data,
 			"default_data"=>$default_data,
+			"data"=>$data,
 		);
 	}
 ?>
