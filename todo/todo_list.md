@@ -1,16 +1,15 @@
 # Todo List
 
- - Rework login prompt
-   - On load dialog box works
-     - *Login button*
-     - *Create Account* button
-     - *Continue Without Login* button
-   - Note indicating that you can't save unless you're logged in
-   - If you're not logged in, give options to Login/Create Account in game
-   - Note indicating that if you login while playing, you'll load your last save and loose your current progress
+ - &#10004; Rework login prompt
+   - &#10004; On load dialog box works
+     - &#10004; *Login button*
+     - &#10004; *Create Account* button
+     - &#10004; *Continue Without Login* button
+   - &#10004; If you're not logged in, give options to Login/Create Account in game
+     - &#10004; Button in top bar that changes between Login/Logout base on current login status
    - &#10004; Cards like login prompt should be able to pause the game and disable everything in the background
- - Put logo in top bar and level indicator in bottom bar
- - Make the top and bottom bar instances of the same class since there's so much similar code between them 
+ - &#10004; Put logo in top bar and level indicator in bottom bar
+ - &#10004; Make the top and bottom bar instances of the same class since there's so much similar code between them 
  - &#10004; Clicking on things should bring up an info card
    - &#10004; Distinguish between clicking on cells and clicking on walls
    - &#10004; Highlight the thing that was clicked on

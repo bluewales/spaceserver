@@ -2,12 +2,14 @@
  * Created by Andrew on 3/19/16.
  */
 class TextInput extends createjs.Container {
-  constructor(placeHolder) {
+  constructor(placeHolder, type="text") {
     super();
 
     // Field Settings
     this.width = 200;
     this.height = 40;
+
+    this.type = type;
 
     // Text Settings
     this.placeHolder = placeHolder;
@@ -84,8 +86,10 @@ class TextInput extends createjs.Container {
   _setupDomNode() {
     if(this._hiddenInput === null) {
       this._hiddenInput = document.createElement('input');
+    
     }
-    this._hiddenInput.type = 'text';
+    this._hiddenInput.autocomplete = "off";
+    this._hiddenInput.type = "text";
     this._hiddenInput.style.display = 'none';
     this._hiddenInput.style.position = 'absolute';
     this._hiddenInput.style.zIndex = -100;
@@ -195,6 +199,7 @@ class TextInput extends createjs.Container {
       var cursor_i = this._hiddenInput.value.length;
       for(var i = 0; i < this._hiddenInput.value.length; i++) {
         this._visiblePostCursorText.text = this._hiddenInput.value.substring(0, i);
+        if (this.type == "password") this._visiblePostCursorText.text = "*".repeat(this._visiblePostCursorText.text.length);
 
         if(lp.x - this._padding < this._visiblePostCursorText.getMeasuredWidth()) {
           cursor_i = i;
@@ -216,9 +221,11 @@ class TextInput extends createjs.Container {
 
       var cursor_i = this._hiddenInput.selectionStart;
       this._postCursorText = this._hiddenInput.value.substring(0, cursor_i);
+      if (this.type == "password") this._postCursorText = "*".repeat(this._postCursorText.length);
       this._cursor.x = this._visiblePostCursorText.getMeasuredWidth();
 
       this._preCursorText = this._hiddenInput.value;
+      if (this.type == "password") this._preCursorText = "*".repeat(this._preCursorText.length);
       this.update();
     }
   }
@@ -233,5 +240,9 @@ class TextInput extends createjs.Container {
 
   _deSelectInput() {
     this._hiddenInput.style.display = 'none';
+  }
+
+  get value() {
+    return this._hiddenInput.value;
   }
 }

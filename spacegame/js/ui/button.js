@@ -9,15 +9,13 @@ class Button extends createjs.Container {
     this.text = new createjs.Text(config.text, this.text_hight + "px Arial", menu_palette[1]);
     this.on_click = config.on_click;
     this.mode = config.mode;
+    this.on_tick = config.on_tick;
 
 
     this.text.textAlign = "center";
     this.text.y = this.height/2 - this.text_hight/2;
     this.text.x = this.width/2;
-    if(config.card) {
-      this.card = config.card;
-      this.card.button = this;
-    }
+    
     this._active = false;
     this.background_color = menu_palette[0];
 
@@ -70,5 +68,6 @@ class Button extends createjs.Container {
       this.active = false;
     }
 
+    if(this.on_tick) this.on_tick();
   }
 }

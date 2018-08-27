@@ -1,7 +1,7 @@
 /**
  * Created by Ox The Automaton on 7/1/2017.
  */
- /*jshint esversion: 6 */
+/*jshint esversion: 6 */
 
 
 
@@ -19,8 +19,8 @@ class Game {
     this.index = {};
 
     d3.select("canvas")
-        .attr("width", this.width)
-        .attr("height", this.height);
+      .attr("width", this.width)
+      .attr("height", this.height);
 
     this.sprites = {
       /* Crew */
@@ -57,18 +57,18 @@ class Game {
 
       /* Structure */
       /* Floors */
-      "floor_plate": {"sources": ["img/sliced/world_sliced/images/oryx_16bit_scifi_world_01.png"]},
+      "floor_plate": { "sources": ["img/sliced/world_sliced/images/oryx_16bit_scifi_world_01.png"] },
 
       /* Furniture */
-      "crate": {"sources": ["img/sliced/world_sliced/images/oryx_16bit_scifi_world_679.png"]},
-      "barrel": {"sources": ["img/sliced/world_sliced/images/oryx_16bit_scifi_world_708.png"]},
-      "charging_pad": {"sources": ["img/sliced/world_sliced/images/oryx_16bit_scifi_world_306.png"]},
+      "crate": { "sources": ["img/sliced/world_sliced/images/oryx_16bit_scifi_world_679.png"] },
+      "barrel": { "sources": ["img/sliced/world_sliced/images/oryx_16bit_scifi_world_708.png"] },
+      "charging_pad": { "sources": ["img/sliced/world_sliced/images/oryx_16bit_scifi_world_306.png"] },
 
       /* Background */
-      "background": {"sources": ["img/mars.jpg"]},
+      "background": { "sources": ["img/mars.jpg"] },
 
       /* Items */
-      "steel_sprite": {"sources": ["img/sliced/items_sliced/oryx_16bit_scifi_items_06.png"]},
+      "steel_sprite": { "sources": ["img/sliced/items_sliced/oryx_16bit_scifi_items_06.png"] },
 
       /* Effects */
       "sparks_1": {
@@ -99,70 +99,73 @@ class Game {
 
     this.sources = {
       /* javascript */
-      "api": {"source": "js/api.js"},
-      "astar": {"source": "js/lib/astar.js"},
-      "easel": {"source": "js/lib/easeljs-0.8.2.min.js"},
-      "structure": {"source": "js/structure/structure.js"},
-      "furniture": {"source": "js/structure/furniture/furniture.js"},
-      "barrel": {"source": "js/structure/furniture/barrel.js"},
-      "bottom_bar": {"source": "js/ui/bottom_bar.js"},
-      "card": {"source": "js/ui/cards/card.js"},
-      "build_card": {"source": "js/ui/cards/build_card.js"},
-      "button": {"source": "js/ui/button.js"},
-      "card_frame": {"source": "js/ui/cards/card_frame.js"},
-      "card_table": {"source": "js/ui/card_table.js"},
-      "jobs": {"source": "js/jobs.js"},
-      "construction_utils": {"source": "js/construction/construction_utils.js"},
-      "construct": {"source": "js/construction/construct.js"},
-      "deconstruct": {"source": "js/construction/deconstruct.js"},
-      "controls_card": {"source": "js/ui/cards/controls_card.js"},
-      "crate": {"source": "js/structure/furniture/crate.js"},
-      "charging_pad": {"source": "js/structure/furniture/charging_pad.js"},
-      "crew": {"source": "js/mobs/crew.js"},
-      "d3": {"source": "js/lib/d3.js"},
-      "wall": {"source": "js/structure/walls/wall.js"},
-      "door": {"source": "js/structure/walls/door.js"},
-      "floor": {"source": "js/structure/floors/floor.js"},
-      "floor_plate": {"source": "js/structure/floors/floor_plate.js"},
-      "graph": {"source": "js/graph.js"},
-      "hatch": {"source": "js/structure/floors/hatch.js"},
-      "hud": {"source": "js/ui/hud.js"},
-      "palettes": {"source": "js/palettes.js"},
-      "pathfinding": {"source": "js/pathfinding.js"},
-      "rooms": {"source": "js/rooms.js"},
-      "ship": {"source": "js/ship.js"},
-      "top_bar": {"source": "js/ui/top_bar.js"},
-      "wall_panel": {"source": "js/structure/walls/wall_panel.js"},
-      "ui_level": {"source": "js/ui/level.js"},
-      "item": {"source": "js/items/item.js"},
-      "steel": {"source": "js/items/steel.js"},
-      "serialization": {"source": "js/serialization.js"},
-      "item_store": {"source": "js/item_store.js"},
-      "interaction_card": {"source": "js/ui/cards/interaction_card.js"},
-      "login_prompt": {"source": "js/ui/cards/login_prompt.js"},
-      "canvas_input": {"source": "js/lib/CreateJSTextInput.js"},
+      "api": { "source": "js/api.js" },
+      "astar": { "source": "js/lib/astar.js" },
+      "easel": { "source": "js/lib/easeljs-0.8.2.min.js" },
+      "structure": { "source": "js/structure/structure.js" },
+      "furniture": { "source": "js/structure/furniture/furniture.js" },
+      "barrel": { "source": "js/structure/furniture/barrel.js" },
+      "bar": { "source": "js/ui/bar.js" },
+      "bottom_bar": { "source": "js/ui/bottom_bar.js" },
+      "card": { "source": "js/ui/cards/card.js" },
+      "build_card": { "source": "js/ui/cards/build_card.js" },
+      "button": { "source": "js/ui/button.js" },
+      "card_frame": { "source": "js/ui/cards/card_frame.js" },
+      "card_table": { "source": "js/ui/card_table.js" },
+      "jobs": { "source": "js/jobs.js" },
+      "construction_utils": { "source": "js/construction/construction_utils.js" },
+      "construct": { "source": "js/construction/construct.js" },
+      "deconstruct": { "source": "js/construction/deconstruct.js" },
+      "controls_card": { "source": "js/ui/cards/controls_card.js" },
+      "crate": { "source": "js/structure/furniture/crate.js" },
+      "charging_pad": { "source": "js/structure/furniture/charging_pad.js" },
+      "crew": { "source": "js/mobs/crew.js" },
+      "d3": { "source": "js/lib/d3.js" },
+      "wall": { "source": "js/structure/walls/wall.js" },
+      "door": { "source": "js/structure/walls/door.js" },
+      "floor": { "source": "js/structure/floors/floor.js" },
+      "floor_plate": { "source": "js/structure/floors/floor_plate.js" },
+      "graph": { "source": "js/graph.js" },
+      "hatch": { "source": "js/structure/floors/hatch.js" },
+      "hud": { "source": "js/ui/hud.js" },
+      "palettes": { "source": "js/palettes.js" },
+      "pathfinding": { "source": "js/pathfinding.js" },
+      "rooms": { "source": "js/rooms.js" },
+      "ship": { "source": "js/ship.js" },
+      "top_bar": { "source": "js/ui/top_bar.js" },
+      "wall_panel": { "source": "js/structure/walls/wall_panel.js" },
+      "ui_level": { "source": "js/ui/level.js" },
+      "logo": { "source": "js/ui/logo.js" },
+      "item": { "source": "js/items/item.js" },
+      "steel": { "source": "js/items/steel.js" },
+      "serialization": { "source": "js/serialization.js" },
+      "item_store": { "source": "js/item_store.js" },
+      "interaction_card": { "source": "js/ui/cards/interaction_card.js" },
+      "login_prompt": { "source": "js/ui/cards/login_prompt.js" },
+      "canvas_input": { "source": "js/lib/CreateJSTextInput.js" }
     };
 
 
     this.manifest = [];
 
-    for(var name in this.sprites) {
+    for (var name in this.sprites) {
       var source = this.sprites[name];
-      for(var j = 0; j < source.sources.length; j++) {
+      for (var j = 0; j < source.sources.length; j++) {
         this.manifest.push(
-          {src: source.sources[j], id: name + (source.sources.length>0?("_"+j):"")}
+          { src: source.sources[j], id: name + (source.sources.length > 0 ? ("_" + j) : "") }
         );
       }
     }
 
-    for(var name in this.sources) {
+    for (var name in this.sources) {
       var source = this.sources[name];
-      this.manifest.push({src: source.source + "?a=" + Math.random(), id: name});
+      this.manifest.push({ src: source.source + "?a=" + Math.random(), id: name });
+      //this.manifest.push({ src: source.source, id: name });
     }
 
-    for(var name in this.data) {
+    for (var name in this.data) {
       var source = this.data[name];
-      this.manifest.push({src: source.source, id: name});
+      this.manifest.push({ src: source.source, id: name });
     }
 
     this.loader = new createjs.LoadQueue(false);
@@ -171,13 +174,13 @@ class Game {
     var loading_div = d3.select("body")
       .style("width", this.width + "px")
       .style("background-color", "white")
-        .append("div")
-          .attr("id", "loading")
-          .style("color", "#333")
-          .style("top", (this.height/2-150) + "px")
-          .style("position", "absolute")
-          .style("margin", "auto")
-          .style("width", this.width + "px");
+      .append("div")
+      .attr("id", "loading")
+      .style("color", "#333")
+      .style("top", (this.height / 2 - 150) + "px")
+      .style("position", "absolute")
+      .style("margin", "auto")
+      .style("width", this.width + "px");
 
     loading_div.append("h1")
       .style("color", "#333")
@@ -188,10 +191,10 @@ class Game {
       .style("padding", "20px");
 
     loading_div.append("p")
-        .style("color", "#333")
-        .text("Loading")
-        .style("text-align", "center")
-        .style("margin", "auto");
+      .style("color", "#333")
+      .text("Loading")
+      .style("text-align", "center")
+      .style("margin", "auto");
 
     loading_div.append("div")
       .attr("id", "loading_box")
@@ -199,15 +202,15 @@ class Game {
       .style("margin", "auto")
       .style("width", "300px")
       .style("height", "25px")
-        .append("div")
-          .attr("id", "loading_bar")
-          .style("background-color", "#333")
-          .style("width", "0px")
-          .style("height", "25px");
+      .append("div")
+      .attr("id", "loading_bar")
+      .style("background-color", "#333")
+      .style("width", "0px")
+      .style("height", "25px");
 
-    this.loader.on("progress", (function(event) {
-      console.log(Math.round(event.progress*100) + " % loaded");
-      d3.select("#loading_bar").style("width", (event.progress*100) + "%");
+    this.loader.on("progress", (function (event) {
+      console.log(Math.round(event.progress * 100) + " % loaded");
+      d3.select("#loading_bar").style("width", (event.progress * 100) + "%");
     }).bind(this));
 
     this.loader.loadManifest(this.manifest, true, "");
@@ -220,12 +223,16 @@ class Game {
   on_asset_load() {
     this.api = new API();
 
-    this.api.download_save_state((function(game_state, is_default){
+    this.load_save();
+  }
+
+  load_save() {
+    this.api.download_save_state((function (game_state) {
       var loading_div = d3.select("#loading").remove();
 
-      this.game_state=game_state;
+      this.game_state = game_state;
       this.start_game();
-      if(is_default) {
+      if (!this.api.logged_in) {
         this.login(true);
       }
     }).bind(this));
@@ -242,16 +249,16 @@ class Game {
 
 
 
-    for(var name in this.sprites) {
+    for (var name in this.sprites) {
       var source = this.sprites[name];
       var sprite_obj = {
         framerate: 2,
         images: [],
         frames: {},
-        animations:{}
+        animations: {}
       }
-      for(var j = 0; j < source.sources.length; j++) {
-        var image = this.loader.getResult(name + (source.sources.length>0?("_"+j):""));
+      for (var j = 0; j < source.sources.length; j++) {
+        var image = this.loader.getResult(name + (source.sources.length > 0 ? ("_" + j) : ""));
         sprite_obj.images.push(image);
 
         sprite_obj.frames.width = image.width;
@@ -259,7 +266,7 @@ class Game {
         sprite_obj.frames.regX = (image.width - 24) / 2;
         sprite_obj.frames.regY = (image.height - 24) / 2;
 
-        if(sprite_obj.animations[name])
+        if (sprite_obj.animations[name])
           sprite_obj.animations[name].push(j);
         else
           sprite_obj.animations[name] = [j];
@@ -272,6 +279,7 @@ class Game {
     this.ship.set_display_level(this.z_level);
 
     this.ui_level = new UILevel(this.z_level);
+    this.logo = new Logo(this.z_level);
 
 
 
@@ -293,7 +301,8 @@ class Game {
 
     this.hud = new HUD();
     this.hud.addChild(this.ui_level);
-    this.hud.on("click", function(evt){}.bind(this));
+    this.hud.addChild(this.logo);
+    this.hud.on("click", function (evt) { }.bind(this));
 
     this.stage = new createjs.Stage(this.canvas);
     this.stage.addChild(this.background);
@@ -309,7 +318,7 @@ class Game {
     createjs.Ticker.on("tick", this.tick.bind(this));
 
 
-    this.now = Date.now()/1000;
+    this.now = Date.now() / 1000;
     this.last_save = this.now;
 
     // setup inputs
@@ -336,7 +345,7 @@ class Game {
 
 
   tick(event) {
-    this.now = Date.now()/1000;
+    this.now = Date.now() / 1000;
 
     this.crew_ticks = 0;
 
@@ -348,18 +357,18 @@ class Game {
 
     var new_width = this.canvas.getBoundingClientRect().width;
     var new_height = this.canvas.getBoundingClientRect().height;
-    if(new_width != this.width || new_height != this.height) {
+    if (new_width != this.width || new_height != this.height) {
       this.width = new_width;
       this.height = new_height;
 
       d3.select("canvas")
-          .attr("width", this.width)
-          .attr("height", this.height);
+        .attr("width", this.width)
+        .attr("height", this.height);
 
       this.background.graphics
         .clear()
         .beginBitmapFill(this.bg_img, "repeat")
-        .drawRect(0,0,this.width,this.height);
+        .drawRect(0, 0, this.width, this.height);
 
       this.hud.resize(this.width, this.height);
       this.card_table.resize(this.width, this.height);
@@ -368,8 +377,8 @@ class Game {
     this.hud.tick();
     this.card_table.tick();
 
-    var centerX = this.canvas.width/2;
-    var centerY = this.canvas.height/2;
+    var centerX = this.canvas.width / 2;
+    var centerY = this.canvas.height / 2;
 
 
     this.ship.scaleX = this.zoom_multiplier;
@@ -378,35 +387,35 @@ class Game {
     this.ship.x = centerX + this.pan_x * this.zoom_multiplier;
     this.ship.y = centerY + this.pan_y * this.zoom_multiplier;
 
-    if(this.currentlyPressedKeys[65]) this.pan(-5, 0);
-    if(this.currentlyPressedKeys[68]) this.pan(5, 0);
-    if(this.currentlyPressedKeys[83]) this.pan(0, 5);
-    if(this.currentlyPressedKeys[87]) this.pan(0, -5);
+    if (this.currentlyPressedKeys[65]) this.pan(-5, 0);
+    if (this.currentlyPressedKeys[68]) this.pan(5, 0);
+    if (this.currentlyPressedKeys[83]) this.pan(0, 5);
+    if (this.currentlyPressedKeys[87]) this.pan(0, -5);
 
-    if(!this.paused) {
+    if (!this.paused) {
       this.ship.tick(event);
     }
 
 
     this.stage.update(event);
 
-    if(this.now - this.last_save > 5 * 60) {
+    if (this.now - this.last_save > 5 * 60) {
       this.last_save = this.now;
       this.save(false);
     }
 
-    if(this.cell_cursor || this.wall_cursor) {
+    if (this.cell_cursor || this.wall_cursor) {
       var mouse_hits_ui = this.hud.hitTest(this.stage.mouseX, this.stage.mouseY) || this.card_table.hitTest(this.stage.mouseX, this.stage.mouseY);
       this.ship.clear_highlight();
 
-      if(mouse_hits_ui) {
+      if (mouse_hits_ui) {
 
       } else {
-        if(this.cell_cursor) {
+        if (this.cell_cursor) {
           var pos = this.pos_from_coord(this.stage.mouseX, this.stage.mouseY);
           this.ship.draw_highlight(pos);
         }
-        if(this.wall_cursor) {
+        if (this.wall_cursor) {
           var pos = this.wall_pos_from_coord(this.stage.mouseX, this.stage.mouseY);
           this.ship.draw_highlight(pos);
         }
@@ -418,11 +427,11 @@ class Game {
     this.change_z(-this.z_level);
     this.change_zoom(-this.zoom + this.default_zoom);
 
-    var mid_x = (this.ship.graph.max_bound.x + this.ship.graph.min_bound.x+1) / 2;
-    var mid_y = (this.ship.graph.max_bound.y + this.ship.graph.min_bound.y+1) / 2;
+    var mid_x = (this.ship.graph.max_bound.x + this.ship.graph.min_bound.x + 1) / 2;
+    var mid_y = (this.ship.graph.max_bound.y + this.ship.graph.min_bound.y + 1) / 2;
 
-    this.pan_x = -(this.ship.grid_width + this.ship.padding*2) * mid_x;
-    this.pan_y = -(this.ship.grid_width + this.ship.padding*2) * mid_y;
+    this.pan_x = -(this.ship.grid_width + this.ship.padding * 2) * mid_x;
+    this.pan_y = -(this.ship.grid_width + this.ship.padding * 2) * mid_y;
 
     this.clear_highlight();
   }
@@ -432,7 +441,7 @@ class Game {
     this.z_level += dz;
     this.ship.set_display_level(this.z_level);
     this.ui_level.set_level(this.z_level);
-    if(this.highlighted_square) this.clear_highlight();
+    if (this.highlighted_square) this.clear_highlight();
     this.ship.clear_selection();
   }
 
@@ -443,18 +452,18 @@ class Game {
 
   pan(dx, dy) {
     var pan_ratio = this.zoom_multiplier;
-    this.pan_x += dx/pan_ratio;
-    this.pan_y += dy/pan_ratio;
+    this.pan_x += dx / pan_ratio;
+    this.pan_y += dy / pan_ratio;
   }
 
   highlight_square(pos) {
-    if(this.highlighted_square) this.clear_highlight();
+    if (this.highlighted_square) this.clear_highlight();
     this.highlighted_square = pos;
   }
 
-  clear_highlight(clear_focus=true) {
+  clear_highlight(clear_focus = true) {
     this.highlighted_square = null;
-    if(clear_focus) {
+    if (clear_focus) {
       this.card_table.focus(undefined);
     }
   }
@@ -462,9 +471,9 @@ class Game {
   handleKeyDown(event) {
     this.currentlyPressedKeys[event.keyCode] = true;
 
-    if(event.keyCode == 69) this.change_z(1); // e key
-    if(event.keyCode == 81) this.change_z(-1); // q key
-    if(event.keyCode == 32) this.re_center(); // space bar
+    if (event.keyCode == 69) this.change_z(1); // e key
+    if (event.keyCode == 81) this.change_z(-1); // q key
+    if (event.keyCode == 32) this.re_center(); // space bar
   }
   handleKeyUp(event) {
     this.currentlyPressedKeys[event.keyCode] = false;
@@ -479,7 +488,7 @@ class Game {
   }
 
   handle_drag(event) {
-    if(this.dragX === undefined || this.dragY === undefined) {
+    if (this.dragX === undefined || this.dragY === undefined) {
       return;
     }
 
@@ -499,24 +508,24 @@ class Game {
     var x = event.stageX;
     var y = event.stageY;
 
-    if(this.login_prompt) {
+    if (this.login_prompt) {
       this.login_prompt.active = false;
     }
 
-    if(this.cell_cursor) {
+    if (this.cell_cursor) {
       var pos = this.pos_from_coord(x, y);
       this.cell_cursor(pos);
-    } else if(this.wall_cursor) {
+    } else if (this.wall_cursor) {
       var wall_pos = this.wall_pos_from_coord(x, y);
       this.wall_cursor(wall_pos);
     } else {
-      if(this.space.hitTest(x, y)) {
+      if (this.space.hitTest(x, y)) {
 
         var target = event.target;
-        if(event.target.is_highlight) {
+        if (event.target.is_highlight) {
           target = this.ship.current_selection;
         }
-        while(!("pos" in target)) target = target.parent;
+        while (!("pos" in target)) target = target.parent;
         this.ship.select(target);
 
       } else {
@@ -529,18 +538,18 @@ class Game {
     var centerX = this.canvas.width / 2;
     var centerY = this.canvas.height / 2;
 
-    var grid = this.ship.grid_width + (this.ship.padding*2);
-    var x = (stageX - centerX - this.pan_x*this.zoom_multiplier) / (grid*this.zoom_multiplier);
-    var y = (stageY - centerY - this.pan_y*this.zoom_multiplier) / (grid*this.zoom_multiplier);
-    var px = (x % 1) + (x < 0?1:0);
-    var py = (y % 1) + (y < 0?1:0);
+    var grid = this.ship.grid_width + (this.ship.padding * 2);
+    var x = (stageX - centerX - this.pan_x * this.zoom_multiplier) / (grid * this.zoom_multiplier);
+    var y = (stageY - centerY - this.pan_y * this.zoom_multiplier) / (grid * this.zoom_multiplier);
+    var px = (x % 1) + (x < 0 ? 1 : 0);
+    var py = (y % 1) + (y < 0 ? 1 : 0);
     var padding = this.ship.padding / grid;
 
     var small = Math.min(px, py);
     var large = Math.max(px, py);
 
-    if(small < padding || large > 1 - padding) {
-        return this.wall_pos_from_coord(stageX, stageY);
+    if (small < padding || large > 1 - padding) {
+      return this.wall_pos_from_coord(stageX, stageY);
     } else {
       return this.pos_from_coord(stageX, stageY);
     }
@@ -550,9 +559,9 @@ class Game {
     var centerX = this.canvas.width / 2;
     var centerY = this.canvas.height / 2;
 
-    var grid = this.ship.grid_width + (this.ship.padding*2);
-    var x = Math.floor((stageX - centerX - this.pan_x*this.zoom_multiplier) / (grid*this.zoom_multiplier));
-    var y = Math.floor((stageY - centerY - this.pan_y*this.zoom_multiplier) / (grid*this.zoom_multiplier));
+    var grid = this.ship.grid_width + (this.ship.padding * 2);
+    var x = Math.floor((stageX - centerX - this.pan_x * this.zoom_multiplier) / (grid * this.zoom_multiplier));
+    var y = Math.floor((stageY - centerY - this.pan_y * this.zoom_multiplier) / (grid * this.zoom_multiplier));
 
     var pos = {
       "x": x,
@@ -566,16 +575,16 @@ class Game {
     var centerX = this.canvas.width / 2;
     var centerY = this.canvas.height / 2;
 
-    var grid = this.ship.grid_width + (this.ship.padding*2);
-    var x = (stageX - centerX - this.pan_x*this.zoom_multiplier) / (grid*this.zoom_multiplier);
-    var y = (stageY - centerY - this.pan_y*this.zoom_multiplier) / (grid*this.zoom_multiplier);
+    var grid = this.ship.grid_width + (this.ship.padding * 2);
+    var x = (stageX - centerX - this.pan_x * this.zoom_multiplier) / (grid * this.zoom_multiplier);
+    var y = (stageY - centerY - this.pan_y * this.zoom_multiplier) / (grid * this.zoom_multiplier);
 
-    var rx = Math.floor(x-y);
-    var ry = Math.floor(x+y);
-    x = Math.floor((rx+ry) / 2);
-    y = Math.floor((ry-rx) / 2);
+    var rx = Math.floor(x - y);
+    var ry = Math.floor(x + y);
+    x = Math.floor((rx + ry) / 2);
+    y = Math.floor((ry - rx) / 2);
 
-    if((rx+ry) % 2 != 0) {
+    if ((rx + ry) % 2 != 0) {
       var ori = "|";
     } else {
       var ori = "-";
@@ -595,23 +604,25 @@ class Game {
     this.paused = mode;
   }
 
-  save(try_login=true) {
+  save(try_login = true) {
     this.game_state = serialize(this.ship);
     console.log(this.game_state);
     this.api.upload_save_state(this.game_state, try_login);
   }
 
-  login(initial_dialogue = false) {
-    if(!this.login_prompt) {
-      this.login_prompt = new LoginPrompt();
+  logout() {
+    this.api.logout();
+  }
+
+  login(initial_dialogue = false, message="", callback) {
+    if (!this.login_prompt) {
+      this.login_prompt = new LoginPrompt(message);
     }
 
-    console.log(initial_dialogue);
-
-    if(initial_dialogue) {
-      this.login_prompt.initial_dialogue();
+    if (initial_dialogue) {
+      this.login_prompt.initial_dialogue(message);
     } else {
-      this.login_prompt.login_dialogue();
+      this.login_prompt.login_dialogue(message);
     }
     this.login_prompt.active = true;
   }

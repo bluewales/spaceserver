@@ -46,6 +46,6 @@
 		// Login the user
 		$login_result = login($username, $password1);
 
-		return array("success"=>"true","logged_in"=>$login_result);
+		return array("success"=>"true","logged_in"=>$login_result['logged_in'],"login_result"=>$login_result);
 	}
 ?>

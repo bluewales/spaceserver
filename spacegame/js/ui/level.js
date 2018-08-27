@@ -2,10 +2,12 @@ class UILevel extends createjs.Container {
   constructor(start_level) {
     super();
 
-    this.level = start_level
+    this.level = start_level;
+    this.height = 50;
+    this.width = 200;
 
     this.box = new createjs.Container();
-    this.box.addChild(create_polygon(menu_palette[1], [[-100,0],[100,0],[60,60],[-60,60]]));
+    this.box.addChild(create_polygon(menu_palette[1], [[-60,0],[60,0],[100,60],[-100,60]]));
     this.text = new createjs.Text("Level " + this.level, "30px Arial", menu_palette[0]);
     this.text.textAlign = "center";
     this.text.y = 10;
@@ -21,7 +23,7 @@ class UILevel extends createjs.Container {
 
   resize(width, height) {
     this.box.x = width/2;
-    this.box.y = 0;
+    this.box.y = height - this.height;
   }
   tick(){
     

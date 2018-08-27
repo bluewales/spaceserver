@@ -16,12 +16,10 @@ class InteractionCard extends Card {
     this.width = this.default_width;
 
     this.line_height = 20;
-
     this.label = title;
-
     this.button_width = 120;
 
-    this.addChild(this.line1_1);
+    this.by_id = {};
   }
 
   set active(value) {
@@ -47,6 +45,7 @@ class InteractionCard extends Card {
     this.frame.height = this.height;
     this.frame.width = this.width;
 
+    this.by_id = {};
   }
 
   add_text(string) {
@@ -60,7 +59,7 @@ class InteractionCard extends Card {
     text.text = string;
     text.height = this.line_height;
     text.width = text.getBounds().width;
-    this.add_line(text);
+    return this.add_line(text);
   }
 
   add_progress_bar(percent) {
@@ -82,7 +81,7 @@ class InteractionCard extends Card {
       .beginStroke(this.foreground_color)
       .drawRect(0, 0, bar.width, this.line_height);
 
-    this.add_line(bar);
+    return this.add_line(bar);
   }
 
   add_button(label, callback) {
@@ -103,7 +102,7 @@ class InteractionCard extends Card {
       button = new Button(button_config);
       button.type = "button";
     }
-    this.add_line(button);
+    return this.add_line(button);
   }
 
   add_input(placeHolder) {
@@ -117,10 +116,27 @@ class InteractionCard extends Card {
       input.type = "input";
     }
 
-    this.add_line(input);
+    return this.add_line(input);
+  }
+
+  add_password(placeHolder) {
+    var password;
+    if (this.lines.length > this.line_count && this.lines[this.line_count].type == "password") {
+      password = this.lines[this.line_count];
+      password.placeHolder = placeHolder;
+    } else {
+      var password = new TextInput(placeHolder, "password");
+      password.update();
+      password.type = "password";
+    }
+
+    return this.add_line(password);
   }
 
   add_line(line) {
+    line.id = getUID(line.type);
+    this.by_id[line.id] = line;
+
     if (this.lines.length > this.line_count) {
       this.lines[this.line_count] = line;
     } else {
@@ -138,6 +154,12 @@ class InteractionCard extends Card {
       this.lines[i].x = this.width/2 - this.lines[i].width/2;
     }
     if(this.active && line.show) line.show();
+
+    return line.id;
+  }
+
+  get_input_value(id) {
+    return this.by_id[id].value;
   }
 
   on_close() {

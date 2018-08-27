@@ -40,7 +40,7 @@ class CardFrame extends createjs.Container {
     this.pinned = true;
   }
   click(event) {
-    if(this.parent.active)
+    if (this.parent.active)
       game.card_table.focus(this.parent);
   }
   mousedown(event) {
@@ -73,7 +73,7 @@ class CardFrame extends createjs.Container {
   draw_box() {
     this.box.graphics.clear();
 
-    if(this.blocking) {
+    if (this.blocking) {
       var w = game.width * 100;
       this.box.graphics.beginFill("rgba(0,0,0,0.85)").drawRect(
         -w, -w, 2 * w, 2 * w

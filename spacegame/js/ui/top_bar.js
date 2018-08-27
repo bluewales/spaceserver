@@ -1,101 +1,40 @@
-class TopBar extends createjs.Container {
+class TopBar extends Bar {
   constructor() {
-    super();
-
-    this.height = 40;
-    this.width = 100;
-
-    this.button_width = 100;
-    this.button_height = this.height;
-
-    this.box = new createjs.Shape();
-    this.box.graphics.beginFill(menu_palette[0]).drawRect(0, 0, this.width, this.height).endFill();
-    this.addChild(this.box);
-
-    this.button_data = [
+    var button_data = [
       {
-        "name":"Controls",
+        "text": "Controls",
         "card": new ControlsCard()
-      },{
-        "name":"Pause",
-        "on_click": function(event) {
+      }, {
+        "text": "Pause",
+        "on_click": function (event) {
           game.pause(this.active);
         }
-      },{
-        "name":"Save",
-        "on_click": function(event) {
+      }, {
+        "text": "Save",
+        "on_click": function (event) {
           game.save();
         },
         "mode": "reset"
       }, {
-        "name": "Logout",
+        "text": "Logout",
         "on_click": function (event) {
           game.logout();
         },
-        "mode": "reset"
+        "mode": "reset",
+        "on_tick": function() {
+          if (this.logged_in == game.api.logged_in) return;
+          if(game.api.logged_in) {
+            this.text.text = "Logout";
+            this.on_click = function() {game.logout();};
+          } else {
+            this.text.text = "Login";
+            this.on_click = function() {game.login();};
+          }
+          this.logged_in = game.api.logged_in;
+        }
       }
     ];
 
-    this.buttons = new createjs.Container();
-    for(var i = 0; i < this.button_data.length; i++) {
-
-      var button_data = this.button_data[i];
-
-      var button_config = {
-        "width": this.button_width,
-        "height": this.button_height,
-        "text": button_data.name,
-        "on_click": button_data.on_click,
-        "mode": button_data.mode
-      };
-      var button = new Button(button_config);
-
-      if(button_data.card) {
-
-        function create_on_click_callback(card) {
-          button.on_click = function(event) {
-            card.active = event.currentTarget.active;
-          }
-        }
-
-        create_on_click_callback(button_data.card);
-
-        function create_on_close_callback(button) {
-          button_data.card.on_close = function() {
-            button.active = false;
-          }
-        }
-        create_on_close_callback(button);
-      }
-
-      this.buttons.addChild(button);
-      //button.active = true;
-      button_data.button = button;
-    }
-    this.addChild(this.buttons);
-  }
-
-  resize(width, height) {
-
-    this.width = width;
-
-    this.box.graphics.clear().beginFill(menu_palette[0]).drawRect(0, 0, this.width, this.height).endFill();
-
-    var buttons = this.buttons.children;
-
-    for(var i = 0; i < buttons.length; i++) {
-      var button = buttons[i];
-      var half = Math.floor(buttons.length/2)
-      button.x = width/2 - this.button_width*(half - i + 0.5) - 50 + (i>=half?this.button_width+100:0);
-    }
-  }
-
-  tick() {
-    var buttons = this.buttons.children;
-    for(var i = 0; i < buttons.length; i++) {
-      var button = buttons[i];
-
-      button.tick();
-    }
+    super(true, button_data);
   }
 }
