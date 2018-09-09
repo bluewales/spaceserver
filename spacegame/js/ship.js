@@ -267,8 +267,10 @@ class Ship extends createjs.Container {
       pos = new_pos;
     }
 
-  var item = new type_lookup[type](pos, this);
+    var item = new type_lookup[type](pos, this);
     this.add_item(item);
+
+    this.item_store.signal_changed();
   }
 
   select(selected) {

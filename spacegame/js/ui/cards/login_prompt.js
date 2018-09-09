@@ -3,6 +3,8 @@ class LoginPrompt extends InteractionCard {
 
     super("");
 
+    this.default_width = 300;
+
     this.button_width = 200;
     this.center = true;
 

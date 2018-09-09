@@ -59,48 +59,6 @@ function fgetline ($file) {
   return $result;
 }
 
-function authenticate_admin($auth_token) {
-  $authenticated = authenticate_user($auth_token);
-  return $authenticated['admin']?$authenticated:false;
-}
-
-function authenticate_user($auth_token) {
-  global $a_skeleton_key, $db_address, $db_user, $db_password, $db_table_prefix, $db_database ;
-  $authenticated = false;
-  if (strlen($a_skeleton_key) > 0 && $auth_token == $a_skeleton_key) {
-    $authenticated = array("user_id" => "0","admin" => true);
-    $authenticated['username'] = "superuser";
-    $authenticated['telephone'] = "(555) 555-5555";
-    $authenticated['auth_token'] = $auth_token;
-  } else {
-    $con = mysql_connect($db_address, $db_user, $db_password);
-    if (!$con) die('Could not connect: ' . mysql_error());
-    mysql_select_db($db_database, $con);
-
-    $sql = "select * from ".$db_table_prefix."_sessions where auth_token='$auth_token'";
-    $result = mysql_query($sql);
-
-    if($result && $row = mysql_fetch_assoc ($result)) {
-      $user_id = $row['user_id'];
-    } else {
-      return false;
-    }
-
-    $sql = "select * from ".$db_table_prefix."_users where id='$user_id'";
-    $result = mysql_query($sql);
-
-    if($result && $row = mysql_fetch_assoc ($result)) {
-      $authenticated = array();
-      $authenticated['user_id'] = $row['id'];
-      $authenticated['admin'] = false;
-      $authenticated['username'] = $row['username'];
-      $authenticated['telephone'] = $row['telephone'];
-      $authenticated['auth_token'] = $auth_token;
-      $authenticated['admin'] = $row['director'];
-    }
-  }
-  return $authenticated;
-}
 
 function done($result, $params) {
 

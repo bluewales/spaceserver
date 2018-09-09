@@ -9,8 +9,9 @@ function construct_structure(type, pos) {
   var store = game.ship.item_store;
 
   for(var i = 0; i < materials.length; i++) {
-    var item = store.claim_item(materials[i]);
+    var item = store.find_item(materials[i]);
     if(!item) break;
+    store.remove_item(item);
     items.push(item);
   }
   if(items.length != materials.length) {
@@ -35,8 +36,6 @@ function construct_structure(type, pos) {
 function deconstruct_structure(structure) {
 
   var job = new Deconstruct(structure);
-
   game.ship.jobs.register_job(job);
-
   console.log("deconstruct " + structure.label + " at " + pos_to_index(structure.pos));
 }

@@ -1,6 +1,12 @@
 class Item extends createjs.Container {
-  constructor(pos, container) {
+  constructor(sprite_key, pos, container) {
     super();
+
+    this.sprite_key = sprite_key;
+    this.sprite = new createjs.Sprite(game.sprites[this.sprite_key].sprite, this.sprite_key);
+    this.sprite.x = 4;
+    this.sprite.y = 4;
+    this.addChild(this.sprite);
 
     this.uid = getUID("Item");
     if(pos) {
@@ -8,13 +14,10 @@ class Item extends createjs.Container {
       this.ship = game.ship;
       this.container = container;
       this.claimed = false;
-
       this.ship.item_store.add_item(this);
     }
   }
   init(raw, objects) {
-
-
     this.type = raw.type;
     this.pos = raw.pos;
 
@@ -31,8 +34,6 @@ class Item extends createjs.Container {
     }
 
     this.ship.item_store.add_item(this);
-
- 
   }
   start(raw, objects) {
   }

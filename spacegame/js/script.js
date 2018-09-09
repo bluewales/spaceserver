@@ -92,9 +92,10 @@ function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min) + min);
 }
 
-function getUID(seed) {
-  if(!seed) {
-    seed = "";
+function getUID(tag) {
+  if(!tag) {
+    tag = "";
   }
-  return seed + "-" + Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+  var id = tag + "-" + Math.random().toString(36).substring(2) + Math.random().toString(36).substring(2);
+  return id;
 }

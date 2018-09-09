@@ -5,6 +5,9 @@ class BottomBar extends Bar {
       {
         "text":"Build",
         "card": new BuildCard()
+      }, {
+        "text": "Market",
+        "card": new MarketCard()
       }
       //this.buttons.addChild(new Button(this.button_width, this.button_height, "Crew"));
       //this.buttons.addChild(new Button(this.button_width, this.button_height, "Jobs"));

@@ -1,57 +1,29 @@
-class ControlsCard extends Card {
+class ControlsCard extends ColumnatedCard {
   constructor() {
     var width = 300;
     var height = 130;
-    var name = "Controls";
+    var label = "Controls";
 
-    super(name, width, height);
+    var columns = [
+      new InteractionCard("Action"),
+      new InteractionCard("Description")
+    ];
+
+    super(label, columns);
 
     this.x = 10;
     this.y = 100;
 
+    this.columns[0].add_text("a,s,d,w");
+    this.columns[1].add_text("scroll");
 
+    this.columns[0].add_text("q,e");
+    this.columns[1].add_text("change level");
 
-    this.line1_1 = new createjs.Text("a,s,d,w", "20px Arial", menu_palette[0]);
-    this.line1_1.x = 10;
-    this.line1_1.y = 10;
+    this.columns[0].add_text("mouse wheel");
+    this.columns[1].add_text("zoom");
 
-    this.line1_2 = new createjs.Text("scroll", "20px Arial", menu_palette[0]);
-    this.line1_2.x = 150;
-    this.line1_2.y = 10;
-
-    this.line2_1 = new createjs.Text("q,e", "20px Arial", menu_palette[0]);
-    this.line2_1.x = 10;
-    this.line2_1.y = 40;
-
-    this.line2_2 = new createjs.Text("change level", "20px Arial", menu_palette[0]);
-    this.line2_2.x = 150;
-    this.line2_2.y = 40;
-
-    this.line3_1 = new createjs.Text("mouse wheel", "20px Arial", menu_palette[0]);
-    this.line3_1.x = 10;
-    this.line3_1.y = 70;
-
-    this.line3_2 = new createjs.Text("zoom", "20px Arial", menu_palette[0]);
-    this.line3_2.x = 150;
-    this.line3_2.y = 70;
-
-    this.line4_1 = new createjs.Text("space", "20px Arial", menu_palette[0]);
-    this.line4_1.x = 10;
-    this.line4_1.y = 100;
-
-    this.line4_2 = new createjs.Text("return to center", "20px Arial", menu_palette[0]);
-    this.line4_2.x = 150;
-    this.line4_2.y = 100;
-
-
-    this.addChild(this.header);
-    this.addChild(this.line1_1);
-    this.addChild(this.line1_2);
-    this.addChild(this.line2_1);
-    this.addChild(this.line2_2);
-    this.addChild(this.line3_1);
-    this.addChild(this.line3_2);
-    this.addChild(this.line4_1);
-    this.addChild(this.line4_2);
+    this.columns[0].add_text("space bar");
+    this.columns[1].add_text("return to center");
   }
 }

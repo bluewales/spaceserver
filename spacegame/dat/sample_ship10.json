@@ -96,8 +96,8 @@
     {"pos": {"x": 1, "y": 1, "z": -1}, "name": "Constructor Bot", "ship": 98, "type": "Crew", "path_progress": 0, "cooldown": 0},
     {"pos": {"x": 0, "y": 0, "z": 0}, "type": "Steel", "ship": 98, "container": 98, "claimed": false},
     {"pos": {"x": -1, "y": 1, "z": -1}, "type": "Steel", "ship": 98, "container": 98, "claimed": false},
-    {"pos": {"x": -1, "y": 0, "z": -1}, "type": "Steel", "ship": 98, "container": 98, "claimed": false},
-    {"pos": {"x": 0, "y": 1, "z": -1}, "type": "Steel", "ship": 98, "container": 98, "claimed": false},
+    {"pos": {"x": -1, "y": 0, "z": -1}, "type": "CircuitBoard", "ship": 98, "container": 98, "claimed": false},
+    {"pos": {"x": 0, "y": 1, "z": -1}, "type": "Plastic", "ship": 98, "container": 98, "claimed": false},
     {"pos": {"x": -1, "y": -1, "z": 0}, "type": "Steel", "ship": 98, "container": 98, "claimed": false},
     {
       "type": "Ship",

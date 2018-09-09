@@ -1,14 +1,14 @@
 class InteractionCard extends Card {
-  constructor(title) {
-    var width = 300;
+  constructor(label) {
+    var width = 10;
     var height = 10;
 
-    super(title, width, height);
+    super(label, width, height);
 
 
     this.margin = this.frame.border_width;
     this.default_width = width;
-    this.default_height = 0;
+    this.default_height = this.margin;
 
     this.lines = [];
     this.line_count = 0;
@@ -16,14 +16,13 @@ class InteractionCard extends Card {
     this.width = this.default_width;
 
     this.line_height = 20;
-    this.label = title;
     this.button_width = 120;
 
     this.by_id = {};
   }
 
   set active(value) {
-    for(var i = 0; i < this.lines.length; i++) {
+    for(let i in this.lines) {
       if(value) {
         if(this.lines[i].show) this.lines[i].show();
       } else {
@@ -34,7 +33,7 @@ class InteractionCard extends Card {
   }
 
   clear_lines() {
-    for(var i = 0; i < this.lines.length; i++) {
+    for(let i in this.lines) {
       this.removeChild(this.lines[i]);
       if(this.lines[i].hide) this.lines[i].hide();
     }
@@ -42,13 +41,11 @@ class InteractionCard extends Card {
     this.height = this.default_height;
     this.width = this.default_width;
 
-    this.frame.height = this.height;
-    this.frame.width = this.width;
-
     this.by_id = {};
   }
 
   add_text(string) {
+
     var text;
     if(this.lines.length > this.line_count && this.lines[this.line_count].type == "text") {
       text = this.lines[this.line_count];
@@ -125,12 +122,37 @@ class InteractionCard extends Card {
       password = this.lines[this.line_count];
       password.placeHolder = placeHolder;
     } else {
-      var password = new TextInput(placeHolder, "password");
+      password = new TextInput(placeHolder, "password");
       password.update();
       password.type = "password";
     }
 
     return this.add_line(password);
+  }
+
+  add_picture(sprite_key) {
+    var picture;
+    if (this.lines.length > this.line_count
+        && this.lines[this.line_count].type == "picture"
+        && this.lines[this.line_count].sprite_key == sprite_key) {
+      picture = this.lines[this.line_count];
+    } else {
+      picture = new createjs.Container();
+      picture.sprite_key = sprite_key;
+      picture.type = "picture";
+
+      console.log(sprite_key);
+
+      var sprite = new createjs.Sprite(game.sprites[sprite_key].sprite, sprite_key);
+      sprite.y = (this.line_height / 2) - (sprite.spriteSheet._frameHeight/2);
+
+      picture.addChild(sprite);
+
+      picture.width = sprite.spriteSheet._frameWidth;
+      picture.height = this.line_height;
+    }
+
+    return this.add_line(picture);
   }
 
   add_line(line) {
@@ -143,14 +165,16 @@ class InteractionCard extends Card {
       this.lines.push(line);
     }
     this.line_count += 1;
+
+
     this.addChild(line);
-    line.y = this.height + this.margin;
+    line.y = this.height;
     line.x = this.margin;
     this.height += line.height + this.margin;
-    if(line.width > this.width) {
-      this.width = line.width;
+    if (this.width < line.width + this.margin*2) {
+      this.width = line.width + this.margin*2;
     }
-    for(var i = 0; i < this.lines.length; i++) {
+    for(let i in this.lines) {
       this.lines[i].x = this.width/2 - this.lines[i].width/2;
     }
     if(this.active && line.show) line.show();
@@ -166,7 +190,7 @@ class InteractionCard extends Card {
     game.ship.clear_selection();
   }
   tick() {
-    for(var i = 0; i < this.lines.length; i++) {
+    for(let i in this.lines) {
       if(this.lines[i].tick) this.lines[i].tick();
     }
   }

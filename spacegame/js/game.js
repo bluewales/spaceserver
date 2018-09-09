@@ -69,6 +69,8 @@ class Game {
 
       /* Items */
       "steel_sprite": { "sources": ["img/sliced/items_sliced/oryx_16bit_scifi_items_06.png"] },
+      "plastic_sprite": { "sources": ["img/sliced/items_sliced/oryx_16bit_scifi_items_43.png"] },
+      "cicuit_board_sprite": { "sources": ["img/sliced/items_sliced/oryx_16bit_scifi_items_65.png"] },
 
       /* Effects */
       "sparks_1": {
@@ -116,6 +118,7 @@ class Game {
       "construction_utils": { "source": "js/construction/construction_utils.js" },
       "construct": { "source": "js/construction/construct.js" },
       "deconstruct": { "source": "js/construction/deconstruct.js" },
+      "columnated_card": { "source": "js/ui/cards/columnated_card.js" },
       "controls_card": { "source": "js/ui/cards/controls_card.js" },
       "crate": { "source": "js/structure/furniture/crate.js" },
       "charging_pad": { "source": "js/structure/furniture/charging_pad.js" },
@@ -138,11 +141,15 @@ class Game {
       "logo": { "source": "js/ui/logo.js" },
       "item": { "source": "js/items/item.js" },
       "steel": { "source": "js/items/steel.js" },
-      "serialization": { "source": "js/serialization.js" },
       "item_store": { "source": "js/item_store.js" },
       "interaction_card": { "source": "js/ui/cards/interaction_card.js" },
       "login_prompt": { "source": "js/ui/cards/login_prompt.js" },
-      "canvas_input": { "source": "js/lib/CreateJSTextInput.js" }
+      "canvas_input": { "source": "js/lib/CreateJSTextInput.js" },
+      "tabbed_card": { "source": "js/ui/cards/tabbed_card.js" },
+      "market_card": { "source": "js/ui/cards/market_card.js" },
+      "circuit_board": { "source": "js/items/circuit_board.js" },
+      "plastic": { "source": "js/items/plastic.js" },
+      "serialization": { "source": "js/serialization.js" },
     };
 
 
@@ -263,8 +270,8 @@ class Game {
 
         sprite_obj.frames.width = image.width;
         sprite_obj.frames.height = image.height;
-        sprite_obj.frames.regX = (image.width - 24) / 2;
-        sprite_obj.frames.regY = (image.height - 24) / 2;
+        sprite_obj.frames.regX = (image.width - image.width) / 2;
+        sprite_obj.frames.regY = (image.height - image.height) / 2;
 
         if (sprite_obj.animations[name])
           sprite_obj.animations[name].push(j);
@@ -614,7 +621,7 @@ class Game {
     this.api.logout();
   }
 
-  login(initial_dialogue = false, message="", callback) {
+  login(initial_dialogue = false, message="") {
     if (!this.login_prompt) {
       this.login_prompt = new LoginPrompt(message);
     }

@@ -1,41 +1,5 @@
 # Todo List
 
- - &#10004; Rework login prompt
-   - &#10004; On load dialog box works
-     - &#10004; *Login button*
-     - &#10004; *Create Account* button
-     - &#10004; *Continue Without Login* button
-   - &#10004; If you're not logged in, give options to Login/Create Account in game
-     - &#10004; Button in top bar that changes between Login/Logout base on current login status
-   - &#10004; Cards like login prompt should be able to pause the game and disable everything in the background
- - &#10004; Put logo in top bar and level indicator in bottom bar
- - &#10004; Make the top and bottom bar instances of the same class since there's so much similar code between them 
- - &#10004; Clicking on things should bring up an info card
-   - &#10004; Distinguish between clicking on cells and clicking on walls
-   - &#10004; Highlight the thing that was clicked on
-   - &#10004; Clear highlights on new click
-   - &#10004; Give the name of what is highlighted
-   - &#10004; Reposition card to mouse
-   - &#10004; Option to deconstruct structures
-   - &#10004; Displays contents of crates
-   - &#10004; Show current job of crew
-   - &#10004; Show item crew is carrying
-   - &#10004; Displays progress of planned construction and deconstruction jobs
-   - &#10004; Option to cancel planned construction
- - &#10004; Construction
-   - &#10004; Knowing where to build things
-     - &#10004; Not where there is already a thing
-     - &#10004; Furniture must be built on floors
-   - &#10004; Building hatches and doors
-   - &#10004; Building furniture
-   - &#10004; Building should consumer materials which must be brought to the site by crew
-     - &#10004; Materials are claimed by the job at the time the structure is planned
-     - &#10004; If materials are not available, the structure is not planned
-   - &#10004; Deconstruct structures
-     - &#10004; Spawn materials that were used to create the structure
-     - &#10004; Deconstruction job is saved
-     - &#10004; Structures with contents (crates) spawn all contents when deconstructed
-   - &#10004; Cancel construction jobs that are in progress
  - Saving
    - &#10004; Jobs should be saved
    - &#10004; A button to force a save
@@ -116,3 +80,39 @@
    - &#10004; Instructions for basic controls
  - &#10004; Loose items are scooped up by crew and stored in crates
  - &#10004; Click and drag to pan
+ - &#10004; Rework login prompt
+   - &#10004; On load dialog box works
+     - &#10004; *Login button*
+     - &#10004; *Create Account* button
+     - &#10004; *Continue Without Login* button
+   - &#10004; If you're not logged in, give options to Login/Create Account in game
+     - &#10004; Button in top bar that changes between Login/Logout base on current login status
+   - &#10004; Cards like login prompt should be able to pause the game and disable everything in the background
+ - &#10004; Put logo in top bar and level indicator in bottom bar
+ - &#10004; Make the top and bottom bar instances of the same class since there's so much similar code between them 
+ - &#10004; Clicking on things should bring up an info card
+   - &#10004; Distinguish between clicking on cells and clicking on walls
+   - &#10004; Highlight the thing that was clicked on
+   - &#10004; Clear highlights on new click
+   - &#10004; Give the name of what is highlighted
+   - &#10004; Reposition card to mouse
+   - &#10004; Option to deconstruct structures
+   - &#10004; Displays contents of crates
+   - &#10004; Show current job of crew
+   - &#10004; Show item crew is carrying
+   - &#10004; Displays progress of planned construction and deconstruction jobs
+   - &#10004; Option to cancel planned construction
+ - &#10004; Construction
+   - &#10004; Knowing where to build things
+     - &#10004; Not where there is already a thing
+     - &#10004; Furniture must be built on floors
+   - &#10004; Building hatches and doors
+   - &#10004; Building furniture
+   - &#10004; Building should consumer materials which must be brought to the site by crew
+     - &#10004; Materials are claimed by the job at the time the structure is planned
+     - &#10004; If materials are not available, the structure is not planned
+   - &#10004; Deconstruct structures
+     - &#10004; Spawn materials that were used to create the structure
+     - &#10004; Deconstruction job is saved
+     - &#10004; Structures with contents (crates) spawn all contents when deconstructed
+   - &#10004; Cancel construction jobs that are in progress

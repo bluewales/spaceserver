@@ -13,13 +13,11 @@ var type_lookup = {
   "Construct": Construct,
   "Patrol": Patrol,
   "PutAway": PutAway,
-  "Deconstruct": Deconstruct
+  "Deconstruct": Deconstruct,
+  "CircuitBoard": CircuitBoard,
+  "Plastic": Plastic
 };
 
-function get_constructor(type) {
-  console.log(type);
-  return eval(type);
-}
 
 
 

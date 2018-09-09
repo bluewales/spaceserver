@@ -1,8 +1,8 @@
-class Steel extends Item {
+class CircuitBoard extends Item {
   constructor(pos, container) {
-    super("steel_sprite", pos, container);
-    this.label = "Steel";
-    this.type = "Steel";
+    super("cicuit_board_sprite", pos, container);
+    this.label = "Circuit Board";
+    this.type = "CircuitBoard";
   }
   init(raw, objects) {
     super.init(raw, objects);
@@ -11,3 +11,4 @@ class Steel extends Item {
     super.start(raw, objects);
   }
 }
+  

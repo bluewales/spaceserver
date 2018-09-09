@@ -13,8 +13,8 @@ class BuildCard extends Card {
     var item_width = 48;
     var item_margin = 6;
 
-    var width = item_width*2 + item_margin;
-    var height = Math.ceil(items.length/2) * (item_width + item_margin);
+    var width = item_width*2 + item_margin*3;
+    var height = Math.ceil(items.length/2) * (item_width + item_margin) + item_margin*1;
     var name = "Build";
     super(name, width, height);
 
