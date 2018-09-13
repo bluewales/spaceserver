@@ -141,10 +141,14 @@ class TabbedCard extends Card {
   }
 
   tick() {
+    
     for (let tab_name in this.pages) {
+      
       let page = this.pages[tab_name];
       let tab = this.tabs[tab_name];
-      if(tab.active) page.tick();
+      if(tab.active) {
+        page.tick();
+      }
     }
   }
 }

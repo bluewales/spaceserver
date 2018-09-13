@@ -134,6 +134,7 @@ class Game {
       "palettes": { "source": "js/palettes.js" },
       "pathfinding": { "source": "js/pathfinding.js" },
       "rooms": { "source": "js/rooms.js" },
+      "number_picker": { "source": "js/ui/number_picker.js" },
       "ship": { "source": "js/ship.js" },
       "top_bar": { "source": "js/ui/top_bar.js" },
       "wall_panel": { "source": "js/structure/walls/wall_panel.js" },

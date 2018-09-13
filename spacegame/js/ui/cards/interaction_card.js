@@ -1,6 +1,6 @@
 class InteractionCard extends Card {
   constructor(label) {
-    var width = 10;
+    var width = 300;
     var height = 10;
 
     super(label, width, height);
@@ -45,6 +45,8 @@ class InteractionCard extends Card {
   }
 
   add_text(string) {
+
+    if(string.length == 0) string = " ";
 
     var text;
     if(this.lines.length > this.line_count && this.lines[this.line_count].type == "text") {
@@ -141,8 +143,6 @@ class InteractionCard extends Card {
       picture.sprite_key = sprite_key;
       picture.type = "picture";
 
-      console.log(sprite_key);
-
       var sprite = new createjs.Sprite(game.sprites[sprite_key].sprite, sprite_key);
       sprite.y = (this.line_height / 2) - (sprite.spriteSheet._frameHeight/2);
 
@@ -153,6 +153,19 @@ class InteractionCard extends Card {
     }
 
     return this.add_line(picture);
+  }
+
+  add_number_picker(width=75, min=0, max=0) {
+    var picker;
+    if (this.lines.length > this.line_count && this.lines[this.line_count].type == "number_picker") {
+      picker = this.lines[this.line_count];
+      picker.min = min;
+      picker.max = max;
+    } else {
+      picker = new NumberPicker(width, this.line_height, min, max);
+    }
+
+    return this.add_line(picker);
   }
 
   add_line(line) {

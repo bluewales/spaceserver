@@ -25,9 +25,6 @@ class BuyCard extends ColumnatedCard {
       column.addChild(column.box);
     }
   }
-
-  tick() {
-  }
 }
 
 class SellCard extends ColumnatedCard {
@@ -39,6 +36,7 @@ class SellCard extends ColumnatedCard {
       new InteractionCard("Pictures"),
       new InteractionCard("Names"),
       new InteractionCard("Counts"),
+      new InteractionCard("Selectors"),
     ];
 
     super(label, columns);
@@ -46,30 +44,35 @@ class SellCard extends ColumnatedCard {
     this.store = game.ship.item_store;
     this.store.register_change_handler(this.read_items.bind(this));
 
+    this.count_index = 0;
+    this.icon_index = 1;
+    this.name_index = 2;
+    this.picker_index = 3;
+
     this.read_items();
   }
 
   read_items() {
     var items = this.store.get_available_item_counts()
 
-    this.columns[0].clear_lines();
-    this.columns[1].clear_lines();
-    this.columns[2].clear_lines();
+    this.columns[this.count_index].clear_lines();
+    this.columns[this.icon_index].clear_lines();
+    this.columns[this.name_index].clear_lines();
+    this.columns[this.picker_index].clear_lines();
 
-    this.columns[0].add_text(" ");
-    this.columns[1].add_text("Name");
-    this.columns[2].add_text("Count");
+    // this.columns[this.count_index].add_text("");
+    // this.columns[this.icon_index].add_text("");
+    // this.columns[this.name_index].add_text("");
+    // this.columns[this.picker_index].add_text("");
 
     for(let ix in items){
       let item = items[ix]; 
 
-      this.columns[0].add_picture(item.sprite_key);
-      this.columns[1].add_text(item.label);
-      this.columns[2].add_text(item.count + "x");
+      this.columns[this.count_index].add_text(item.count + "x");
+      this.columns[this.icon_index].add_picture(item.sprite_key);
+      this.columns[this.name_index].add_text(item.label);
+      this.columns[this.picker_index].add_number_picker(75, 0, item.count);
     }
-  }
-
-  tick() {
   }
 }
 

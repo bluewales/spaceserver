@@ -13,6 +13,8 @@ class ColumnatedCard extends Card {
       column.resize_listener = this.resize.bind(this);
       column.y = 0;
 
+      column.default_width = 1;
+
       this.addChild(column);
     }
 

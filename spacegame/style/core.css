@@ -43,10 +43,6 @@ h1 {
 html, body { margin:0; padding:0; overflow:hidden; }
 canvas, svg { position:fixed; top:0; bottom:0; left:0; right:0; height:100%; width:100%; }
 
-#menus {
-
-}
-
 #menus ul{
     position: absolute;
     padding: 3px;
@@ -105,9 +101,6 @@ canvas, svg { position:fixed; top:0; bottom:0; left:0; right:0; height:100%; wid
     float:right;
 }
 
-.menu-header {
-
-}
 
 .menu tr {
     padding: 50px;
@@ -140,9 +133,6 @@ h6 {
     cursor: pointer;
 }
 
-.prompt.message {
-
-}
 
 .prompt.message:hover {
   color: grey;

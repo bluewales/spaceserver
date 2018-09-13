@@ -63,8 +63,6 @@ class ItemStore {
         item_counts[item_label] = 1;
       }
 
-      console.log(item_label + " " + item.sprite_key);
-
       sprite_keys[item_label] = item.sprite_key;
     }
 
