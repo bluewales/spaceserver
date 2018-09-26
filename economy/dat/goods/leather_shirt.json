@@ -1,0 +1,8 @@
+{
+  "name": "leather shirt",
+  "made_by_profession": "tailor",
+  "function_for_affinity": "(R)(100)%(R)(100)%+(5)/(20)+=",
+  "function_for_utility": "(producing_skill)(3)*(affinity)(7)*(10)/+(alread_possessed)(1)+/(100)(age)-(affinity)+*(200)/=",
+  "durability": 1300,
+  "used_by_profession": []
+}

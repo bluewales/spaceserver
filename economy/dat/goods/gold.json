@@ -1,0 +1,10 @@
+{
+  "name": "gold",
+  "function_for_utility": "(producing_skill)(3)*(utilizing_skill)(7)*+(1)(alread_possessed)(10)/+/=",
+  "used_by_profession": [
+    "smith",
+    "minter"
+  ],
+  "made_by_profession": "smelter",
+  "durability": 2000
+}

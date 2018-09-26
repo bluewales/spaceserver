@@ -1,0 +1,8 @@
+{
+  "name": "sword",
+  "made_by_profession": "smith",
+  "function_for_affinity": "(R)(101)%=",
+  "function_for_utility": "(affinity)(producing_skill)+(alread_possessed)(1)+/=",
+  "durability": 2500,
+  "used_by_profession": []
+}

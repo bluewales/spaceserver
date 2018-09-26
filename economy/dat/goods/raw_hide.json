@@ -1,0 +1,9 @@
+{
+  "name": "raw hide",
+  "made_by_profession": "butcher",
+  "function_for_utility": "(utilizing_skill)(7)*(producing_skill)(3)*+(alread_possessed)(1)+/=",
+  "durability": 650,
+  "used_by_profession": [
+    "tanner"
+  ]
+}

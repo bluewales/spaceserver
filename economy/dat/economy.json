@@ -1,0 +1,9 @@
+{
+  "cities": [
+    {
+      "name": "Earth",
+      "file": "earth.json",
+      "default_population": 3
+    }
+  ]
+}

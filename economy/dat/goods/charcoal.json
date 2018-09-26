@@ -1,0 +1,9 @@
+{
+  "name": "charcoal",
+  "made_by_profession": "smith",
+  "function_for_utility": "(producing_skill)(3)*(utilizing_skill)(7)*+(1)(alread_possessed)(5)/+/=",
+  "durability": 1900,
+  "used_by_profession": [
+    "smith"
+  ]
+}

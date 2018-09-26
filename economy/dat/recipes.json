@@ -1,0 +1,1122 @@
+[
+  {
+    "required_tools": {
+      "hammer": 1
+    },
+    "beneficial_tools": {},
+    "required_materials": {
+      "iron": 1,
+      "wood": 1,
+      "charcoal": 1
+    },
+    "function_for_production": "(skill)(2)/=",
+    "products": {
+      "axe": 1
+    },
+    "action": "make axe",
+    "profession": "smith"
+  },
+  {
+    "required_tools": {
+      "knife": 1
+    },
+    "beneficial_tools": {
+      "axe": 1
+    },
+    "required_materials": {
+      "cow": 1
+    },
+    "function_for_production": "(skill)(2)/=",
+    "products": {
+      "bone": 2,
+      "sinew": 5,
+      "raw hide": 1
+    },
+    "action": "slaughter cow",
+    "profession": "butcher"
+  },
+  {
+    "required_tools": {
+      "knife": 1
+    },
+    "beneficial_tools": {},
+    "required_materials": {
+      "bone": 1
+    },
+    "function_for_production": "(skill)=",
+    "products": {
+      "bone needle": 1
+    },
+    "action": "carve bone needle",
+    "profession": "crafter"
+  },
+  {
+    "required_tools": {
+      "wood kiln": 1
+    },
+    "beneficial_tools": {},
+    "required_materials": {
+      "wood": 1
+    },
+    "function_for_production": "(skill)=",
+    "products": {
+      "charcoal": 1
+    },
+    "action": "make charcoal",
+    "profession": "farmer"
+  },
+  {
+    "required_tools": {
+      "smelting furnace": 1,
+      "hammer": 1
+    },
+    "beneficial_tools": {},
+    "required_materials": {
+      "chromium ore": 3,
+      "charcoal": 1
+    },
+    "function_for_production": "(skill)(4)/=",
+    "products": {
+      "chromium": 1
+    },
+    "action": "smelt chromium ore",
+    "profession": "smelter"
+  },
+  {
+    "required_tools": {
+      "pick axe": 1
+    },
+    "beneficial_tools": {
+      "shovel": 1
+    },
+    "required_materials": {},
+    "function_for_production": "(skill)(beneficial_tools)+(potential)*s(16)/=",
+    "products": {
+      "chromium ore": 1
+    },
+    "action": "mine chromium ore",
+    "profession": "miner"
+  },
+  {
+    "required_tools": {
+      "pick axe": 1
+    },
+    "beneficial_tools": {
+      "shovel": 1
+    },
+    "required_materials": {},
+    "function_for_production": "(skill)(beneficial_tools)+(potential)*s=",
+    "products": {
+      "copper": 1
+    },
+    "action": "mine copper",
+    "profession": "miner"
+  },
+  {
+    "required_tools": {
+      "smelting furnace": 1,
+      "hammer": 1
+    },
+    "beneficial_tools": {},
+    "required_materials": {
+      "copper coin": 1,
+      "charcoal": 1
+    },
+    "function_for_production": "(skill)(3)*=",
+    "products": {
+      "copper": 1
+    },
+    "action": "melt copper coin",
+    "profession": "smelter"
+  },
+  {
+    "required_tools": {
+      "knife": 1,
+      "hammer": 1
+    },
+    "beneficial_tools": {},
+    "required_materials": {
+      "copper": 1
+    },
+    "function_for_production": "(skill)(6)/=",
+    "products": {
+      "copper bowl": 1
+    },
+    "action": "make copper bowl",
+    "profession": "smith"
+  },
+  {
+    "required_tools": {
+      "mint": 1
+    },
+    "beneficial_tools": {
+      "hammer": 1,
+      "knife": 1
+    },
+    "required_materials": {
+      "copper": 1,
+      "charcoal": 1
+    },
+    "function_for_production": "(skill)(skill)(beneficial_tools)*s+(5)*=",
+    "products": {
+      "copper coin": 1
+    },
+    "action": "mint copper coins",
+    "profession": "minter"
+  },
+  {
+    "required_tools": {
+      "hoe": 1
+    },
+    "beneficial_tools": {},
+    "required_materials": {},
+    "function_for_production": "(skill)(potential)*s(7)/=",
+    "products": {
+      "cotton": 2
+    },
+    "action": "harvest cotton",
+    "profession": "farmer"
+  },
+  {
+    "required_tools": {
+      "spinning wheel": 1
+    },
+    "beneficial_tools": {},
+    "required_materials": {
+      "cotton thread": 3
+    },
+    "function_for_production": "(skill)=",
+    "products": {
+      "cotton cloth": 1
+    },
+    "action": "weave cotton cloth",
+    "profession": "weaver"
+  },
+  {
+    "required_tools": {
+      "steel needle": 1
+    },
+    "beneficial_tools": {
+      "pin": 1
+    },
+    "required_materials": {
+      "cotton cloth": 3,
+      "cotton thread": 2
+    },
+    "function_for_production": "(skill)(beneficial_tools)+(5)/=",
+    "products": {
+      "cotton pants": 1
+    },
+    "action": "sew cotton pants",
+    "profession": "tailor"
+  },
+  {
+    "required_tools": {
+      "steel needle": 1
+    },
+    "beneficial_tools": {
+      "pin": 1
+    },
+    "required_materials": {
+      "cotton cloth": 2,
+      "cotton thread": 1
+    },
+    "function_for_production": "(skill)(beneficial_tools)+(5)/=",
+    "products": {
+      "cotton shirt": 1
+    },
+    "action": "sew cotton shirt",
+    "profession": "tailor"
+  },
+  {
+    "required_tools": {
+      "spinning wheel": 1
+    },
+    "beneficial_tools": {},
+    "required_materials": {
+      "cotton": 1
+    },
+    "function_for_production": "(skill)=",
+    "products": {
+      "cotton thread": 1
+    },
+    "action": "spin cotton thread",
+    "profession": "spinner"
+  },
+  {
+    "required_tools": {},
+    "beneficial_tools": {},
+    "required_materials": {},
+    "function_for_production": "(1)(0)(R)(100)(skill)-%(0):?=",
+    "products": {
+      "cow": 1
+    },
+    "action": "catch cow",
+    "profession": "hunter"
+  },
+  {
+    "required_tools": {},
+    "beneficial_tools": {},
+    "required_materials": {
+      "cow": 2
+    },
+    "function_for_production": "(1)=",
+    "products": {
+      "cow": 3
+    },
+    "action": "breed cow",
+    "profession": "farmer"
+  },
+  {
+    "required_tools": {
+      "grindstone": 1
+    },
+    "beneficial_tools": {},
+    "required_materials": {
+      "wheat": 1
+    },
+    "function_for_production": "(skill)(3)/=",
+    "products": {
+      "flour": 2
+    },
+    "action": "mill flour",
+    "profession": "miller"
+  },
+  {
+    "required_tools": {
+      "oven": 1
+    },
+    "beneficial_tools": {},
+    "required_materials": {
+      "flour": 10,
+      "wood": 1
+    },
+    "function_for_production": "(skill)(20)/(2)+=",
+    "products": {
+      "food": 10
+    },
+    "action": "bake bread",
+    "profession": "cook"
+  },
+  {
+    "required_tools": {
+      "smelting furnace": 1,
+      "hammer": 1
+    },
+    "beneficial_tools": {},
+    "required_materials": {
+      "gold nugget": 1,
+      "charcoal": 2
+    },
+    "function_for_production": "(skill)(8)/=",
+    "products": {
+      "gold": 1
+    },
+    "action": "smelt gold nugget",
+    "profession": "smelter"
+  },
+  {
+    "required_tools": {
+      "smelting furnace": 1,
+      "hammer": 1
+    },
+    "beneficial_tools": {},
+    "required_materials": {
+      "gold coin": 1,
+      "charcoal": 1
+    },
+    "function_for_production": "(skill)(3)/=",
+    "products": {
+      "gold": 1
+    },
+    "action": "melt gold coin",
+    "profession": "smelter"
+  },
+  {
+    "required_tools": {
+      "mint": 1,
+      "hammer": 1,
+      "knife": 1
+    },
+    "beneficial_tools": {},
+    "required_materials": {
+      "gold": 1,
+      "charcoal": 1
+    },
+    "function_for_production": "(skill)(10)/=",
+    "products": {
+      "gold coin": 1
+    },
+    "action": "mint gold coins",
+    "profession": "minter"
+  },
+  {
+    "required_tools": {
+      "knife": 1,
+      "hammer": 1
+    },
+    "beneficial_tools": {},
+    "required_materials": {
+      "gold": 1,
+      "charcoal": 1
+    },
+    "function_for_production": "(skill)(6)/=",
+    "products": {
+      "gold necklace": 1
+    },
+    "action": "make gold necklace",
+    "profession": "smith"
+  },
+  {
+    "required_tools": {
+      "pick axe": 1,
+      "hammer": 1
+    },
+    "beneficial_tools": {},
+    "required_materials": {},
+    "function_for_production": "(skill)(6)/=",
+    "products": {
+      "gold nugget": 1
+    },
+    "action": "mine gold nugget",
+    "profession": "miner"
+  },
+  {
+    "required_tools": {
+      "knife": 1,
+      "hammer": 1
+    },
+    "beneficial_tools": {},
+    "required_materials": {
+      "gold": 1,
+      "charcoal": 1
+    },
+    "function_for_production": "(skill)(6)/=",
+    "products": {
+      "gold ring": 1
+    },
+    "action": "make gold ring",
+    "profession": "smith"
+  },
+  {
+    "required_tools": {},
+    "beneficial_tools": {},
+    "required_materials": {
+      "stone": 4
+    },
+    "function_for_production": "(skill)(2)/=",
+    "products": {
+      "grindstone": 1
+    },
+    "action": "carve grindstone",
+    "profession": "crafter"
+  },
+  {
+    "required_tools": {},
+    "beneficial_tools": {
+      "hammer": 1
+    },
+    "required_materials": {
+      "iron": 2,
+      "wood": 1
+    },
+    "function_for_production": "(skill)(2)/(1)+=",
+    "products": {
+      "hammer": 1
+    },
+    "action": "make hammer",
+    "profession": "smith"
+  },
+  {
+    "required_tools": {},
+    "beneficial_tools": {
+      "axe": 1
+    },
+    "required_materials": {
+      "wood": 1
+    },
+    "function_for_production": "(skill)(3)/=",
+    "products": {
+      "hoe": 1
+    },
+    "action": "make hoe",
+    "profession": "crafter"
+  },
+  {
+    "required_tools": {
+      "smelting furnace": 1
+    },
+    "beneficial_tools": {},
+    "required_materials": {
+      "iron ore": 1,
+      "charcoal": 1
+    },
+    "function_for_production": "(skill)(3)/=",
+    "products": {
+      "iron": 1
+    },
+    "action": "smelt iron ore",
+    "profession": "smelter"
+  },
+  {
+    "required_tools": {},
+    "beneficial_tools": {},
+    "required_materials": {},
+    "function_for_production": "(1)(0)(R)(100)%(skill)(potential)*s<?=",
+    "products": {
+      "iron ore": 1
+    },
+    "action": "find iron ore",
+    "profession": "miner"
+  },
+  {
+    "required_tools": {
+      "pick axe": 1,
+      "shovel": 1
+    },
+    "beneficial_tools": {
+      "shovel": 1
+    },
+    "required_materials": {},
+    "function_for_production": "(skill)(beneficial_tools)+(2)/(potential)*s=",
+    "products": {
+      "iron ore": 1
+    },
+    "action": "mine iron ore",
+    "profession": "miner"
+  },
+  {
+    "required_tools": {
+      "hammer": 1
+    },
+    "beneficial_tools": {},
+    "required_materials": {
+      "iron": 1,
+      "charcoal": 2,
+      "wood": 1
+    },
+    "function_for_production": "(skill)=",
+    "products": {
+      "knife": 1
+    },
+    "action": "make knife",
+    "profession": "smith"
+  },
+  {
+    "required_tools": {
+      "knife": 1
+    },
+    "beneficial_tools": {},
+    "required_materials": {
+      "raw hide": 1
+    },
+    "function_for_production": "(skill)=",
+    "products": {
+      "leather": 1
+    },
+    "action": "tan leather",
+    "profession": "tanner"
+  },
+  {
+    "required_tools": {
+      "bone needle": 1
+    },
+    "beneficial_tools": {
+      "pin": 1
+    },
+    "required_materials": {
+      "leather": 1,
+      "sinew": 3
+    },
+    "function_for_production": "(skill)(beneficial_tools)+(5)/=",
+    "products": {
+      "leather pants": 1
+    },
+    "action": "sew leather pants",
+    "profession": "tailor"
+  },
+  {
+    "required_tools": {
+      "smelting furnace": 1,
+      "hammer": 1
+    },
+    "beneficial_tools": {},
+    "required_materials": {
+      "silver ore": 1,
+      "charcoal": 2
+    },
+    "function_for_production": "(skill)(beneficial_tools)+(3)/=",
+    "products": {
+      "leather shirt": 1
+    },
+    "action": "smelt silver ore",
+    "profession": "smelter"
+  },
+  {
+    "required_tools": {
+      "hammer": 1,
+      "knife": 1
+    },
+    "beneficial_tools": {},
+    "required_materials": {
+      "steel": 3,
+      "iron": 2,
+      "chromium": 2,
+      "wood": 10
+    },
+    "function_for_production": "(skill)(20)/=",
+    "products": {
+      "mint": 1
+    },
+    "action": "build mint",
+    "profession": "minter"
+  },
+  {
+    "required_tools": {
+      "smelting furnace": 1,
+      "hammer": 1
+    },
+    "beneficial_tools": {},
+    "required_materials": {
+      "nickel ore": 2,
+      "charcoal": 1
+    },
+    "function_for_production": "(skill)(beneficial_tools)+(2)/=",
+    "products": {
+      "nickel": 1
+    },
+    "action": "smelt nickel ore",
+    "profession": "smelter"
+  },
+  {
+    "required_tools": {
+      "pick axe": 1
+    },
+    "beneficial_tools": {
+      "shovel": 1
+    },
+    "required_materials": {},
+    "function_for_production": "(skill)(beneficial_tools)+(potential)*s(12)/=",
+    "products": {
+      "nickel ore": 1
+    },
+    "action": "mine nickel ore",
+    "profession": "miner"
+  },
+  {
+    "required_tools": {},
+    "beneficial_tools": {},
+    "required_materials": {
+      "stone": 5
+    },
+    "function_for_production": "(skill)(beneficial_tools)+(5)/=",
+    "products": {
+      "oven": 1
+    },
+    "action": "construct oven",
+    "profession": "crafter"
+  },
+  {
+    "required_tools": {
+      "steel needle": 1
+    },
+    "beneficial_tools": {},
+    "required_materials": {
+      "cotton": 1
+    },
+    "function_for_production": "(skill)(beneficial_tools)+(3)/=",
+    "products": {
+      "pair of cotton socks": 1
+    },
+    "action": "sew socks",
+    "profession": "tailor"
+  },
+  {
+    "required_tools": {
+      "wooden needle": 1
+    },
+    "beneficial_tools": {},
+    "required_materials": {
+      "wool": 1
+    },
+    "function_for_production": "(skill)(beneficial_tools)+(4)/=",
+    "products": {
+      "pair of wool socks": 1
+    },
+    "action": "smelt silver ore",
+    "profession": "crafter"
+  },
+  {
+    "required_tools": {
+      "hammer": 1
+    },
+    "beneficial_tools": {},
+    "required_materials": {
+      "iron": 1,
+      "wood": 1,
+      "charcoal": 1
+    },
+    "function_for_production": "(skill)(beneficial_tools)+(7)/=",
+    "products": {
+      "pick axe": 1
+    },
+    "action": "forge pick axe",
+    "profession": "smith"
+  },
+  {
+    "required_tools": {
+      "hammer": 1
+    },
+    "beneficial_tools": {},
+    "required_materials": {
+      "iron": 1,
+      "charcoal": 1
+    },
+    "function_for_production": "(skill)(beneficial_tools)+(2)/=",
+    "products": {
+      "pin": 1
+    },
+    "action": "forge pin",
+    "profession": "smith"
+  },
+  {
+    "required_tools": {
+      "knife": 1
+    },
+    "beneficial_tools": {},
+    "required_materials": {
+      "wood": 3
+    },
+    "function_for_production": "(skill)(2)/=",
+    "products": {
+      "rake": 1
+    },
+    "action": "make rake",
+    "profession": "crafter"
+  },
+  {
+    "required_tools": {
+      "hammer": 1
+    },
+    "beneficial_tools": {},
+    "required_materials": {
+      "iron": 1,
+      "wood": 1
+    },
+    "function_for_production": "(skill)(beneficial_tools)+(3)/=",
+    "products": {
+      "saw": 1
+    },
+    "action": "make saw",
+    "profession": "smith"
+  },
+  {
+    "required_tools": {},
+    "beneficial_tools": {},
+    "required_materials": {},
+    "function_for_production": "(1)(0)(R)(100)(skill)-%(0):?=",
+    "products": {
+      "sheep": 1
+    },
+    "action": "catch sheep",
+    "profession": "hunter"
+  },
+  {
+    "required_tools": {},
+    "beneficial_tools": {},
+    "required_materials": {
+      "sheep": 2
+    },
+    "function_for_production": "(1)=",
+    "products": {
+      "sheep": 3
+    },
+    "action": "breed sheep",
+    "profession": "farmer"
+  },
+  {
+    "required_tools": {
+      "hammer": 1
+    },
+    "beneficial_tools": {},
+    "required_materials": {
+      "wood": 1,
+      "iron": 2
+    },
+    "function_for_production": "(skill)(3)/=",
+    "products": {
+      "shovel": 1
+    },
+    "action": "make shovel",
+    "profession": "smith"
+  },
+  {
+    "required_tools": {
+      "smelting furnace": 1,
+      "hammer": 1
+    },
+    "beneficial_tools": {},
+    "required_materials": {
+      "silver ore": 1,
+      "charcoal": 3
+    },
+    "function_for_production": "(skill)(6)/=",
+    "products": {
+      "silver": 1
+    },
+    "action": "smelt silver ore",
+    "profession": "smelter"
+  },
+  {
+    "required_tools": {
+      "smelting furnace": 1,
+      "hammer": 1
+    },
+    "beneficial_tools": {},
+    "required_materials": {
+      "silver coin": 1,
+      "charcoal": 2
+    },
+    "function_for_production": "(skill)=",
+    "products": {
+      "silver": 1
+    },
+    "action": "melt silver coin",
+    "profession": "smelter"
+  },
+  {
+    "required_tools": {
+      "mint": 1,
+      "hammer": 1
+    },
+    "beneficial_tools": {
+      "knife": 1
+    },
+    "required_materials": {
+      "silver": 1,
+      "charcoal": 2
+    },
+    "function_for_production": "(skill)(skill)(beneficial_tools)*s+(2)/=",
+    "products": {
+      "silver coin": 1
+    },
+    "action": "mint silver coins",
+    "profession": "minter"
+  },
+  {
+    "required_tools": {
+      "pick axe": 1
+    },
+    "beneficial_tools": {
+      "hammer": 1
+    },
+    "required_materials": {},
+    "function_for_production": "(skill)(beneficial_tools)+(12)/=",
+    "products": {
+      "silver ore": 1
+    },
+    "action": "mine silver ore",
+    "profession": "miner"
+  },
+  {
+    "required_tools": {
+      "knife": 1,
+      "hammer": 1
+    },
+    "beneficial_tools": {},
+    "required_materials": {
+      "silver": 1
+    },
+    "function_for_production": "(skill)(6)/=",
+    "products": {
+      "silver plate": 1
+    },
+    "action": "make silver plate",
+    "profession": "smith"
+  },
+  {
+    "required_tools": {},
+    "beneficial_tools": {},
+    "required_materials": {
+      "stone": 1
+    },
+    "function_for_production": "(skill)(5)/=",
+    "products": {
+      "smelting furnace": 1
+    },
+    "action": "construct smelting furnace",
+    "profession": "smelter"
+  },
+  {
+    "required_tools": {
+      "axe": 1,
+      "knife": 1
+    },
+    "beneficial_tools": {},
+    "required_materials": {
+      "wood": 1
+    },
+    "function_for_production": "(skill)(5)/=",
+    "products": {
+      "spinning wheel": 1
+    },
+    "action": "make spinning wheel",
+    "profession": "crafter"
+  },
+  {
+    "required_tools": {
+      "smelting furnace": 1,
+      "hammer": 1
+    },
+    "beneficial_tools": {},
+    "required_materials": {
+      "iron": 2,
+      "iron ore": 1,
+      "charcoal": 3,
+      "nickel": 1,
+      "chromium": 1
+    },
+    "function_for_production": "(skill)(2)/=",
+    "products": {
+      "steel": 1
+    },
+    "action": "make steel",
+    "profession": "smelter"
+  },
+  {
+    "required_tools": {
+      "hammer": 1
+    },
+    "beneficial_tools": {},
+    "required_materials": {
+      "steel": 1,
+      "charcoal": 1
+    },
+    "function_for_production": "(skill)=",
+    "products": {
+      "steel needle": 1
+    },
+    "action": "forge needle",
+    "profession": "smith"
+  },
+  {
+    "required_tools": {},
+    "beneficial_tools": {
+      "pick axe": 1,
+      "shovel": 1
+    },
+    "required_materials": {},
+    "function_for_production": "(R)(skill)%(beneficial_tools)+(10)/=",
+    "products": {
+      "stone": 5
+    },
+    "action": "gather stone",
+    "profession": "miner"
+  },
+  {
+    "required_tools": {
+      "hammer": 1,
+      "knife": 1
+    },
+    "beneficial_tools": {},
+    "required_materials": {
+      "steel": 4,
+      "bone": 1,
+      "charcoal": 2
+    },
+    "function_for_production": "(skill)=",
+    "products": {
+      "sword": 1
+    },
+    "action": "forge sword",
+    "profession": "smith"
+  },
+  {
+    "required_tools": {
+      "hoe": 1
+    },
+    "beneficial_tools": {
+      "rake": 1,
+      "shovel": 1
+    },
+    "required_materials": {},
+    "function_for_production": "(skill)(beneficial_tools)+=",
+    "products": {
+      "wheat": 1
+    },
+    "action": "grow wheat",
+    "profession": "crafter"
+  },
+  {
+    "required_tools": {},
+    "beneficial_tools": {},
+    "required_materials": {},
+    "function_for_production": "(skill)(10)/(potential)*(100)/(1)+=",
+    "products": {
+      "wood": 1
+    },
+    "action": "chop wood",
+    "profession": "lumber jack"
+  },
+  {
+    "required_tools": {
+      "axe": 1
+    },
+    "beneficial_tools": {
+      "saw": 1
+    },
+    "required_materials": {},
+    "function_for_production": "(skill)(beneficial_tools)*s(potential)*s(2)/=",
+    "products": {
+      "wood": 2
+    },
+    "action": "chop wood",
+    "profession": "lumber jack"
+  },
+  {
+    "required_tools": {
+      "knife": 1
+    },
+    "beneficial_tools": {},
+    "required_materials": {
+      "wood": 1
+    },
+    "function_for_production": "(skill)=",
+    "products": {
+      "wooden needle": 1
+    },
+    "action": "carve wooden needle",
+    "profession": "crafter"
+  },
+  {
+    "required_tools": {},
+    "beneficial_tools": {},
+    "required_materials": {
+      "stone": 3,
+      "wood": 1
+    },
+    "function_for_production": "(skill)(3)/=",
+    "products": {
+      "wood kiln": 1
+    },
+    "action": "build wood kiln",
+    "profession": "smelter"
+  },
+  {
+    "required_tools": {
+      "knife": 1
+    },
+    "beneficial_tools": {},
+    "required_materials": {
+      "sheep": 1
+    },
+    "function_for_production": "(skill)(5)/=",
+    "products": {
+      "wool fiber": 1
+    },
+    "action": "shear sheep",
+    "profession": "farmer"
+  },
+  {
+    "required_tools": {
+      "wooden needle": 1
+    },
+    "beneficial_tools": {
+      "pin": 1
+    },
+    "required_materials": {
+      "wool": 3,
+      "wool thread": 3
+    },
+    "function_for_production": "(skill)(beneficial_tools)+(5)/(1)+=",
+    "products": {
+      "wool pants": 1
+    },
+    "action": "sew wool pants",
+    "profession": "tailor"
+  },
+  {
+    "required_tools": {
+      "steel needle": 1
+    },
+    "beneficial_tools": {
+      "pin": 10
+    },
+    "required_materials": {
+      "wool": 3,
+      "wool thread": 2
+    },
+    "function_for_production": "(skill)(beneficial_tools)+(3)/=",
+    "products": {
+      "wool pants": 1
+    },
+    "action": "sew wool pants",
+    "profession": "tailor"
+  },
+  {
+    "required_tools": {
+      "wooden needle": 1
+    },
+    "beneficial_tools": {
+      "pin": 10
+    },
+    "required_materials": {
+      "wool": 1,
+      "wool thread": 2
+    },
+    "function_for_production": "(skill)(beneficial_tools)+(5)/=",
+    "products": {
+      "wool shirt": 1
+    },
+    "action": "sew wool shirt",
+    "profession": "tailor"
+  },
+  {
+    "required_tools": {
+      "steel needle": 1
+    },
+    "beneficial_tools": {
+      "pin": 10
+    },
+    "required_materials": {
+      "wool": 1,
+      "wool thread": 1
+    },
+    "function_for_production": "(skill)(beneficial_tools)+(3)/=",
+    "products": {
+      "wool shirt": 1
+    },
+    "action": "sew wool shirt",
+    "profession": "tailor"
+  },
+  {
+    "required_tools": {
+      "spinning wheel": 1
+    },
+    "beneficial_tools": {},
+    "required_materials": {
+      "wool fiber": 1
+    },
+    "function_for_production": "(skill)=",
+    "products": {
+      "wool thread": 3
+    },
+    "action": "spin wool",
+    "profession": "spinner"
+  },
+  {
+    "required_tools": {
+      "spinning wheel": 1
+    },
+    "beneficial_tools": {},
+    "required_materials": {
+      "wool thread": 5
+    },
+    "function_for_production": "(skill)=",
+    "products": {
+      "wool": 1
+    },
+    "action": "weave wool cloth",
+    "profession": "weaver"
+  }
+]

@@ -1,0 +1,8 @@
+{
+  "name": "gold necklace",
+  "made_by_profession": "smith",
+  "function_for_affinity": "(R)(100)%(R)(100)%+(2)/=",
+  "function_for_utility": "(producing_skill)(3)*(affinity)(7)*(10)/+(alread_possessed)(1)+/(100)(age)-(affinity)+*(200)/=",
+  "durability": 800,
+  "used_by_profession": []
+}

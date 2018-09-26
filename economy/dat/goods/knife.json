@@ -1,0 +1,11 @@
+{
+  "name": "knife",
+  "made_by_profession": "smith",
+  "function_for_utility": "(utilizing_skill)(7)*(producing_skill)(3)*+(alread_possessed)(1)+/=",
+  "durability": 1800,
+  "used_by_profession": [
+    "carpenter",
+    "crafter",
+    "farmer"
+  ]
+}

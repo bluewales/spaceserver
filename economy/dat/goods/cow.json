@@ -1,0 +1,11 @@
+{
+  "name": "cow",
+  "made_by_profession": "hunter",
+  "function_for_affinity": "(100)(0)(R)(1000)%(1):?=",
+  "function_for_utility": "(affinity)(producing_skill)(3)*(utilizing_skill)(7)*+(affinity)?(1)(alread_possessed)(5)/+/=",
+  "durability": 900,
+  "used_by_profession": [
+    "butcher",
+    "hunter"
+  ]
+}

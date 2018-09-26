@@ -1,0 +1,10 @@
+{
+  "name": "bone",
+  "made_by_profession": "butcher",
+  "function_for_utility": "(producing_skill)(3)*(utilizing_skill)(7)*+(1)(alread_possessed)(5)/+/=",
+  "durability": 1800,
+  "used_by_profession": [
+    "crafter",
+    "blogger"
+  ]
+}

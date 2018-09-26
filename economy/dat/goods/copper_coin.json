@@ -1,0 +1,8 @@
+{
+  "name": "copper coin",
+  "made_by_profession": "minter",
+  "function_for_utility": "(0)=",
+  "durability": 0,
+  "used_by_profession": [],
+  "default_price": 10
+}

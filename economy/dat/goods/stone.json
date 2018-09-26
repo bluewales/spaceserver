@@ -1,0 +1,9 @@
+{
+  "name": "stone",
+  "made_by_profession": "miner",
+  "function_for_utility": "(producing_skill)(3)*(utilizing_skill)(7)*+(1)(alread_possessed)(5)/+/=",
+  "durability": 2000,
+  "used_by_profession": [
+    "crafter"
+  ]
+}

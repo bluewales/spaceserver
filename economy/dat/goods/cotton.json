@@ -1,0 +1,10 @@
+{
+  "name": "cotton",
+  "made_by_profession": "farmer",
+  "function_for_utility": "(producing_skill)(3)*(utilizing_skill)(7)*+(1)(alread_possessed)(5)/+/=",
+  "durability": 1250,
+  "function_for_potential": "(P1)(100)(P2)-*s(0)(P3)(0):?=",
+  "used_by_profession": [
+    "spinner"
+  ]
+}

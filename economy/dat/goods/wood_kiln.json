@@ -1,0 +1,9 @@
+{
+  "name": "wood kiln",
+  "made_by_profession": "mason",
+  "function_for_utility": "(utilizing_skill)(7)*(producing_skill)(3)*+(alread_possessed)(1)+/=",
+  "durability": 1800,
+  "used_by_profession": [
+    "smith"
+  ]
+}

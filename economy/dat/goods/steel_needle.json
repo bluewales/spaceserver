@@ -1,0 +1,9 @@
+{
+  "name": "steel needle",
+  "made_by_profession": "smith",
+  "function_for_utility": "(utilizing_skill)(7)*(producing_skill)(3)*+(alread_possessed)(1)+/=",
+  "durability": 1600,
+  "used_by_profession": [
+    "tailor"
+  ]
+}
