@@ -66,6 +66,8 @@ class Market:
 
     self.bids[good_name].append(bid)
 
+    citizen.city.register_bids(good_name, count)
+
   def submit_offer_from_citizen(self, citizen, good_name, count, min_price):
 
     offer = {
@@ -78,6 +80,8 @@ class Market:
       self.offers[good_name] = []
 
     self.offers[good_name].append(offer)
+
+    citizen.city.register_offers(good_name, count)
 
 
   def facilitate_trades(self):
@@ -124,6 +128,7 @@ class Market:
             del good_bids[0]
             continue
           bid['citizen'].bought(good_name, quantity, price)
+          bid['citizen'].city.register_trades(good_name, quantity)
 
         for offer in good_offers:
           quantity = offer['count']
@@ -131,6 +136,7 @@ class Market:
             del good_offers[0]
             continue
           offer['citizen'].sold(good_name, quantity, price)
+          offer['citizen'].city.register_trades(good_name, quantity)
         continue
 
       done = False
@@ -162,7 +168,8 @@ class Market:
         bid['citizen'].bought(good_name, quantity, price)
         offer['citizen'].sold(good_name, quantity, price)
 
-        print("%s buys %d %s from %s for %d" % (bid['citizen'].first_name, quantity, good_name, offer['citizen'].first_name, price))
+        # print("%s buys %d %s from %s for %d" % (bid['citizen'].first_name, quantity, good_name, offer['citizen'].first_name, price))
+        bid['citizen'].city.register_trades(good_name, quantity)
 
         offer['count'] -= quantity
         bid['count'] -= quantity

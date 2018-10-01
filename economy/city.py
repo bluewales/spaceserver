@@ -31,6 +31,8 @@ class City:
 
     self.economy = Economy(data_path)
 
+    self.history = None
+
     if os.path.isfile(self.file_name):
       self.load()
     else:
@@ -77,11 +79,9 @@ class City:
       json.dump(city_data, json_file)
       json_file.close()
 
-
-  
-
-
   def advance_day(self) :
+    self.history_blank_line()
+
     self.day += 1
 
     print("%d citizens" % (len(self.citizens)))
@@ -92,3 +92,99 @@ class City:
 
     for citizen in self.citizens:
       citizen.expire_goods()
+
+    self.save_history()
+
+  def history_blank_line(self):
+    line = {
+      "goods": {},
+      "recipes": {},
+      "day": 0,
+      "money": 0,
+      "starving": 0
+    }
+    for good_name in self.economy.goods:
+      line['goods'][good_name] = {
+        "price": self.market.default_price,
+        "count": 0,
+        "produced": 0,
+        "consumed": 0,
+        "offers": 0,
+        "bids": 0,
+        "trades": 0
+      }
+      if "default_price" in self.economy.goods[good_name]:
+        line['goods'][good_name]['default_price'] = self.economy.goods[good_name]['default_price']
+
+    for recipe in self.economy.recipes:
+      action = recipe['action']
+      line['recipes'][action] = {
+        "planned": 0,
+        "produced": 0
+      }
+    self.current_line = line
+    return line
+
+  def check_history(self):
+    if self.history is None:
+      self.history = {}
+
+
+  def save_history(self):
+    self.check_history()
+    resolution = 1
+
+    self.current_line['day'] = self.day
+
+    for citizen in self.citizens:
+      self.current_line['money'] += citizen.money
+
+    for good_name in self.economy.goods:
+      self.current_line['goods'][good_name]['price'] = self.market.prices[good_name]
+
+    while resolution <= self.day:
+      current_line = self.current_line
+      ressolution_key = str(resolution)
+      if ressolution_key not in self.history:
+        self.history[ressolution_key] = []
+        self.history[ressolution_key].append(self.history_blank_line())
+        self.history[ressolution_key][0]['money'] = self.economy.default_money * self.default_population
+      if self.day % resolution == 0:
+        self.history[ressolution_key].append(current_line)
+
+      if len(self.history[ressolution_key]) > 100:
+        self.history[ressolution_key] = self.history[ressolution_key][-1000:]
+      
+      resolution *= 10
+
+  def register_detail(self, detail, good_name, count):
+    self.current_line['goods'][good_name][detail] += count
+
+  def register_possessions(self, possessions):
+    for good_name in possessions:
+      count = possessions[good_name]
+      self.register_detail("count", good_name, count)
+
+  def register_produced(self, good_name, count):
+    self.register_detail("produced", good_name, count)
+
+  def register_consumed(self, good_name, count):
+    self.register_detail("consumed", good_name, count)
+
+  def register_offers(self, good_name, count):
+    self.register_detail("offers", good_name, count)
+
+  def register_bids(self, good_name, count):
+    self.register_detail("bids", good_name, count)
+
+  def register_trades(self, good_name, count):
+    self.register_detail("trades", good_name, count)
+
+  def register_starvation(self):
+    self.current_line['starving'] += 1
+
+  def register_plan(self, action):
+    self.current_line['recipes'][action]['planned'] += 1
+
+  def register_production(self, action):
+    self.current_line['recipes'][action]['produced'] += 1

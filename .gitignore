@@ -9,3 +9,4 @@ matrix.py
 /test
 /fonts
 *.pyc
+economy/history.json

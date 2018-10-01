@@ -115,13 +115,8 @@ def evaluate_one_param(op, a):
 if __name__ == '__main__':
 
   params = {
-    "P1": 10,
-    "P2": 12,
-    "P3": 73,
-    "P4": 23,
-    "P5": 19,
-    "P6": 99
-
+    "age": 31,
+    "alread_possessed": 32
   }
 
   
@@ -129,4 +124,5 @@ if __name__ == '__main__':
   test_string = "(100)(0)(R)(1000)%(1):?="
   test_string = "(P4)(3)*(P2)(7)*(10)/+(P3)(1)+/(100)(P6)-(P2)+*(200)/="
   test_string = "(R)(100)%(R)(100)%+(2)/="
+  test_string = "(age)(10)*(0)(age)(alread_possessed)>?="
   print(rvp_parse(test_string, params))

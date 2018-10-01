@@ -2,7 +2,7 @@
   "name": "mint",
   "made_by_profession": "minter",
   "function_for_utility": "(utilizing_skill)(15)*(alread_possessed)(1)+/=",
-  "durability": 400,
+  "durability": 4000,
   "used_by_profession": [
     "minter"
   ]

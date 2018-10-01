@@ -90,7 +90,7 @@
       "shovel": 1
     },
     "required_materials": {},
-    "function_for_production": "(skill)(beneficial_tools)+(potential)*s(16)/=",
+    "function_for_production": "(R)(skill)%s(beneficial_tools)+(potential)*s=",
     "products": {
       "chromium ore": 1
     },
@@ -157,7 +157,7 @@
       "copper": 1,
       "charcoal": 1
     },
-    "function_for_production": "(skill)(skill)(beneficial_tools)*s+(5)*=",
+    "function_for_production": "(skill)(skill)(beneficial_tools)*+s=",
     "products": {
       "copper coin": 1
     },
@@ -170,7 +170,7 @@
     },
     "beneficial_tools": {},
     "required_materials": {},
-    "function_for_production": "(skill)(potential)*s(7)/=",
+    "function_for_production": "(skill)(potential)*s=",
     "products": {
       "cotton": 2
     },
@@ -203,7 +203,7 @@
       "cotton cloth": 3,
       "cotton thread": 2
     },
-    "function_for_production": "(skill)(beneficial_tools)+(5)/=",
+    "function_for_production": "(skill)(beneficial_tools)+s=",
     "products": {
       "cotton pants": 1
     },
@@ -221,7 +221,7 @@
       "cotton cloth": 2,
       "cotton thread": 1
     },
-    "function_for_production": "(skill)(beneficial_tools)+(5)/=",
+    "function_for_production": "(skill)(beneficial_tools)+s=",
     "products": {
       "cotton shirt": 1
     },
@@ -288,10 +288,10 @@
     },
     "beneficial_tools": {},
     "required_materials": {
-      "flour": 10,
+      "flour": 5,
       "wood": 1
     },
-    "function_for_production": "(skill)(20)/(2)+=",
+    "function_for_production": "(skill)(10)/(2)+=",
     "products": {
       "food": 10
     },
@@ -308,7 +308,7 @@
       "gold nugget": 1,
       "charcoal": 2
     },
-    "function_for_production": "(skill)(8)/=",
+    "function_for_production": "(skill)(4)/=",
     "products": {
       "gold": 1
     },
@@ -906,7 +906,7 @@
       "shovel": 1
     },
     "required_materials": {},
-    "function_for_production": "(R)(skill)%(beneficial_tools)+(10)/=",
+    "function_for_production": "(R)(skill)%(beneficial_tools)+=",
     "products": {
       "stone": 5
     },
@@ -951,7 +951,7 @@
     "required_tools": {},
     "beneficial_tools": {},
     "required_materials": {},
-    "function_for_production": "(skill)(10)/(potential)*(100)/(1)+=",
+    "function_for_production": "(skill)(potential)*(100)/(1)+=",
     "products": {
       "wood": 1
     },
@@ -1028,7 +1028,7 @@
       "wool": 3,
       "wool thread": 3
     },
-    "function_for_production": "(skill)(beneficial_tools)+(5)/(1)+=",
+    "function_for_production": "(skill)(beneficial_tools)(1)++=",
     "products": {
       "wool pants": 1
     },
@@ -1046,7 +1046,7 @@
       "wool": 3,
       "wool thread": 2
     },
-    "function_for_production": "(skill)(beneficial_tools)+(3)/=",
+    "function_for_production": "(skill)(beneficial_tools)+=",
     "products": {
       "wool pants": 1
     },
@@ -1064,7 +1064,7 @@
       "wool": 1,
       "wool thread": 2
     },
-    "function_for_production": "(skill)(beneficial_tools)+(5)/=",
+    "function_for_production": "(skill)(beneficial_tools)+=",
     "products": {
       "wool shirt": 1
     },
@@ -1082,7 +1082,7 @@
       "wool": 1,
       "wool thread": 1
     },
-    "function_for_production": "(skill)(beneficial_tools)+(3)/=",
+    "function_for_production": "(skill)(beneficial_tools)+=",
     "products": {
       "wool shirt": 1
     },

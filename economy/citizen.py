@@ -47,11 +47,9 @@ class Citizen:
       self.possessions = data['possessions']
 
       self.birthdate = data['birthdate']
-
-      self.recipe_ix = data['recipe_ix']
     else:    
 
-      print("RESTARTING")
+      #print("RESTARTING")
 
       self.money = self.economy.default_money
 
@@ -79,13 +77,22 @@ class Citizen:
         self.possessions[good_name] = 0
 
       self.birthdate = random.randrange(20,100)
-
-      self.recipe_ix = 0
     
     self.margin = 0
 
   def expire_goods(self):
-    pass
+    for good_name in self.possessions:
+      durability = self.goods[good_name]['durability']
+      if durability == 0:
+        continue
+      possessed = self.possessions[good_name]
+      if possessed == 0:
+        continue
+      if durability > possessed:
+        if random.randrange(durability) < possessed:
+          self.possessions[good_name] -= 1
+      else:
+        self.possessions[good_name] -= int(possessed / durability)
 
   def serialize(self):
     result = {
@@ -95,8 +102,7 @@ class Citizen:
         "skills": self.skills,
         "affinities": self.affinities,
         "possessions": self.possessions,
-        "birthdate": self.birthdate,
-        "recipe_ix": self.recipe_ix
+        "birthdate": self.birthdate
     }
     return result
 
@@ -143,9 +149,9 @@ class Citizen:
         quantity = self.get_quantity_producable(recipe, True)
         if recipe['products']['food'] * quantity >= self.one_round_food:
           self.produce(recipe)
-          print("%s %s will scavenges by %s" % (self.first_name, self.last_name, recipe['action']))
+          # print("%s %s will scavenges by %s" % (self.first_name, self.last_name, recipe['action']))
           return
-
+    self.city.register_starvation()
     newFood = 1
     self.add_new_good("food", newFood)
 
@@ -170,6 +176,14 @@ class Citizen:
       price = self.city.market.prices[good_name]
       quantity = required_materials[good_name]
       cost += price * quantity
+
+    tool_cost = 0
+    required_tools = recipe['required_tools']
+    for tool_name in required_tools:
+      quantity = required_tools[tool_name] - self.possessions[tool_name]
+      if quantity > 0:
+        price = self.city.market.prices[tool_name]
+        tool_cost += price * quantity
     
     revenue = 0
     products = recipe['products']
@@ -180,7 +194,7 @@ class Citizen:
 
     profit = revenue - cost
     
-    return production * profit
+    return production * profit - tool_cost
 
   def what_to_produce(self, recipes, realistic):
     max_profit = 0
@@ -234,7 +248,7 @@ class Citizen:
 
       
 
-      print(" will buy %d %s for %d money" % (quantity, good_name, price))
+      # print(" will buy %d %s for %d money" % (quantity, good_name, price))
 
   def buy_needs(self):
 
@@ -247,7 +261,7 @@ class Citizen:
       if possessed < needed:
         quantity = needed - possessed
         self.city.market.submit_bid_from_citizen(self, good_name, quantity, price)
-        print(" will buy %d %s for %d money" % (quantity, good_name, price))
+        # print(" will buy %d %s for %d money" % (quantity, good_name, price))
 
         self.money_spending += quantity*price
         if good_name in self.goods_buying:
@@ -278,11 +292,11 @@ class Citizen:
       else:
         self.goods_selling[good_name] = quantity
 
-      print(" will sell %d %s for %d money" % (quantity, good_name, price))
+      # print(" will sell %d %s for %d money" % (quantity, good_name, price))
 
   def advance_day(self):
 
-    print("\n%s %s" % (self.first_name, self.last_name))
+    # print("\n%s %s" % (self.first_name, self.last_name))
 
     self.money_spending = 0
     self.goods_selling = {}
@@ -290,32 +304,25 @@ class Citizen:
     self.goods_needed = {"food": self.one_round_food}
 
     if not self.has_food_for_procution():
-      print(" will scavenge for food")
-      self.recipe_ix = -1
+      # print(" will scavenge for food")
       self.scavenge()
     else:
-      recipe = None
-      if self.recipe_ix >= 0:
-        last_recipe = self.recipes[self.recipe_ix]
-        quantity = self.get_quantity_producable(last_recipe, True)
-        if quantity > 0:
-          recipe = last_recipe
-
-      if recipe is None:
-        recipe = self.what_to_produce(self.recipes, True)
-      print(" will %s" % (recipe['action']))
+      recipe = self.what_to_produce(self.recipes, True)
+      # print(" will %s" % (recipe['action']))
       self.produce(recipe)
 
     self.plan_tomorrow()
 
-    print("buy needs")
+    # print("buy needs")
     self.buy_needs()
 
-    print("buy wants")
+    # print("buy wants")
     self.buy_wants()
 
-    print("sell excess")
+    # print("sell excess")
     self.sell_excess()
+
+    self.city.register_possessions(self.possessions)
 
   ## notice that this function assumes that the citizen has required materials for production
   ## if the citizen does not indeed have enough stuff, an error will occur, one that might be very hard indeed to detect and fix
@@ -327,7 +334,10 @@ class Citizen:
     required_goods = recipe['required_materials']
     for good_name in required_goods:
       num_required = required_goods[good_name]
-      self.remove_good(good_name, num_required * number_produced)
+      consumed = num_required * number_produced
+      self.remove_good(good_name, consumed)
+
+      self.city.register_consumed(good_name, consumed)
 
     #   Add goods produced by production
     #
@@ -337,26 +347,27 @@ class Citizen:
       produced = int(count * number_produced)
       self.add_new_good(product_name, produced)
 
-      print("Produced %d %s" % (produced, product_name))
+      self.city.register_produced(product_name, produced)
+
+      # print("Produced %d %s" % (produced, product_name))
 
     #   Remove food consumed
     # 
     self.remove_good("food", self.one_round_food)
 
-    self.recipe_ix = recipe['ix']
+    self.city.register_consumed("food", self.one_round_food)
+
+    self.city.register_production(recipe['action'])
 
 
       
 
 
   def plan_tomorrow(self):
-    if self.recipe_ix < 0:
-      recipe = self.what_to_produce(self.recipes, False)
-    else:
-      recipe = self.recipes[self.recipe_ix]
+    recipe = self.what_to_produce(self.recipes, False)
     number_produced = self.get_quantity_producable(recipe, False)
 
-    print(" wants to %s tomorrow" % (recipe['action']))
+    # print(" wants to %s tomorrow" % (recipe['action']))
 
     required_goods = recipe['required_materials']
     for good_name in required_goods:
@@ -374,6 +385,8 @@ class Citizen:
         self.goods_needed[tool_name] += quantity_needed
       else:
         self.goods_needed[tool_name] = quantity_needed
+
+    self.city.register_plan(recipe['action'])
 
   def has_food_for_procution(self):
     if "food" not in self.possessions:
