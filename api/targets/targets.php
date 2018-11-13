@@ -43,6 +43,15 @@ $targets = array (
 			"data"
 		),
 		"optional_params" => array ()
+	),
+	"get_prices" => array (
+		"function" => "get_prices",
+		"file" => "get_prices.php",
+		"required_params" => array (
+			"city",
+			"goods"
+		),
+		"optional_params" => array ()
 	)
 );
 ?>

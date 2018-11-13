@@ -54,10 +54,10 @@
 
 
 
-  var svg_width = 1000;
+  var svg_width = 1100;
   var svg_height = 750;
 
-  var colors = ["blue", "green", "red", "purple", "darkblue", "orange", "darkred"];
+  var colors = ["blue", "green", "red", "purple", "darkblue", "darkorange", "darkred", "darkgreen"];
 
   function draw_graphs(datas, colors) {
 
@@ -81,7 +81,7 @@
       let data = datas[i];
       let color = colors[i];
 
-      let margin = {top: 20, right: 20, bottom: 30, left: 50};
+      let margin = {top: 20, right: 20, bottom: 30, left: 70};
       let width = svg_width - margin.left - margin.right;
       let height = svg_height - margin.top - margin.bottom;
       let g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
@@ -124,7 +124,7 @@
           .attr("r", '1');
 
       g.append("g")
-          .attr("transform", "translate(0," + (height-10) + ")")
+          .attr("transform", "translate(0," + (height) + ")")
           .call(d3.axisBottom(xScale))
         .select(".domain")
           .remove();

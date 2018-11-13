@@ -2,8 +2,9 @@
   "name": "oven",
   "made_by_profession": "mason",
   "function_for_utility": "(utilizing_skill)(7)*(producing_skill)(3)*+(alread_possessed)(1)+/=",
-  "durability": 200,
+  "durability": 2000,
   "used_by_profession": [
-    "baker"
+    "baker",
+    "chemist"
   ]
 }

@@ -1,0 +1,9 @@
+{
+  "name": "still",
+  "made_by_profession": "mechanic",
+  "function_for_utility": "(utilizing_skill)(15)*(alread_possessed)(1)+/=",
+  "durability": 6000,
+  "used_by_profession": [
+    "chemist"
+  ]
+}

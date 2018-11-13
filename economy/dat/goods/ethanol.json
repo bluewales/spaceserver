@@ -1,0 +1,10 @@
+{
+  "name": "ethanol",
+  "made_by_profession": "chemist",
+  "function_for_affinity": "(R)(100)%=",
+  "function_for_utility": "(affinity)(10)*(utilizing_skill)(4)*+(1)(alread_possessed)+/=",
+  "durability": 500,
+  "used_by_profession": [
+    "chemist"
+  ]
+}

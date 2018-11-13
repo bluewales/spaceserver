@@ -47,6 +47,7 @@ class Citizen:
       self.possessions = data['possessions']
 
       self.birthdate = data['birthdate']
+      
     else:    
 
       #print("RESTARTING")
@@ -57,26 +58,24 @@ class Citizen:
       self.first_name = name['first_name']
       self.last_name = name['last_name']
 
-
-      #   Generate random skills for all professions
-      #
       self.skills = {}
-      for profession in self.professions:
-        self.skills[profession] = random.randrange(0,101)
-
-      #   Generate affinities for goods
-      #
       self.affinities = {}
       self.possessions = {}
-      for good_name in self.goods:
-        good = self.goods[good_name]
+
+      self.birthdate = random.randrange(20,100)
+
+    for profession in self.professions:
+      if profession not in self.skills:
+        self.skills[profession] = random.randrange(0,101)
+    for good_name in self.goods:
+      good = self.goods[good_name]
+      if good_name not in self.affinities:
         affinity = 0
         if 'function_for_affinity' in good:
           affinity = rvp_parse(good['function_for_affinity'])
         self.affinities[good_name] = affinity
+      if good_name not in self.possessions:
         self.possessions[good_name] = 0
-
-      self.birthdate = random.randrange(20,100)
     
     self.margin = 0
 
@@ -91,8 +90,10 @@ class Citizen:
       if durability > possessed:
         if random.randrange(durability) < possessed:
           self.possessions[good_name] -= 1
+          self.city.register_decayed(good_name, 1)
       else:
         self.possessions[good_name] -= int(possessed / durability)
+        self.city.register_decayed(good_name, int(possessed / durability))
 
   def serialize(self):
     result = {
@@ -208,7 +209,7 @@ class Citizen:
       if(profit >= max_profit):
         self.margin = profit - max_profit
         max_profit = profit
-        best_recipe =recipe
+        best_recipe = recipe
       elif(self.margin > max_profit-profit):
         self.margin = max_profit-profit
     
@@ -449,8 +450,9 @@ class Citizen:
 
     ## find score for beneficial tools possessed
     beneficial_tools = self.get_beneficial_tool_score(recipe)
+    potential = self.city.potentials[made_by_profession]
 
-    production = self.get_production(recipe, skill, beneficial_tools)
+    production = self.get_production(recipe, skill, beneficial_tools, potential)
 
     if realistic and production > 0:
       required_materials = recipe['required_materials']
@@ -526,16 +528,12 @@ class Citizen:
         score = skill
     return score
   
-  def get_production(self, recipe, skill, beneficial_tools):
-    P = [0]*4
-    P[1] = skill
-    P[2] = beneficial_tools
-    P[3] = 50 ##potential
+  def get_production(self, recipe, skill, beneficial_tools, potential):
 
     params = {
       "skill": skill,
       "beneficial_tools": beneficial_tools,
-      "potential": 50
+      "potential": potential
     }
     production = rvp_parse(recipe['function_for_production'], params)
     return int(production)

@@ -16,6 +16,7 @@ import time
 
 
 from city import City
+from economy import Economy
 
 
 
@@ -29,9 +30,9 @@ def main() :
   data_path = "dat/"
 
   with open(data_path + "economy.json") as json_file:
-    economy = json.load(json_file)
+    economy_raw = json.load(json_file)
     json_file.close()
-  cities_raw = economy['cities']
+  cities_raw = economy_raw['cities']
   
   history_file = "history.json"
 
@@ -40,6 +41,7 @@ def main() :
   if "reset" not in sys.argv:
     with open(history_file, "r") as fd:
       histories = json.load(fd)
+      fd.close()
 
   for city_data in cities_raw:
     if "reset" in sys.argv:
@@ -53,9 +55,14 @@ def main() :
 
 
   days_to_simulate = 1
-  if len(sys.argv) > 2:
-    days_to_simulate = int(sys.argv[2])
+  for arg in sys.argv:
+    try:
+      days_to_simulate = int(arg)
+    except:
+      pass
 
+  stop_up_time = time.time()
+  print("start up % 6ld s" % (stop_up_time - start_time))
 
   
   for i in range(days_to_simulate):
@@ -81,7 +88,6 @@ def main() :
     seconds %= 60
     minutes %= 60
 
-
     print("%02d:%02d:%02d.%03d" % (hours, minutes, seconds, millis))
 
   histories = {}
@@ -89,10 +95,20 @@ def main() :
     city.save()
     histories[city.name] = city.history
 
+  with open("prices.json", "w") as fd:
+    city_prices = {}
+    for city in cities:
+      city_prices[city.name] = city.market.prices
+
+    json.dump(city_prices, fd)
+    fd.close()
   
   with open(history_file, "w") as fd:
     #json.dump(histories, fd, indent=2)
     json.dump(histories, fd)
+
+  economy = Economy(data_path)
+  economy.reset()
 
 
 
@@ -100,4 +116,6 @@ def main() :
 if __name__ == '__main__':
   while True:
     main()
-
+    if "repeat" not in sys.argv:
+      break
+    

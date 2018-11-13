@@ -3,7 +3,6 @@
   "made_by_profession": "lumber jack",
   "function_for_utility": "(producing_skill)(3)*(utilizing_skill)(7)*+(1)(alread_possessed)(5)/+/=",
   "durability": 500,
-  "function_for_potential": "(P1)(100)(P1)-*(P2)(100)(P2)-*+(50)/=",
   "used_by_profession": [
     "cabinet maker",
     "carpenter"

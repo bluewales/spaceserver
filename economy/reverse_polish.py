@@ -33,19 +33,18 @@ def rvp_parse(formula, params={}):
         formula = formula[ix:]
 
     elif op == "=": ## this is the end, return the number
-      if len(stack) > 1 :
-        print("RVP ERROR: %s\n" % formula)
+      if len(stack) != 1 :
+        print("RVP ERROR\n")
       return stack.pop()
     elif op == "?": ## terciary operators
       c = stack.pop()
       b = stack.pop()
       a = stack.pop()
       stack.append(evaluate_three_param(op, a, b, c))
-    elif op == "s":
+    elif op == "s": ## unary operators
       a = stack.pop()
       stack.append(evaluate_one_param(op, a))
     else: ## binary operators
-
       b = stack.pop()
       a = stack.pop()
       stack.append(evaluate(op, a,b))
@@ -91,6 +90,16 @@ def evaluate(op, a, b):
       return 1
     else:
       return 0    
+  elif op == "n":
+    if a > b:
+      return b
+    else:
+      return a
+  elif op == "x":
+    if a > b:
+      return a
+    else:
+      return b
   elif op == ">":
     if a > b:
       return 1

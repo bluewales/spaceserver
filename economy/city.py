@@ -14,6 +14,7 @@
 
 import json
 import os
+import time
 
 from citizen import Citizen
 from market import Market
@@ -32,6 +33,13 @@ class City:
     self.economy = Economy(data_path)
 
     self.history = None
+
+    self.potentials = {}
+
+    for profession in self.economy.professions:
+      self.potentials[profession] = 50
+    for potential in city_data['potentials']:
+      self.potentials[potential] = city_data['potentials'][potential]
 
     if os.path.isfile(self.file_name):
       self.load()
@@ -80,20 +88,31 @@ class City:
       json_file.close()
 
   def advance_day(self) :
+
+    start_time = time.time()
+
     self.history_blank_line()
 
     self.day += 1
 
-    print("%d citizens" % (len(self.citizens)))
+    print("  %d citizens" % (len(self.citizens)))
     for citizen in self.citizens:
       citizen.advance_day()
 
+    print("  citizens advanced in %d s" % (time.time() - start_time))
+
     self.market.facilitate_trades()
+
+    print("  trades facilitated in %d s" % (time.time() - start_time))
 
     for citizen in self.citizens:
       citizen.expire_goods()
 
+    print("  goods expired in %d s" % (time.time() - start_time))
+
     self.save_history()
+
+    print("  history saved in %d s" % (time.time() - start_time))
 
   def history_blank_line(self):
     line = {
@@ -111,7 +130,8 @@ class City:
         "consumed": 0,
         "offers": 0,
         "bids": 0,
-        "trades": 0
+        "trades": 0,
+        "decayed": 0
       }
       if "default_price" in self.economy.goods[good_name]:
         line['goods'][good_name]['default_price'] = self.economy.goods[good_name]['default_price']
@@ -180,6 +200,9 @@ class City:
   def register_trades(self, good_name, count):
     self.register_detail("trades", good_name, count)
 
+  def register_decayed(self, good_name, count):
+    self.register_detail("decayed", good_name, count)
+
   def register_starvation(self):
     self.current_line['starving'] += 1
 
@@ -188,3 +211,5 @@ class City:
 
   def register_production(self, action):
     self.current_line['recipes'][action]['produced'] += 1
+
+  

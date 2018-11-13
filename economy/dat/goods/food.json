@@ -1,7 +1,8 @@
 {
   "name": "food",
   "made_by_profession": "baker",
-  "function_for_utility": "(age)(10)*(0)(age)(alread_possessed)(3)*>?=",
-  "durability": 100,
+  "function_for_affinity": "(R)(90)%(10)+=",
+  "function_for_utility": "(age)(affinity)+(alread_possessed)-(age)(alread_possessed)/x=",
+  "durability": 0,
   "used_by_profession": []
 }

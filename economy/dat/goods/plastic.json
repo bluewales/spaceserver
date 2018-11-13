@@ -1,0 +1,9 @@
+{
+  "name": "plastic",
+  "made_by_profession": "chemist",
+  "function_for_utility": "(producing_skill)(3)*(utilizing_skill)(6)*+(alread_possessed)(1)+/=",
+  "durability": 10000,
+  "used_by_profession": [
+    "chemist"
+  ]
+}

@@ -2,7 +2,7 @@
   "name": "shovel",
   "made_by_profession": "smith",
   "function_for_utility": "(utilizing_skill)(7)*(producing_skill)(3)*+(alread_possessed)(1)+/=",
-  "durability": 9000,
+  "durability": 1500,
   "used_by_profession": [
     "farmer",
     "miner"

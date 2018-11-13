@@ -1,200 +1,69 @@
 {
-    "wheat": {
-        "path": "wheat.json"
-    },
-    "wood": {
-        "path": "wood.json"
-    },
-    "iron ore": {
-        "path": "iron_ore.json"
-    },
-    "cow": {
-        "path": "cow.json"
-    },
-    "sheep": {
-        "path": "sheep.json"
-    },
-    "cotton": {
-        "path": "cotton.json"
-    },
-    "copper": {
-        "path": "copper.json"
-    },
-    "stone": {
-        "path": "stone.json"
-    },
-    "nickel ore": {
-        "path": "nickel_ore.json"
-    },
-    "chromium ore": {
-        "path": "chromium_ore.json"
-    },
-    "gold nugget": {
-        "path": "gold_nugget.json"
-    },
-    "silver ore": {
-        "path": "silver_ore.json"
-    },
-    "gold necklace": {
-        "path": "gold_necklace.json"
-    },
-    "gold ring": {
-        "path": "gold_ring.json"
-    },
-    "silver plate": {
-        "path": "silver_plate.json"
-    },
-    "copper bowl": {
-        "path": "copper_bowl.json"
-    },
-    "leather pants": {
-        "path": "leather_pants.json"
-    },
-    "wool pants": {
-        "path": "wool_pants.json"
-    },
-    "cotton pants": {
-        "path": "cotton_pants.json"
-    },
-    "leather shirt": {
-        "path": "leather_shirt.json"
-    },
-    "wool shirt": {
-        "path": "wool_shirt.json"
-    },
-    "cotton shirt": {
-        "path": "cotton_shirt.json"
-    },
-    "pair of wool socks": {
-        "path": "pair_of_wool_socks.json"
-    },
-    "pair of cotton socks": {
-        "path": "pair_of_cotton_socks.json"
-    },
-    "table": {},
-    "chair": {},
-    "bed": {},
-    "chest of drawers": {},
-    "sofa": {},
-    "wooden needle": {
-        "path": "wooden_needle.json"
-    },
-    "bone needle": {
-        "path": "bone_needle.json"
-    },
-    "steel needle": {
-        "path": "steel_needle.json"
-    },
-    "pin": {
-        "path": "pin.json"
-    },
-    "hammer": {
-        "path": "hammer.json"
-    },
-    "axe": {
-        "path": "axe.json"
-    },
-    "saw": {
-        "path": "saw.json"
-    },
-    "pick axe": {
-        "path": "pick_axe.json"
-    },
-    "grindstone": {
-        "path": "grindstone.json"
-    },
-    "oven": {
-        "path": "oven.json"
-    },
-    "mint": {
-        "path": "mint.json"
-    },
-    "wood kiln": {
-        "path": "wood_kiln.json"
-    },
-    "smelting furnace": {
-        "path": "smelting_furnace.json"
-    },
-    "knife": {
-        "path": "knife.json"
-    },
-    "rake": {
-        "path": "rake.json"
-    },
-    "hoe": {
-        "path": "hoe.json"
-    },
-    "shovel": {
-        "path": "shovel.json"
-    },
-    "spinning wheel": {
-        "path": "spinning_wheel.json"
-    },
-    "rope": {},
-    "sword": {
-        "path": "sword.json"
-    },
-    "raw hide": {
-        "path": "raw_hide.json"
-    },
-    "wool fiber": {
-        "path": "wool_fiber.json"
-    },
-    "leather": {
-        "path": "leather.json"
-    },
-    "wool": {
-        "path": "wool.json"
-    },
-    "cotton cloth": {
-        "path": "cotton_cloth.json"
-    },
-    "sinew": {
-        "path": "sinew.json"
-    },
-    "wool thread": {
-        "path": "wool_thread.json"
-    },
-    "cotton thread": {
-        "path": "cotton_thread.json"
-    },
-    "flour": {
-        "path": "flour.json"
-    },
-    "iron": {
-        "path": "iron.json"
-    },
-    "steel": {
-        "path": "steel.json"
-    },
-    "chromium": {
-        "path": "chromium.json"
-    },
-    "nickel": {
-        "path": "nickel.json"
-    },
-    "gold": {
-        "path": "gold.json"
-    },
-    "silver": {
-        "path": "silver.json"
-    },
-    "charcoal": {
-        "path": "charcoal.json"
-    },
-    "bone": {
-        "path": "bone.json"
-    },
-    "gold coin": {
-        "path": "gold_coin.json"
-    },
-    "silver coin": {
-        "path": "silver_coin.json"
-    },
-    "copper coin": {
-        "path": "copper_coin.json"
-    },
-    "food": {
-        "path": "food.json"
-    }
+    "axe": {"path": "axe.json"},
+    "chromium": {"path": "chromium.json"},
+    "chromium ore": {"path": "chromium_ore.json"},
+    "copper": {"path": "copper.json"},
+    "copper bowl": {"path": "copper_bowl.json"},
+    "cotton": {"path": "cotton.json"},
+    "cotton cloth": {"path": "cotton_cloth.json"},
+    "cotton pants": {"path": "cotton_pants.json"},
+    "cotton shirt": {"path": "cotton_shirt.json"},
+    "cotton thread": {"path": "cotton_thread.json"},
+    "cow": {"path": "cow.json"},
+    "bone": {"path": "bone.json"},
+    "circuit board": {"path": "circuit_board.json"},
+    "charcoal": {"path": "charcoal.json"},
+    "ethanol": {"path": "ethanol.json"},
+    "ethylene": {"path": "ethylene.json"},
+    "flour": {"path": "flour.json"},
+    "food": {"path": "food.json"},
+    "grindstone": {"path": "grindstone.json"},
+    "gold": {"path": "gold.json"},
+    "gold coin": {"path": "gold_coin.json"},
+    "gold necklace": {"path": "gold_necklace.json"},
+    "gold nugget": {"path": "gold_nugget.json"},
+    "gold ring": {"path": "gold_ring.json"},
+    "hammer": {"path": "hammer.json"},
+    "hoe": {"path": "hoe.json"},
+    "iron": {"path": "iron.json"},
+    "iron ore": {"path": "iron_ore.json"},
+    "knife": {"path": "knife.json"},
+    "leather": {"path": "leather.json"},
+    "leather pants": {"path": "leather_pants.json"},
+    "leather shirt": {"path": "leather_shirt.json"},
+    "mint": {"path": "mint.json"},
+    "needle": {"path": "needle.json"},
+    "nickel": {"path": "nickel.json"},
+    "nickel ore": {"path": "nickel_ore.json"},
+    "oven": {"path": "oven.json"},
+    "pair of cotton socks": {"path": "pair_of_cotton_socks.json"},
+    "pair of wool socks": {"path": "pair_of_wool_socks.json"},
+    "pick axe": {"path": "pick_axe.json"},
+    "pin": {"path": "pin.json"},
+    "plastic": {"path": "plastic.json"},
+    "rake": {"path": "rake.json"},
+    "raw hide": {"path": "raw_hide.json"},
+    "saw": {"path": "saw.json"},
+    "sheep": {"path": "sheep.json"},
+    "shovel": {"path": "shovel.json"},
+    "silver": {"path": "silver.json"},
+    "silver coin": {"path": "silver_coin.json"},
+    "silver plate": {"path": "silver_plate.json"},
+    "silver ore": {"path": "silver_ore.json"},
+    "sinew": {"path": "sinew.json"},
+    "smelting furnace": {"path": "smelting_furnace.json"},
+    "spinning wheel": {"path": "spinning_wheel.json"},
+    "steel": {"path": "steel.json"},
+    "still": {"path": "still.json"},
+    "stone": {"path": "stone.json"},
+    "sugar cane": {"path": "sugar_cane.json"},
+    "sword": {"path": "sword.json"},
+    "wheat": {"path": "wheat.json"},
+    "wood": {"path": "wood.json"},
+    "wood kiln": {"path": "wood_kiln.json"},
+    "wool": {"path": "wool.json"},
+    "wool fiber": {"path": "wool_fiber.json"},
+    "wool pants": {"path": "wool_pants.json"},
+    "wool shirt": {"path": "wool_shirt.json"},
+    "wool thread": {"path": "wool_thread.json"}
 }

@@ -3,7 +3,6 @@
   "made_by_profession": "miner",
   "function_for_utility": "(producing_skill)(3)*(utilizing_skill)(7)*+(1)(alread_possessed)(5)/+/=",
   "durability": 4000,
-  "function_for_potential": "(P2)(100)(P1)-*s(55)*s=",
   "used_by_profession": [
     "smelter"
   ]

@@ -1,0 +1,9 @@
+{
+  "name": "circuit board",
+  "made_by_profession": "electrician",
+  "function_for_utility": "(utilizing_skill)(100)*(alread_possessed)(10)x/=",
+  "durability": 1000,
+  "used_by_profession": [
+    "electrician"
+  ]
+}

@@ -9,16 +9,27 @@
    - Robot returns to pad when low on energy
    - Will the robot be stuck forever if it doesn't charge in time?
  - Trading
+   - Economy
+     - &#10004; The economy simulation generates prices
+     - &#10004; Prices can be loaded through the API
+     - Player trades are submitted to the economy
+     - Player trades are resolved against citizen trades
    - Ship has a certain amount of money
    - Some way to tell what items are on the ship
    - Show which items are for sale and their prices
-   - Deliver purchased items to ship by shuttle
-   - Delivered items must be stored by crew
-   - Sold items need to be picked up by the shuttle
-   - Crew must take sold items to shuttle
    - How the heck do shuttles work?
+     - Deliver purchased items to ship by shuttle
+       - Delivered items must be stored by crew
+     - Sold items need to be picked up by the shuttle
+       - Crew must take sold items to shuttle
  - Production server
+ - Travel
  - Keep the ship connected.  Structure building, planning, and deconstruction need to keep the ship in one piece at all times
+ - Time management
+   - &#10004; Pause time
+   - A concept of absolute time that is saved
+   - Let time advance at different speeds
+ - Crafting
  - Atmosphere
    - Pressure and composition, maybe saved as attributes on the graph
    - Spreading throughout a chamber
@@ -43,11 +54,6 @@
    - Fuel and oxygen for propellant and power generation
    - All those same substances and more as cargo to sell at the next port. Maybe even dangerous chemicals like acids or explosives
  - Power generation and consumption
- - Time management
-   - &#10004; Pause time
-   - A concept of absolute time that is saved
-   - Let time advance at different speeds
- - Travel
  - Find a way to draw lower levels.  I'd like to make them darker
  - &#10004; Some scheme for marking items done on this list
  - &#10004; Open/Close animations for doors and hatches

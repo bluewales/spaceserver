@@ -50,8 +50,6 @@ class Market:
       "prices": self.prices
     }
 
-  def facilitate_trades(self):
-    pass
 
   def submit_bid_from_citizen(self, citizen, good_name, count, max_price):
 
@@ -88,8 +86,6 @@ class Market:
 
     ## This would be a good time to load trades from external sources, but I don't know how it works
     #this->load_player_trades(city);
-
-    print("Start trades")
 
     goods = list(set(self.offers.keys()).union(set(self.bids.keys())))
 
@@ -151,19 +147,28 @@ class Market:
           done = True
           continue
 
-        if price > offer['min']:
+        if price < offer['min']:
           price = offer['min']
-        if price < bid['max']:
+        if price > bid['max']:
           price = bid['max']
 
         quantity = min(bid['count'], offer['count'])
 
-        if offer['citizen'].possessions[good_name] < quantity:
+        if offer['citizen'].possessions[good_name] < 1:
           del good_offers[0]
           continue
-        if bid['citizen'].money < quantity*price:
+        if bid['citizen'].money < price:
           del good_bids[0]
           continue
+
+        if quantity > offer['citizen'].possessions[good_name]:
+          quantity = offer['citizen'].possessions[good_name]
+        if bid['citizen'].money < quantity*price:
+          quantity = int(bid['citizen'].money / price)
+
+        if quantity == 0:
+          print("ERROR TRADING quantity zero")
+          raise("ERROR TRADING quantity zero")
 
         bid['citizen'].bought(good_name, quantity, price)
         offer['citizen'].sold(good_name, quantity, price)
@@ -180,16 +185,22 @@ class Market:
         if bid['count'] == 0:
           del good_bids[0]
 
+      delta = int(price / 128)
+      if delta == 0:
+        delta = 1
+
       if price != self.prices[good_name]:
-        price = self.prices[good_name]
+        self.prices[good_name] = price
       else:
         if (len(good_bids) > 0 and good_bids[0]['max'] < self.prices[good_name]):
           good_bids = []
         if (len(good_offers) > 0 and good_offers[0]['min'] > self.prices[good_name]):
           good_offers = []
         if len(good_bids) > len(good_offers):
-          self.prices[good_name] += 1
-        elif len(good_bids) < len(good_offers) and self.prices[good_name] > 1:
-          self.prices[good_name] -= 1
+          self.prices[good_name] += delta
+        elif len(good_bids) < len(good_offers):
+          self.prices[good_name] -= delta
+          if self.prices[good_name] < 1:
+            self.prices[good_name] = 1
 
       
