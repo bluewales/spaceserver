@@ -44,15 +44,16 @@ class NumberPicker extends createjs.Container {
     this.value_text.textAlign = "center";
     this.addChild(this.value_text);
 
-    this.minus_button.x = this.width - this.height;
+    this.plus_button.x = this.width - this.height;
 
-    this.addChild(this.plus_button);
+    
     this.addChild(this.minus_button);
+    this.addChild(this.plus_button);
   }
 
   set value(value) {
     this._value = value;
-    if(this._value > this.max_value && this.max_value > 0) this._value = this.max_value;
+    if (this._value > this.max_value && this.max_value >= this.min_value) this._value = this.max_value;
     if (this._value < this.min_value) this._value = this.min_value;
     if (this.value_text) {
       this.value_text.text = this._value;

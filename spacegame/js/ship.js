@@ -44,6 +44,8 @@ class Ship extends createjs.Container {
     this.items = {};
     this.crew = {};
 
+    this.money = 200;
+
     this.places = [
       this.floors,
       this.walls,
@@ -62,6 +64,12 @@ class Ship extends createjs.Container {
 
   init(raw, objects) {
     this.type = raw.type;
+
+    if(raw.money !== undefined) {
+      this.money = raw.money;
+    } else {
+      this.money = 100;
+    }
   }
 
   start(raw, objects) {
@@ -105,6 +113,8 @@ class Ship extends createjs.Container {
   get_raw(callback) {
     this.raw = {};
     this.raw.type = this.type;
+
+    this.raw.money = this.money;
 
     for (var i = 0; i < this.places.length; i++) {
       for (var thing of iterate_3d(this.places[i])) {

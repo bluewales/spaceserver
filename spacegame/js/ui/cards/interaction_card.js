@@ -1,6 +1,5 @@
 class InteractionCard extends Card {
-  constructor(label) {
-    var width = 300;
+  constructor(label, width=300) {
     var height = 10;
 
     super(label, width, height);

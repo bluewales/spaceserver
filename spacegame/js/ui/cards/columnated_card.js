@@ -32,12 +32,11 @@ class ColumnatedCard extends Card {
 
       let column = this.columns[ix];
 
-
       if (first) first = false;
       else width += this.border_width;
 
       column.x = width;
-      width += column.width
+      width += column.width;
 
       if(height < column.height) height = column.height;
     }

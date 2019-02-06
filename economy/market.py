@@ -19,6 +19,7 @@
 #include "PlayerOffer.h"
 
 import random
+import math
 
 from economy import Economy
 
@@ -35,19 +36,27 @@ class Market:
 
     if data is None:
       self.prices = {}
+      self.momentums = {}
     else:
       self.prices = data['prices']
+      if "momentums" in data:
+        self.momentums = data['momentums']
+      else:
+        self.momentums = {}
 
     for good_name in self.goods:
-      if good_name not in self.prices:
+      if good_name not in self.prices or "coin" in good_name:
         if "default_price" in self.goods[good_name]:
           self.prices[good_name] = self.goods[good_name]['default_price']
         else:
           self.prices[good_name] = self.default_price
+      if good_name not in self.momentums:
+        self.momentums[good_name] = 0
 
   def serialize(self):
     return {
-      "prices": self.prices
+      "prices": self.prices,
+      "momentums": self.momentums
     }
 
 
@@ -87,7 +96,7 @@ class Market:
     ## This would be a good time to load trades from external sources, but I don't know how it works
     #this->load_player_trades(city);
 
-    goods = list(set(self.offers.keys()).union(set(self.bids.keys())))
+    goods = list(self.goods.keys())
 
     random.shuffle(goods)
 
@@ -185,10 +194,6 @@ class Market:
         if bid['count'] == 0:
           del good_bids[0]
 
-      delta = int(price / 128)
-      if delta == 0:
-        delta = 1
-
       if price != self.prices[good_name]:
         self.prices[good_name] = price
       else:
@@ -196,11 +201,26 @@ class Market:
           good_bids = []
         if (len(good_offers) > 0 and good_offers[0]['min'] > self.prices[good_name]):
           good_offers = []
-        if len(good_bids) > len(good_offers):
-          self.prices[good_name] += delta
-        elif len(good_bids) < len(good_offers):
-          self.prices[good_name] -= delta
-          if self.prices[good_name] < 1:
-            self.prices[good_name] = 1
 
-      
+        delta = 0
+
+        if len(good_bids) > len(good_offers):
+          if self.momentums[good_name] < 0:
+            self.momentums[good_name] = 0
+          else:
+            self.momentums[good_name] += 1
+          delta = math.floor(math.sqrt(self.momentums[good_name]))
+        elif len(good_bids) < len(good_offers):
+          if self.momentums[good_name] > 0:
+            self.momentums[good_name] = 0
+          else:
+            self.momentums[good_name] -= 1
+          delta = -math.floor(math.sqrt(-self.momentums[good_name]))
+        else:
+          self.momentums[good_name] = 0        
+          
+        #print("% 20s:% 5d % 4d -> % 4d" % (good_name, self.prices[good_name], self.momentums[good_name], delta))
+
+        self.prices[good_name] += delta
+        if self.prices[good_name] < 1:
+          self.prices[good_name] = 1

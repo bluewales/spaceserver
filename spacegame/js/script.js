@@ -1,5 +1,43 @@
 var seventh_root_of_two = Math.pow(2, 1/7);
 
+Object.defineProperty(Object.prototype, "watch", {
+  enumerable: false,
+  configurable: true,
+  writable: false,
+  value: function (property, callback) {
+    var descriptor = {};
+    if(property in this) {
+      descriptor = Object.getOwnPropertyDescriptor(this, property);
+    }
+    var old_set = descriptor.set;
+    var old_get = descriptor.get;
+    var old_value = descriptor.value;
+
+    delete descriptor.writable;
+    delete descriptor.value;
+
+    var property_alias = "_watched_" + property;
+
+    descriptor.set = function (value) {
+      this[property_alias] = value;
+      callback(value);
+      if (old_set) old_set(value);
+    };
+
+    if (old_get) {
+      descriptor.get = old_get;
+    } else {
+      descriptor.get = function () {
+        return this[property_alias];
+      }
+    }
+
+    Object.defineProperty(this, property, descriptor);
+
+    this[property] = old_value;
+  }
+});
+
 function init() {
   window.game = new Game();
 }

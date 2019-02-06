@@ -57,6 +57,12 @@ class City:
       for citizen_data in data['citizens']:
         self.citizens.append(Citizen(self, self.data_path, citizen_data))
 
+      if len(self.citizens) < self.default_population:
+        self.citizens.append(Citizen(self, self.data_path))
+      
+      if len(self.citizens) > self.default_population:
+        self.citizens = self.citizens[0:-1]
+
       self.market = Market(self.data_path, data['market'])
 
       self.day = data['day']

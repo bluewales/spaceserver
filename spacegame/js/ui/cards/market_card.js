@@ -10,7 +10,7 @@ class BuyCard extends ColumnatedCard {
 
     super(label, columns);
 
-    let colors = ["red", "green"];
+    let colors = ["red", "green", "purple"];
 
     for(let ix in columns) {
       let column = columns[ix];
@@ -53,17 +53,12 @@ class SellCard extends ColumnatedCard {
   }
 
   read_items() {
-    var items = this.store.get_available_item_counts()
+    var items = this.store.get_available_item_counts();
 
     this.columns[this.count_index].clear_lines();
     this.columns[this.icon_index].clear_lines();
     this.columns[this.name_index].clear_lines();
     this.columns[this.picker_index].clear_lines();
-
-    // this.columns[this.count_index].add_text("");
-    // this.columns[this.icon_index].add_text("");
-    // this.columns[this.name_index].add_text("");
-    // this.columns[this.picker_index].add_text("");
 
     for(let ix in items){
       let item = items[ix]; 
@@ -76,15 +71,47 @@ class SellCard extends ColumnatedCard {
   }
 }
 
-class MarketCard extends TabbedCard {
+class TradesCard extends TabbedCard {
   constructor() {
 
     var tabs = {
       "Buy": new BuyCard(),
       "Sell": new SellCard()
     };
+
+    var label = "Trades";
+    super(label, tabs);
+  }
+}
+
+class StatusCard extends InteractionCard {
+  constructor() {
+    super("Status", 1);
     
-    var name = "Market";
-    super(name, tabs);
+    game.ship.watch("money", function(value) {
+      this.clear_lines();
+      this.add_text("Account: ¤" + Math.floor(value));
+    }.bind(this));
+
+  }
+}
+
+class MarketCard extends StratifiedCard {
+  constructor() {
+    var tabs = {
+      "Trades": new TradesCard(),
+      "Status": new StatusCard()
+    };
+    var label = "Market";
+
+    super(label, tabs);
+  }
+
+  set active(value) {
+    super.active = value;
+    if (value) {
+      this.x = (game.width - this.width) / 2;
+      this.y = (game.height - this.height) / 2;
+    }
   }
 }

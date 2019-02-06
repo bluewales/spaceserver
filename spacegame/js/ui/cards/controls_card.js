@@ -5,11 +5,14 @@ class ControlsCard extends ColumnatedCard {
     var label = "Controls";
 
     var columns = [
-      new InteractionCard("Action"),
-      new InteractionCard("Description")
+      new InteractionCard("Action", width = 200),
+      new InteractionCard("Description", width=200)
     ];
 
     super(label, columns);
+
+    
+
 
     this.x = 10;
     this.y = 100;

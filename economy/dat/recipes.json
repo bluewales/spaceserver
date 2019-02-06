@@ -366,7 +366,7 @@
     },
     "beneficial_tools": {},
     "required_materials": {},
-    "function_for_production": "(R)(10)%(skill)(10)/x(potential)(10)/n=",
+    "function_for_production": "(R)(10)%(skill)(10)/x(0)(potential)(10)>?=",
     "products": {
       "gold nugget": 1
     },
@@ -795,24 +795,6 @@
       "silver coin": 1
     },
     "action": "mint silver coins",
-    "profession": "minter"
-  },
-  {
-    "required_tools": {
-      "mint": 1,
-      "hammer": 1,
-      "knife": 1
-    },
-    "beneficial_tools": {},
-    "required_materials": {
-      "gold": 1,
-      "charcoal": 3
-    },
-    "function_for_production": "(skill)s=",
-    "products": {
-      "gold coin": 1
-    },
-    "action": "mint gold coins",
     "profession": "minter"
   },
   {

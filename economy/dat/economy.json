@@ -3,7 +3,7 @@
     {
       "name": "Earth",
       "file": "earth.json",
-      "default_population": 100,
+      "default_population": 10000,
       "potentials": {
         "hunter": 100,
         "farmer": 100,
@@ -12,7 +12,7 @@
     },{
       "name": "Mars",
       "file": "mars.json",
-      "default_population": 100,
+      "default_population": 1000,
       "potentials": {
         "hunter": 0,
         "farmer": 50,

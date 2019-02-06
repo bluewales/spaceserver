@@ -44,6 +44,7 @@ class Card extends createjs.Container {
   }
 
   set active(value) {
+
     if(this._active === value) return;
     this._active = value;
     if(this._frameless) return;

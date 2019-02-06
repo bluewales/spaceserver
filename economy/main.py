@@ -38,10 +38,11 @@ def main() :
 
   cities = []
   histories = []
-  if "reset" not in sys.argv:
-    with open(history_file, "r") as fd:
-      histories = json.load(fd)
-      fd.close()
+  if os.path.isfile(history_file) :
+    if "reset" not in sys.argv:
+      with open(history_file, "r") as fd:
+        histories = json.load(fd)
+        fd.close()
 
   for city_data in cities_raw:
     if "reset" in sys.argv:

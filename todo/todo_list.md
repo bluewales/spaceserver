@@ -4,18 +4,14 @@
    - &#10004; Jobs should be saved
    - &#10004; A button to force a save
    - An indication that saving is happening
- - Robot charging pad
-   - Robot runs out of charge
-   - Robot returns to pad when low on energy
-   - Will the robot be stuck forever if it doesn't charge in time?
  - Trading
    - Economy
      - &#10004; The economy simulation generates prices
      - &#10004; Prices can be loaded through the API
      - Player trades are submitted to the economy
      - Player trades are resolved against citizen trades
-   - Ship has a certain amount of money
-   - Some way to tell what items are on the ship
+   - &#10004; Ship has a certain amount of money
+   - Some way to tell what items are on the ship and available to sell
    - Show which items are for sale and their prices
    - How the heck do shuttles work?
      - Deliver purchased items to ship by shuttle
@@ -23,13 +19,17 @@
      - Sold items need to be picked up by the shuttle
        - Crew must take sold items to shuttle
  - Production server
- - Travel
+ - Robot charging pad
+   - Robot runs out of charge
+   - Robot returns to pad when low on energy
+   - Will the robot be stuck forever if it doesn't charge in time?
  - Keep the ship connected.  Structure building, planning, and deconstruction need to keep the ship in one piece at all times
  - Time management
    - &#10004; Pause time
    - A concept of absolute time that is saved
    - Let time advance at different speeds
  - Crafting
+ - Travel
  - Atmosphere
    - Pressure and composition, maybe saved as attributes on the graph
    - Spreading throughout a chamber

@@ -119,6 +119,7 @@ class Game {
       "construct": { "source": "js/construction/construct.js" },
       "deconstruct": { "source": "js/construction/deconstruct.js" },
       "columnated_card": { "source": "js/ui/cards/columnated_card.js" },
+      "stratified_card": { "source": "js/ui/cards/stratified_card.js" },
       "controls_card": { "source": "js/ui/cards/controls_card.js" },
       "crate": { "source": "js/structure/furniture/crate.js" },
       "charging_pad": { "source": "js/structure/furniture/charging_pad.js" },
