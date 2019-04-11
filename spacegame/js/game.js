@@ -3,8 +3,6 @@
  */
 /*jshint esversion: 6 */
 
-
-
 class Game {
   constructor() {
     this.width = d3.select("canvas").node().getBoundingClientRect().width - 1;
@@ -70,7 +68,7 @@ class Game {
       /* Items */
       "steel_sprite": { "sources": ["img/sliced/items_sliced/oryx_16bit_scifi_items_06.png"] },
       "plastic_sprite": { "sources": ["img/sliced/items_sliced/oryx_16bit_scifi_items_43.png"] },
-      "cicuit_board_sprite": { "sources": ["img/sliced/items_sliced/oryx_16bit_scifi_items_65.png"] },
+      "circuit_board_sprite": { "sources": ["img/sliced/items_sliced/oryx_16bit_scifi_items_65.png"] },
 
       /* Effects */
       "sparks_1": {
@@ -103,7 +101,7 @@ class Game {
       /* javascript */
       "api": { "source": "js/api.js" },
       "astar": { "source": "js/lib/astar.js" },
-      "easel": { "source": "js/lib/easeljs-0.8.2.min.js" },
+      "easel": { "source": "js/lib/easel.js" },
       "structure": { "source": "js/structure/structure.js" },
       "furniture": { "source": "js/structure/furniture/furniture.js" },
       "barrel": { "source": "js/structure/furniture/barrel.js" },
@@ -148,12 +146,12 @@ class Game {
       "login_prompt": { "source": "js/ui/cards/login_prompt.js" },
       "canvas_input": { "source": "js/lib/CreateJSTextInput.js" },
       "tabbed_card": { "source": "js/ui/cards/tabbed_card.js" },
+      "market": { "source": "js/market.js" },
       "market_card": { "source": "js/ui/cards/market_card.js" },
       "circuit_board": { "source": "js/items/circuit_board.js" },
       "plastic": { "source": "js/items/plastic.js" },
       "serialization": { "source": "js/serialization.js" },
     };
-
 
     this.manifest = [];
 
@@ -227,10 +225,9 @@ class Game {
     this.currentlyPressedKeys = {};
   }
 
-
-
   on_asset_load() {
     this.api = new API();
+    this.market = new Market();
 
     this.load_save();
   }
@@ -248,15 +245,15 @@ class Game {
   }
 
   start_game() {
+
+    
+
     this.canvas = document.getElementById("easel");
 
     var ctx = this.canvas.getContext('2d');
-    ctx.mozImageSmoothingEnabled = false;
     ctx.webkitImageSmoothingEnabled = false;
     ctx.msImageSmoothingEnabled = false;
     ctx.imageSmoothingEnabled = false;
-
-
 
     for (var name in this.sprites) {
       var source = this.sprites[name];
@@ -290,18 +287,15 @@ class Game {
     this.ui_level = new UILevel(this.z_level);
     this.logo = new Logo(this.z_level);
 
-
-
     this.bg_img = document.createElement("img");
+    this.bg_img.onload = (function() {
+      this.background.graphics
+        .beginBitmapFill(this.bg_img, "repeat")
+        .drawRect(0, 0, this.width, this.height);
+    }).bind(this);
     this.bg_img.src = "img/mars.jpg";
     this.background = new createjs.Shape();
-    this.background.graphics
-      .beginBitmapFill(this.bg_img, "repeat")
-      .drawRect(0, 0, this.width, this.height);
-
-
-
-
+    
 
     this.space = new createjs.Container();
     this.space.addChild(this.ship);
@@ -359,7 +353,6 @@ class Game {
     this.crew_ticks = 0;
 
     var ctx = this.canvas.getContext('2d');
-    ctx.mozImageSmoothingEnabled = false;
     ctx.webkitImageSmoothingEnabled = false;
     ctx.msImageSmoothingEnabled = false;
     ctx.imageSmoothingEnabled = false;
@@ -403,6 +396,7 @@ class Game {
 
     if (!this.paused) {
       this.ship.tick(event);
+      this.market.tick(event);
     }
 
 
@@ -411,6 +405,7 @@ class Game {
     if (this.now - this.last_save > 5 * 60) {
       this.last_save = this.now;
       this.save(false);
+      this.market.reload_prices();
     }
 
     if (this.cell_cursor || this.wall_cursor) {

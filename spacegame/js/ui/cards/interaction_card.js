@@ -43,15 +43,20 @@ class InteractionCard extends Card {
     this.by_id = {};
   }
 
-  add_text(string) {
+  add_text(string, bold=false) {
 
     if(string.length == 0) string = " ";
+
+    var font_string = (this.line_height) + "px Arial";
+    if(bold) {
+      font_string = "bold " + font_string;
+    }
 
     var text;
     if(this.lines.length > this.line_count && this.lines[this.line_count].type == "text") {
       text = this.lines[this.line_count];
     } else {
-      text = new createjs.Text(string, (this.line_height) + "px Arial", this.foreground_color);
+      text = new createjs.Text(string, font_string, this.foreground_color);
       text.type = "text";
     }
     text.text = string;
@@ -162,6 +167,7 @@ class InteractionCard extends Card {
       picker.max = max;
     } else {
       picker = new NumberPicker(width, this.line_height, min, max);
+      picker.type = "number_picker";
     }
 
     return this.add_line(picker);
@@ -177,7 +183,6 @@ class InteractionCard extends Card {
       this.lines.push(line);
     }
     this.line_count += 1;
-
 
     this.addChild(line);
     line.y = this.height;
@@ -196,6 +201,10 @@ class InteractionCard extends Card {
 
   get_input_value(id) {
     return this.by_id[id].value;
+  }
+
+  get_line_by_id(id) {
+    return this.by_id[id];
   }
 
   on_close() {

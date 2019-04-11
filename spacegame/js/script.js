@@ -20,8 +20,8 @@ Object.defineProperty(Object.prototype, "watch", {
 
     descriptor.set = function (value) {
       this[property_alias] = value;
-      callback(value);
       if (old_set) old_set(value);
+      callback(this[property]);
     };
 
     if (old_get) {

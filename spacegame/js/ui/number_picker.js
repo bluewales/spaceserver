@@ -58,6 +58,9 @@ class NumberPicker extends createjs.Container {
     if (this.value_text) {
       this.value_text.text = this._value;
     }
+    if (this.on_change) {
+      this.on_change(value);
+    }
   }
   get value() {
     return this._value;

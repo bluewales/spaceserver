@@ -52,6 +52,7 @@ class ItemStore {
   get_available_item_counts() {
     var item_counts = {};
     var sprite_keys = {};
+    var name_keys = {};
 
     for (var uid in this.by_uid) {
       let item = this.by_uid[uid];
@@ -64,12 +65,20 @@ class ItemStore {
       }
 
       sprite_keys[item_label] = item.sprite_key;
+      name_keys[item_label] = item.name_key;
     }
+
+    
 
     var items = [];
     for (var label in item_counts) {
       let count = item_counts[label];
-      items.push({ "label": label, "count": count, "sprite_key":sprite_keys[label] });
+      items.push({
+        "label": label,
+        "count": count,
+        "sprite_key":sprite_keys[label],
+        "name_key": name_keys[label]
+      });
     }
     items.sort(function (a, b) { return a.label.localeCompare(b.label); });
 

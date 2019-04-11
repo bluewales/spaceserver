@@ -1,8 +1,6 @@
 class Steel extends Item {
   constructor(pos, container) {
-    super("steel_sprite", pos, container);
-    this.label = "Steel";
-    this.type = "Steel";
+    super("Steel", pos, container);
   }
   init(raw, objects) {
     super.init(raw, objects);

@@ -16,8 +16,6 @@ class Tab extends createjs.Container {
 
     this.box = new createjs.Shape();
     
-
-
     this.addChild(this.box);
     this.addChild(this.label);
 
@@ -68,7 +66,7 @@ class TabbedCard extends Card {
 
     super(name, width, height);
 
-    this.tab_height = 40;
+    this.tab_height = 44;
     
     this.pages = pages;
 
@@ -141,14 +139,20 @@ class TabbedCard extends Card {
   }
 
   tick() {
-    
     for (let tab_name in this.pages) {
-      
       let page = this.pages[tab_name];
       let tab = this.tabs[tab_name];
       if(tab.active) {
         page.tick();
       }
+    }
+  }
+
+  reset() {
+    super.reset();
+    for (let tab_name in this.pages) {
+      let page = this.pages[tab_name];
+      page.reset();
     }
   }
 }

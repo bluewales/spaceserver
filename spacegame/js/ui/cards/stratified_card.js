@@ -50,4 +50,12 @@ class StratifiedCard extends Card {
       row.tick();
     }
   }
+
+  reset() {
+    super.reset();
+    for (let ix in this.rows) {
+      let row = this.rows[ix];
+      row.reset();
+    }
+  }
 }

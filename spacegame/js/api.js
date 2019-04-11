@@ -50,4 +50,14 @@ class API {
   logout() {
     this.make_call({ "method": "logout" }, undefined, false);
   }
+
+  download_prices(city, goods, callback) {
+    this.make_call({
+      "method": "get_prices",
+      "city": city,
+      "goods": goods.join()
+    }, (function (response) {
+      if (callback) callback(response['prices']);
+    }).bind(this));
+  }
 }

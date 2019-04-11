@@ -771,7 +771,7 @@
       "silver coin": 1,
       "charcoal": 1
     },
-    "function_for_production": "(skill)s=",
+    "function_for_production": "(skill)(6)/=",
     "products": {
       "silver": 1
     },
@@ -790,7 +790,7 @@
       "silver": 1,
       "charcoal": 5
     },
-    "function_for_production": "(skill)(beneficial_tools)+s(2)/=",
+    "function_for_production": "(skill)(beneficial_tools)+s=",
     "products": {
       "silver coin": 1
     },

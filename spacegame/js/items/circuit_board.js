@@ -1,8 +1,7 @@
 class CircuitBoard extends Item {
   constructor(pos, container) {
-    super("cicuit_board_sprite", pos, container);
-    this.label = "Circuit Board";
-    this.type = "CircuitBoard";
+
+    super("Circuit Board", pos, container);
   }
   init(raw, objects) {
     super.init(raw, objects);

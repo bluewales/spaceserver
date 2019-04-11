@@ -44,7 +44,7 @@ class Ship extends createjs.Container {
     this.items = {};
     this.crew = {};
 
-    this.money = 200;
+    this.money = 100000;
 
     this.places = [
       this.floors,
@@ -68,7 +68,7 @@ class Ship extends createjs.Container {
     if(raw.money !== undefined) {
       this.money = raw.money;
     } else {
-      this.money = 100;
+      this.money = 100000;
     }
   }
 

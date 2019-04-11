@@ -138,6 +138,8 @@ class Card extends createjs.Container {
   }
 
   tick() {
-    
+  }
+
+  reset() {
   }
 }

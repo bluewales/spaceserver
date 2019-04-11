@@ -52,4 +52,12 @@ class ColumnatedCard extends Card {
       column.tick();
     }
   }
+
+  reset() {
+    super.reset();
+    for (let ix in this.columns) {
+      let column = this.columns[ix];
+      column.reset();
+    }
+  }
 }

@@ -1,8 +1,12 @@
 class Item extends createjs.Container {
-  constructor(sprite_key, pos, container) {
+  constructor(name, pos, container) {
     super();
 
-    this.sprite_key = sprite_key;
+    this.label = name;
+    this.name_key = name.toLowerCase();
+    this.sprite_key = name.toLowerCase().replace(" ", "_") + "_sprite";
+    this.type = name.replace(" ", "");
+
     this.sprite = new createjs.Sprite(game.sprites[this.sprite_key].sprite, this.sprite_key);
     this.sprite.x = 4;
     this.sprite.y = 4;
