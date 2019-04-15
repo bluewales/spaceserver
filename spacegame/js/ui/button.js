@@ -6,10 +6,12 @@ class Button extends createjs.Container {
     this.width = config.width;
     this.height = config.height;
     this.text_hight = config.text_hight || 20;
-    this.text = new createjs.Text(config.text, this.text_hight + "px Arial", menu_palette[1]);
+    this.text = new createjs.Text(config.text, this.text_hight + "px Arial", menu_background_color);
     this.on_click = config.on_click;
     this.mode = config.mode;
     this.on_tick = config.on_tick;
+
+    this.enabled = true;
 
 
     this.text.textAlign = "center";
@@ -17,20 +19,23 @@ class Button extends createjs.Container {
     this.text.x = this.width / 2;
 
     this._active = false;
-    this.background_color = menu_palette[0];
+    this.background_color = menu_foreground_color;
 
     this.box = new createjs.Shape();
     this.box.graphics.beginFill(this.background_color).drawRect(0, 0, this.width, this.height).endFill();
 
     this.addEventListener("mousedown", function (event) {
-      this.box.graphics.clear().beginFill(menu_palette[2]).drawRect(0, 0, this.width, this.height).endFill();
+      if(!this.enabled) return;
+      this.box.graphics.clear().beginFill(menu_alt_foreground_color).drawRect(0, 0, this.width, this.height).endFill();
     }.bind(this));
 
     this.addEventListener("pressup", function (event) {
+      if (!this.enabled) return;
       this.box.graphics.clear().beginFill(this.background_color).drawRect(0, 0, this.width, this.height).endFill();
     }.bind(this));
 
     this.addEventListener("click", function (event) {
+      if (!this.enabled) return;
       this.active = !this.active;
       this.debounce = 5;
       if (this.on_click) {
@@ -47,9 +52,9 @@ class Button extends createjs.Container {
     if (this._active === value) return;
     this._active = value;
     if (this._active) {
-      this.background_color = menu_palette[3];
+      this.background_color = menu_contrast_color;
     } else {
-      this.background_color = menu_palette[0];
+      this.background_color = menu_foreground_color;
     }
     this.box.graphics.clear().beginFill(this.background_color).drawRect(0, 0, this.width, this.height).endFill();
   }
@@ -68,5 +73,17 @@ class Button extends createjs.Container {
     }
 
     if (this.on_tick) this.on_tick();
+  }
+
+  enable() {
+    this.enabled = true;
+    this.background_color = menu_foreground_color;
+    this.box.graphics.clear().beginFill(this.background_color).drawRect(0, 0, this.width, this.height).endFill();
+  }
+
+  disable() {
+    this.enabled = false;
+    this.background_color = menu_alt_contrast_color;
+    this.box.graphics.clear().beginFill(this.background_color).drawRect(0, 0, this.width, this.height).endFill();
   }
 }

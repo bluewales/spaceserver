@@ -68,8 +68,6 @@ class ItemStore {
       name_keys[item_label] = item.name_key;
     }
 
-    
-
     var items = [];
     for (var label in item_counts) {
       let count = item_counts[label];

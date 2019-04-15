@@ -11,7 +11,7 @@ Object.defineProperty(Object.prototype, "watch", {
     }
     var old_set = descriptor.set;
     var old_get = descriptor.get;
-    var old_value = descriptor.value;
+    var old_value = this[property];
 
     delete descriptor.writable;
     delete descriptor.value;
@@ -21,7 +21,7 @@ Object.defineProperty(Object.prototype, "watch", {
     descriptor.set = function (value) {
       this[property_alias] = value;
       if (old_set) old_set(value);
-      callback(this[property]);
+      callback(value);
     };
 
     if (old_get) {

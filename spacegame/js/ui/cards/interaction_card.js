@@ -43,7 +43,7 @@ class InteractionCard extends Card {
     this.by_id = {};
   }
 
-  add_text(string, bold=false) {
+  add_text(string, bold=false, color=undefined) {
 
     if(string.length == 0) string = " ";
 
@@ -51,12 +51,16 @@ class InteractionCard extends Card {
     if(bold) {
       font_string = "bold " + font_string;
     }
+    if(color === undefined) {
+      color = this.foreground_color;
+    }
 
     var text;
     if(this.lines.length > this.line_count && this.lines[this.line_count].type == "text") {
       text = this.lines[this.line_count];
+      text.color = color;
     } else {
-      text = new createjs.Text(string, font_string, this.foreground_color);
+      text = new createjs.Text(string, font_string, color);
       text.type = "text";
     }
     text.text = string;
@@ -104,6 +108,11 @@ class InteractionCard extends Card {
       };
       button = new Button(button_config);
       button.type = "button";
+    }
+    if(callback) {
+      button.enable();
+    } else {
+      button.disable();
     }
     return this.add_line(button);
   }
@@ -163,8 +172,8 @@ class InteractionCard extends Card {
     var picker;
     if (this.lines.length > this.line_count && this.lines[this.line_count].type == "number_picker") {
       picker = this.lines[this.line_count];
-      picker.min = min;
-      picker.max = max;
+      picker.min_value = min;
+      picker.max_value = max;
     } else {
       picker = new NumberPicker(width, this.line_height, min, max);
       picker.type = "number_picker";

@@ -20,6 +20,7 @@ class Market {
     console.log("reload prices");
 
     game.api.download_prices("Earth", ["steel", "plastic", "circuit board"], function(prices) {
+      console.log("Prices loaded ");
       this.prices = prices;
     }.bind(this));
   }
@@ -27,6 +28,11 @@ class Market {
   register_sale(sell_summary) {
     console.log("Selling");
     console.log(sell_summary);
+  }
+
+  register_purchase(buy_summary) {
+    console.log("Buying");
+    console.log(buy_summary);
   }
 
   tick(event) {

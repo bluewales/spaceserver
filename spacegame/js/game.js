@@ -70,6 +70,9 @@ class Game {
       "plastic_sprite": { "sources": ["img/sliced/items_sliced/oryx_16bit_scifi_items_43.png"] },
       "circuit_board_sprite": { "sources": ["img/sliced/items_sliced/oryx_16bit_scifi_items_65.png"] },
 
+      /* Vehicles */
+      "small_shuttle": { "sources": ["img/shuttle/shuttle_48.png"] },
+
       /* Effects */
       "sparks_1": {
         "sources": [

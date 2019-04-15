@@ -15,13 +15,13 @@ class CardFrame extends createjs.Container {
     this.width = width;
     this.height = height;
 
-    this.foreground_color = menu_palette[0];
-    this.background_color = menu_palette[1];
-    this.alt_foreground_color = menu_palette[2];
-    this.contrast_color = menu_palette[4];
-    this.alt_contrast_color = menu_palette[3];
+    this.foreground_color = menu_foreground_color;
+    this.background_color = menu_background_color;
+    this.alt_foreground_color = menu_alt_foreground_color;
+    this.contrast_color = menu_contrast_color;
+    this.alt_contrast_color = menu_alt_contrast_color;
 
-    this.title = new createjs.Text(this.parent.label, (this.header_width - this.border_width * 2) + "px Arial", menu_palette[0]);
+    this.title = new createjs.Text(this.parent.label, (this.header_width - this.border_width * 2) + "px Arial", this.foreground_color);
     this.title.x = this.border_width;
     this.title.y = -this.header_width;
     this.addChild(this.title);

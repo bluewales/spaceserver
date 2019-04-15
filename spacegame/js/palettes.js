@@ -31,3 +31,9 @@ var color_palettes = [
 var ship_palette = color_palettes[0];
 var menu_palette = color_palettes[9];
 //var menu_palette = color_palettes[18];
+
+menu_foreground_color = menu_palette[0];
+menu_background_color = menu_palette[1];
+menu_alt_foreground_color = menu_palette[2];
+menu_contrast_color = menu_palette[4];
+menu_alt_contrast_color = menu_palette[3];
