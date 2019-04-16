@@ -154,6 +154,7 @@ class Game {
       "circuit_board": { "source": "js/items/circuit_board.js" },
       "plastic": { "source": "js/items/plastic.js" },
       "serialization": { "source": "js/serialization.js" },
+      "ship_graphics": { "source": "js/ship_graphics.js" },
     };
 
     this.manifest = [];
@@ -413,18 +414,18 @@ class Game {
 
     if (this.cell_cursor || this.wall_cursor) {
       var mouse_hits_ui = this.hud.hitTest(this.stage.mouseX, this.stage.mouseY) || this.card_table.hitTest(this.stage.mouseX, this.stage.mouseY);
-      this.ship.clear_highlight();
+      this.ship.graphics.clear_highlight();
 
       if (mouse_hits_ui) {
 
       } else {
         if (this.cell_cursor) {
           var pos = this.pos_from_coord(this.stage.mouseX, this.stage.mouseY);
-          this.ship.draw_highlight(pos);
+          this.ship.graphics.draw_highlight(pos);
         }
         if (this.wall_cursor) {
           var pos = this.wall_pos_from_coord(this.stage.mouseX, this.stage.mouseY);
-          this.ship.draw_highlight(pos);
+          this.ship.graphics.draw_highlight(pos);
         }
       }
     }
@@ -437,8 +438,8 @@ class Game {
     var mid_x = (this.ship.graph.max_bound.x + this.ship.graph.min_bound.x + 1) / 2;
     var mid_y = (this.ship.graph.max_bound.y + this.ship.graph.min_bound.y + 1) / 2;
 
-    this.pan_x = -(this.ship.grid_width + this.ship.padding * 2) * mid_x;
-    this.pan_y = -(this.ship.grid_width + this.ship.padding * 2) * mid_y;
+    this.pan_x = -(this.ship.graphics.grid_width + this.ship.graphics.padding * 2) * mid_x;
+    this.pan_y = -(this.ship.graphics.grid_width + this.ship.graphics.padding * 2) * mid_y;
 
     this.clear_highlight();
   }
@@ -545,12 +546,12 @@ class Game {
     var centerX = this.canvas.width / 2;
     var centerY = this.canvas.height / 2;
 
-    var grid = this.ship.grid_width + (this.ship.padding * 2);
+    var grid = this.ship.graphics.grid_width + (this.ship.graphics.padding * 2);
     var x = (stageX - centerX - this.pan_x * this.zoom_multiplier) / (grid * this.zoom_multiplier);
     var y = (stageY - centerY - this.pan_y * this.zoom_multiplier) / (grid * this.zoom_multiplier);
     var px = (x % 1) + (x < 0 ? 1 : 0);
     var py = (y % 1) + (y < 0 ? 1 : 0);
-    var padding = this.ship.padding / grid;
+    var padding = this.ship.graphics.padding / grid;
 
     var small = Math.min(px, py);
     var large = Math.max(px, py);
@@ -566,7 +567,7 @@ class Game {
     var centerX = this.canvas.width / 2;
     var centerY = this.canvas.height / 2;
 
-    var grid = this.ship.grid_width + (this.ship.padding * 2);
+    var grid = this.ship.graphics.grid_width + (this.ship.graphics.padding * 2);
     var x = Math.floor((stageX - centerX - this.pan_x * this.zoom_multiplier) / (grid * this.zoom_multiplier));
     var y = Math.floor((stageY - centerY - this.pan_y * this.zoom_multiplier) / (grid * this.zoom_multiplier));
 
@@ -582,7 +583,7 @@ class Game {
     var centerX = this.canvas.width / 2;
     var centerY = this.canvas.height / 2;
 
-    var grid = this.ship.grid_width + (this.ship.padding * 2);
+    var grid = this.ship.graphics.grid_width + (this.ship.graphics.padding * 2);
     var x = (stageX - centerX - this.pan_x * this.zoom_multiplier) / (grid * this.zoom_multiplier);
     var y = (stageY - centerY - this.pan_y * this.zoom_multiplier) / (grid * this.zoom_multiplier);
 

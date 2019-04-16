@@ -8,10 +8,10 @@ class FloorPlate extends Floor {
 
     this.sprite_key = "floor_plate";
 
-    var grid = this.ship.grid_width+this.ship.padding*2;
+    var grid = this.ship.graphics.grid_width+this.ship.graphics.padding*2;
     this.skirt = new createjs.Shape();
     this.skirt.graphics.beginFill(ship_palette[0])
-      .drawRect(-this.ship.padding, -this.ship.padding, grid, grid);
+      .drawRect(-this.ship.graphics.padding, -this.ship.graphics.padding, grid, grid);
     this.addChild(this.skirt);
     this.addChild(new createjs.Sprite(game.sprites[this.sprite_key].sprite, this.sprite_key));
 

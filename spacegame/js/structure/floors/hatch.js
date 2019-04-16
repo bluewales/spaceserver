@@ -10,12 +10,11 @@ class Hatch extends Floor {
     this.sprite_key = "h";
     this.pos = raw.pos;
 
-    var grid = this.ship.grid_width+this.ship.padding*2;
+    var grid = this.ship.graphics.grid_width+this.ship.graphics.padding*2;
     this.skirt = new createjs.Shape();
     this.skirt.graphics.beginFill(ship_palette[0])
-      .drawRect(-this.ship.padding, -this.ship.padding, grid, grid);
+      .drawRect(-this.ship.graphics.padding, -this.ship.graphics.padding, grid, grid);
     this.addChild(this.skirt);
-    //this.addChild(new createjs.Sprite(game.ship.sprites[this.sprite_key].sprite, this.sprite_key));
 
     this.open = 0;
 
@@ -65,8 +64,8 @@ class Hatch extends Floor {
     if(!this.hatch_art) this.hatch_art = {};
     if(!this.hatch_art[open]) {
 
-      var g = game.ship.grid_width;
-      var p = game.ship.padding;
+      var g = game.ship.graphics.grid_width;
+      var p = game.ship.graphics.padding;
       var o = open;
 
       var drawing = new createjs.Container();

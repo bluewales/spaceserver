@@ -2,47 +2,16 @@
  * Created by Luke on 7/9/2017.
  */
 
-class Level extends createjs.Container {
-  constructor() {
-    super();
-
-    this.layers = {};
-  }
-
-  add(item, layer) {
-    if (this.layers[layer] === undefined) {
-      this.layers[layer] = new createjs.Container();
-      this.addChild(this.layers[layer]);
-    }
-    this.layers[layer].addChild(item);
-    this.setChildIndex(this.layers[layer], layer);
-  }
-  remove(item, layer) {
-    if (this.layers[layer] === undefined) {
-      return;
-    }
-    this.layers[layer].removeChild(item);
-  }
-}
-
 class Ship extends createjs.Container {
   constructor() {
     super();
-
-    this.grid_width = 24;
-    this.padding = 1.5;
-
-    this.floor_layer = 0;
-    this.wall_layer = 1;
-    this.furniture_layer = 2;
-    this.item_layer = 3;
-    this.crew_layer = 4;
 
     this.floors = {};
     this.walls = {};
     this.furniture = {};
     this.items = {};
     this.crew = {};
+    this.shuttles = {};
 
     this.money = 100000;
 
@@ -50,16 +19,19 @@ class Ship extends createjs.Container {
       this.floors,
       this.walls,
       this.furniture,
-      this.crew
+      this.crew,
+      this.shuttles
     ];
 
-    this.levels = {};
     this.graph = new Graph(this);
     this.rooms = new Rooms(this);
 
     this.jobs = new Jobs();
 
     this.item_store = new ItemStore();
+
+    this.graphics = new ShipGraphics();
+    this.addChild(this.graphics);
   }
 
   init(raw, objects) {
@@ -151,39 +123,25 @@ class Ship extends createjs.Container {
     }
   }
 
-  position_transform(x) {
-    return x * (this.grid_width + this.padding * 2) + this.padding;
-  }
-
-
-  add_thing(pos, place, thing, layer) {
-    if (this.levels[pos.z] === undefined) {
-      this.levels[pos.z] = new Level();
-      this.set_display_level(game.z_level);
-    }
-    this.levels[pos.z].remove(thing, layer);
+  add_thing(pos, place, thing) {
     if (place !== undefined) set_3d(place, pos, thing);
-    this.levels[pos.z].add(thing, layer);
+    this.graphics.add_thing(pos, thing);
   }
-  remove_thing(pos, place, thing, layer) {
-    this.levels[pos.z].remove(thing, layer);
+  remove_thing(pos, place, thing) {
     if (place !== undefined) set_3d(place, pos, undefined);
+    this.graphics.remove_thing(pos, thing);
   }
-  get_layer_from_string(str) {
-    switch (str) {
-      case "floor":
-        return this.floor_layer;
-      case "wall":
-        return this.wall_layer;
-      case "furniture":
-        return this.furniture_layer;
-      case "item":
-        return this.item_layer;
-      default:
-        console.log("ERROR cannot find layer '" + str + "'");
-        return undefined;
-    }
+
+  get_floor(pos) {
+    return get_3d(this.floors, pos);
   }
+  get_wall(pos) {
+    return get_3d(this.walls, pos);
+  }
+  get_furniture(pos) {
+    return get_3d(this.furniture, pos);
+  }
+
   get_place_from_string(str) {
     switch (str) {
       case "floor":
@@ -201,32 +159,19 @@ class Ship extends createjs.Container {
   }
 
   add_structure(structure) {
-    var layer = this.get_layer_from_string(structure.layer);
     var place = this.get_place_from_string(structure.layer);
-    this.add_thing(structure.pos, place, structure, layer);
+    this.add_thing(structure.pos, place, structure);
     this.graph.update_pos(structure.pos);
     return structure;
   }
   remove_structure(structure) {
-    var layer = this.get_layer_from_string(structure.layer);
     var place = this.get_place_from_string(structure.layer);
-    this.remove_thing(structure.pos, place, structure, layer);
+    this.remove_thing(structure.pos, place, structure);
     this.graph.update_pos(structure.pos);
     if (this.current_selection === structure) {
       this.clear_selection();
     }
   }
-
-  get_floor(pos) {
-    return get_3d(this.floors, pos);
-  }
-  get_wall(pos) {
-    return get_3d(this.walls, pos);
-  }
-  get_furniture(pos) {
-    return get_3d(this.furniture, pos);
-  }
-
 
   add_crew_member(crew_member) {
     this.add_thing(crew_member.pos, this.crew, crew_member, this.crew_layer);
@@ -237,13 +182,7 @@ class Ship extends createjs.Container {
     }
     set_3d(this.crew, crew_member.pos, undefined);
     set_3d(this.crew, p, crew_member);
-    if (crew_member.pos.z != p.z) {
-      this.levels[crew_member.pos.z].remove(crew_member, this.crew_layer);
-      this.add_thing(p, this.crew, crew_member, this.crew_layer);
-      if (this.current_selection === crew_member) {
-        this.clear_selection();
-      }
-    }
+    this.graphics.move_thing(p, crew_member);
   }
 
   add_item(item) {
@@ -255,7 +194,7 @@ class Ship extends createjs.Container {
   }
 
   remove_item(item) {
-    this.levels[item.pos.z].remove(item, this.item_layer);
+    this.graphics.remove_thing(item.pos, item);
     this.items[item.uid] = undefined;
     delete this.items[item.uid];
     if (this.current_selection === item) {
@@ -265,7 +204,6 @@ class Ship extends createjs.Container {
 
   spawn_item(type, pos) {
     if (pos.ori) {
-
       var new_pos = { x: pos.x, y: pos.y, z: pos.z };
       if (Math.random() < 0.5) {
         if (pos.ori == "|") {
@@ -303,7 +241,7 @@ class Ship extends createjs.Container {
     this.interaction_card.y = this.getStage().mouseY;
 
     this.interaction_card.active = true;
-    this.draw_highlight(selected.pos);
+    this.graphics.draw_highlight(selected.pos);
 
     this.current_selection.set_highlight(this.highlight_shape);
   }
@@ -313,8 +251,7 @@ class Ship extends createjs.Container {
       return;
     }
 
-
-    this.clear_highlight();
+    this.graphics.clear_highlight();
     this.current_selection.set_highlight(undefined);
     this.current_selection = null;
 
@@ -323,74 +260,7 @@ class Ship extends createjs.Container {
     card.active = false;
   }
 
-
-  draw_highlight(pos) {
-
-    var grid = this.grid_width + this.padding * 2;
-    var pad = this.padding;
-
-    if (!this.highlight) {
-      this.highlight = {};
-
-      function corner(shape, x1, x2, x3, y1, y2, y3) {
-        create_polygon('red', [[x1, y1], [x3, y1], [x3, y2], [x2, y2], [x2, y3], [x1, y3]], shape);
-      }
-
-      function corners(shape, x1, x2, x3, x4, x5, x6, y1, y2, y3, y4, y5, y6) {
-        corner(shape, x1, x2, x3, y1, y2, y3);
-        corner(shape, x6, x5, x4, y1, y2, y3);
-        corner(shape, x1, x2, x3, y6, y5, y4);
-        corner(shape, x6, x5, x4, y6, y5, y4);
-      }
-
-      this.highlight['square'] = new createjs.Shape();
-      this.highlight['square'].is_highlight = true;
-
-      corners(this.highlight['square'],
-        -2 * pad, -pad, grid / 4, grid - grid / 4 - 2 * pad, grid - pad, grid,
-        -2 * pad, -pad, grid / 4, grid - grid / 4 - 2 * pad, grid - pad, grid);
-
-      this.highlight["|"] = new createjs.Shape();
-      this.highlight["|"].is_highlight = true;
-      this.highlight["|"].graphics
-        .beginFill('red')
-        .drawRect(grid - this.padding * 2, -this.padding, this.padding * 2, grid);
-
-      this.highlight["-"] = new createjs.Shape();
-      this.highlight["-"].is_highlight = true;
-      this.highlight["-"].graphics
-        .beginFill('red')
-        .drawRect(-this.padding, grid - this.padding * 2, grid, this.padding * 2);
-    }
-
-    if (pos.ori) {
-      this.highlight_shape = this.highlight[pos.ori];
-    } else {
-      this.highlight_shape = this.highlight['square'];
-    }
-
-    this.highlight_shape.y = this.position_transform(pos.y);
-    this.highlight_shape.x = this.position_transform(pos.x);
-
-    this.addChild(this.highlight_shape);
-  }
-
-  clear_highlight() {
-    this.removeChild(this.highlight_shape);
-  }
-
   set_display_level(z_level) {
-    this.removeAllChildren();
-    this.addChild(this.levels[z_level]);
-    return;
-
-    var min_z = d3.min(d3.keys(this.levels), function (d) { return d * 1; });
-    for (var z = min_z; z <= z_level; z++) {
-      if (this.levels[z] !== undefined) {
-        var darken = Math.pow(0.5, z_level - z);
-        this.levels[z].alpha = Math.floor(darken);
-        this.addChild(this.levels[z]);
-      }
-    }
+    this.graphics.set_display_level(z_level);
   }
 }

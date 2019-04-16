@@ -54,8 +54,8 @@ class Door extends Wall {
 
       this.door_art[open] = {};
 
-      var g = window.game.ship.grid_width;
-      var p = window.game.ship.padding;
+      var g = window.game.ship.graphics.grid_width;
+      var p = window.game.ship.graphics.padding;
       var o = open;
 
       var v_drawing = new createjs.Container();

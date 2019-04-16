@@ -85,8 +85,8 @@ class Item extends createjs.Container {
   }
   tick() {
     if(this.pos) {
-      this.x = this.ship.position_transform(this.pos.x);
-      this.y = this.ship.position_transform(this.pos.y);
+      this.x = this.ship.graphics.position_transform(this.pos.x);
+      this.y = this.ship.graphics.position_transform(this.pos.y);
     }
   }
 }

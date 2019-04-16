@@ -8,8 +8,8 @@ class WallPanel extends Wall {
     super.init(raw, objects);
 
 
-    var g = this.ship.grid_width;
-    var p = this.ship.padding;
+    var g = this.ship.graphics.grid_width;
+    var p = this.ship.graphics.padding;
 
     this.drawing = new createjs.Container();
     if(this.pos.ori == "-") {

@@ -14,8 +14,8 @@ class Crew extends createjs.Container {
     this.pos = raw.pos;
     this.sprite = raw.sprite;
 
-    this.x = this.ship.position_transform(this.pos.x);
-    this.y = this.ship.position_transform(this.pos.y);
+    this.x = this.ship.graphics.position_transform(this.pos.x);
+    this.y = this.ship.graphics.position_transform(this.pos.y);
 
     this.cooldown = (raw.cooldown !== undefined) ? raw.cooldown : 0;
     this.path_progress = (raw.path_progress !== undefined) ? raw.path_progress : 0;
@@ -116,17 +116,17 @@ class Crew extends createjs.Container {
       this.update_interaction_card();
     }
 
-    var dx = this.ship.position_transform(this.pos.x) - this.x;
-    var dy = this.ship.position_transform(this.pos.y) - this.y;
+    var dx = this.ship.graphics.position_transform(this.pos.x) - this.x;
+    var dy = this.ship.graphics.position_transform(this.pos.y) - this.y;
     if (Math.abs(dx) > this.speed) {
       this.x += this.speed * dx / Math.abs(dx);
     } else {
-      this.x = this.ship.position_transform(this.pos.x);
+      this.x = this.ship.graphics.position_transform(this.pos.x);
     }
     if (Math.abs(dy) > this.speed) {
       this.y += this.speed * dy / Math.abs(dy);
     } else {
-      this.y = this.ship.position_transform(this.pos.y);
+      this.y = this.ship.graphics.position_transform(this.pos.y);
     }
     if (this.highlight) {
       this.highlight.x = this.x;

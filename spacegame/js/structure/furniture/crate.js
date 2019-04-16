@@ -20,8 +20,6 @@ class Crate extends Furniture {
   init(raw, objects) {
     super.init(raw, objects);
 
-
-
     var items = raw.item;
     if (!items) items = [];
 
@@ -47,15 +45,19 @@ class Crate extends Furniture {
   }
 
   tick() {
-    if (Math.random() * 1000 < 1) {
-      if (this.item_count + this.pending_items < this.inventory_size) {
-        for (var key in this.ship.items) {
-          var item = this.ship.items[key];
-          if (item === undefined) continue;
-          if (item.claimed === false) {
-            var job = new PutAway(this, item);
-            this.ship.jobs.register_job(job);
-            break;
+    if (Math.random() * 1000 < this.inventory_size - this.item_count) {
+      var now_check = new Date();
+      if (this.last_check === undefined || now_check - this.last_check > 10000){
+        this.last_check = now_check;
+        if (this.item_count + this.pending_items < this.inventory_size) {
+          for (var key in this.ship.items) {
+            var item = this.ship.items[key];
+            if (item === undefined) continue;
+            if (item.claimed === false) {
+              var job = new PutAway(this, item);
+              this.ship.jobs.register_job(job);
+              break;
+            }
           }
         }
       }
