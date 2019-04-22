@@ -75,7 +75,6 @@ class Crew extends createjs.Container {
     this.removeChild(item);
   }
   tick(event) {
-    //return;
     if (this.cooldown > 0) {
       this.cooldown -= 1;
     } else if (this.path) {

@@ -15,7 +15,8 @@ var type_lookup = {
   "PutAway": PutAway,
   "Deconstruct": Deconstruct,
   "CircuitBoard": CircuitBoard,
-  "Plastic": Plastic
+  "Plastic": Plastic,
+  "SmallShuttle": SmallShuttle
 };
 
 

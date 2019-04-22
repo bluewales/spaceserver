@@ -51,6 +51,7 @@ class ShipGraphics extends createjs.Container {
 
   add_thing(pos, thing) {
     let layer_index = this.layer_indexes[thing.layer];
+    console.log(thing.layer + " " + layer_index);
     if (this.levels[pos.z] === undefined) {
       this.levels[pos.z] = new Level();
     }

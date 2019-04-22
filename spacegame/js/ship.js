@@ -23,6 +23,14 @@ class Ship extends createjs.Container {
       this.shuttles
     ];
 
+    this.places_by_name = {
+      "floor" : this.floors,
+      "wall" : this.walls,
+      "furniture" : this.furniture,
+      "crew" : this.crew,
+      "shuttle" : this.shuttles
+    };
+
     this.graph = new Graph(this);
     this.rooms = new Rooms(this);
 
@@ -80,6 +88,8 @@ class Ship extends createjs.Container {
     for (var i = 0; i < jobs.length; i++) {
       this.jobs.register_job(objects[jobs[i]]);
     }
+
+    this.add_shuttle(new SmallShuttle(this, {x:1,y:1,z:1}));
   }
 
   get_raw(callback) {
@@ -142,30 +152,14 @@ class Ship extends createjs.Container {
     return get_3d(this.furniture, pos);
   }
 
-  get_place_from_string(str) {
-    switch (str) {
-      case "floor":
-        return this.floors;
-      case "wall":
-        return this.walls;
-      case "furniture":
-        return this.furniture;
-      case "item":
-        return this.items;
-      default:
-        console.log("ERROR cannot find place '" + str + "'");
-        return undefined;
-    }
-  }
-
   add_structure(structure) {
-    var place = this.get_place_from_string(structure.layer);
+    var place = this.places_by_name[structure.layer];
     this.add_thing(structure.pos, place, structure);
     this.graph.update_pos(structure.pos);
     return structure;
   }
   remove_structure(structure) {
-    var place = this.get_place_from_string(structure.layer);
+    var place = this.places_by_name[structure.layer];
     this.remove_thing(structure.pos, place, structure);
     this.graph.update_pos(structure.pos);
     if (this.current_selection === structure) {
@@ -173,8 +167,12 @@ class Ship extends createjs.Container {
     }
   }
 
+  add_shuttle(shuttle) {
+    this.add_thing(shuttle.pos, this.shuttles, shuttle);
+  }
+
   add_crew_member(crew_member) {
-    this.add_thing(crew_member.pos, this.crew, crew_member, this.crew_layer);
+    this.add_thing(crew_member.pos, this.crew, crew_member);
   }
   change_position_crew(crew_member, p) {
     if (get_3d(this.crew, crew_member.pos) !== crew_member) {
@@ -186,13 +184,12 @@ class Ship extends createjs.Container {
   }
 
   add_item(item) {
-    this.add_thing(item.pos, undefined, item, this.item_layer);
+    this.add_thing(item.pos, undefined, item);
     this.items[item.uid] = item;
 
     item.container = this;
     return item;
   }
-
   remove_item(item) {
     this.graphics.remove_thing(item.pos, item);
     this.items[item.uid] = undefined;

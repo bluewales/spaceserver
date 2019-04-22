@@ -125,6 +125,7 @@ class Game {
       "crate": { "source": "js/structure/furniture/crate.js" },
       "charging_pad": { "source": "js/structure/furniture/charging_pad.js" },
       "crew": { "source": "js/mobs/crew.js" },
+      "small_shuttle": { "source": "js/mobs/small_shuttle.js" },
       "d3": { "source": "js/lib/d3.js" },
       "wall": { "source": "js/structure/walls/wall.js" },
       "door": { "source": "js/structure/walls/door.js" },
