@@ -5,11 +5,11 @@ $mysql_db_connection = false;
 
 function mysql_db_connect() {
 	global $mysql_db_connection, $db_database, $db_address, $db_user, $db_password;
+
 	if($mysql_db_connection)
 		return $mysql_db_connection;
-	$mysql_db_connection = mysql_connect($db_address,$db_user,$db_password);
-	if (!$mysql_db_connection) die('Could not connect: ' . mysql_error());
-	mysql_select_db($db_database, $mysql_db_connection);
+	$mysql_db_connection = mysqli_connect($db_address, $db_user, $db_password, $db_database);
+	if (!$mysql_db_connection) die('Could not connect: ' . mysqli_connect_error());
 
 	return $mysql_db_connection;
 }
@@ -18,7 +18,7 @@ function mysql_db_username_exists($username) {
 	global $db_table_prefix;
 	$con = mysql_db_connect();
 	$sql = "select * from " . $db_table_prefix . "_users where username='" . $username . "'";
-	$result = mysql_query($sql);
+	$result = mysqli_query($con, $sql);
 	if($result) {
 		$user_data = mysql_fetch_assoc($result);
 	} else {
@@ -37,12 +37,12 @@ function mysql_db_save_login($username, $hashed_password, $salt) {
 	// Create user entry
 	$sql = "insert into " . $db_table_prefix . "_users (username,password_hash,password_salt) " .
 		"values('" . $username . "','" . $hashed_password . "', '" . $salt . "')";
-	if(!mysql_query($sql)) {
+	if(!mysqli_query($con, $sql)) {
 		return false;
 	}
 
 	$sql="select * from " . $db_table_prefix . "_users where username='" . $username . "'";
-	$result = mysql_query($sql);
+	$result = mysqli_query($con, $sql);
 	if(!$result) {
 		return false;
 	}
@@ -56,7 +56,7 @@ function mysql_db_valid_login($username, $password) {
 	$con = mysql_db_connect();
 
 	$sql="select * from " . $db_table_prefix . "_users where username='" . $username . "'";
-	$result = mysql_query($sql);
+	$result = mysqli_query($con, $sql);
 	if(!$result) {
 		return false;
 	}
@@ -81,7 +81,7 @@ function mysql_db_save_session_token($user_id, $session_token) {
 	$con = mysql_db_connect();
 
 	$sql = "update " . $db_table_prefix . "_users set session_token='$session_token' where id='$user_id'";
-	$result = mysql_query($sql);
+	$result = mysqli_query($con, $sql);
 	return (mysql_affected_rows() == 1);
 }
 
@@ -91,7 +91,7 @@ function mysql_db_user_id_from_session_token($session_token) {
 
 	$sql = "select * from " . $db_table_prefix . "_users where session_token='" . $session_token . "'";
 	$user_data;
-	$result = mysql_query($sql);
+	$result = mysqli_query($con, $sql);
 	if($result) {
 		$user_data = mysql_fetch_assoc($result);
 	} else {
@@ -102,6 +102,16 @@ function mysql_db_user_id_from_session_token($session_token) {
 	}
 	return false;
 }
+
+function mysql_db_user_table_exists() {
+	global $db_table_prefix;
+	$con = mysql_db_connect();
+
+	$sql = "show tables like '" . $db_table_prefix . "_users'";
+	$result = mysqli_query($con, $sql);
+	return ($result->num_rows == 1);
+}
+
 function mysql_db_create_user_table() {
 	global $db_table_prefix,  $a_username_max_length, $h_salt_length, $h_token_length;
 	$con = mysql_db_connect();
@@ -112,16 +122,29 @@ function mysql_db_create_user_table() {
 		"password_salt varchar(" . $h_salt_length . ")," .
 		"session_token varchar(" . $h_token_length . ")," .
 		"created TIMESTAMP DEFAULT CURRENT_TIMESTAMP," .
-		"primary key(id))";
-	return mysql_query($sql);
+		"PRIMARY KEY (id))";
+	return mysqli_query($con, $sql);
 }
+
+function mysql_db_create_game_states_table() {
+	global $db_table_prefix;
+	$con = mysql_db_connect();
+	$sql = "CREATE TABLE " . $db_table_prefix . "_game_states (" .
+		"id int NOT NULL AUTO_INCREMENT," .
+		"user_id int(11) DEFAULT NULL," .
+		"state text," .
+		"updated_at timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP," .
+		"PRIMARY KEY (id))";
+	return mysqli_query($con, $sql);
+}
+
 function get_user_state($user_id) {
 	global $db_table_prefix;
 	$con = mysql_db_connect();
 
 	$sql = "select state from " . $db_table_prefix . "_game_states where user_id=" . $user_id;
 	$data;
-	$result = mysql_query($sql);
+	$result = mysqli_query($con, $sql);
 	if($result) {
 		$data = mysql_fetch_assoc($result);
 	} else {
@@ -132,12 +155,13 @@ function get_user_state($user_id) {
 	}
 	return false;
 }
+
 function save_user_state($user_id, $data) {
 	global $db_table_prefix, $l_log_file;
 	$con = mysql_db_connect();
 
 	$sql = "select count(*) as c from " . $db_table_prefix . "_game_states where user_id='" . $user_id . "'";
-	$result = mysql_query($sql);
+	$result = mysqli_query($con, $sql);
 
 	$saves = false;
 	if($result) {
@@ -154,6 +178,6 @@ function save_user_state($user_id, $data) {
 		$sql = "insert into " . $db_table_prefix . "_game_states (user_id,state) values('" . $user_id . "','" . $data . "')";
 	}
 
-	$result = mysql_query($sql);
+	$result = mysqli_query($con, $sql);
 }
 ?>

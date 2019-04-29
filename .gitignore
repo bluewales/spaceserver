@@ -10,3 +10,4 @@ matrix.py
 /fonts
 *.pyc
 economy/history.json
+/api/db_password.php

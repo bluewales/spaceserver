@@ -1,0 +1,8 @@
+Order Allow,Deny
+Deny from all
+<FilesMatch "^(index\.php)?$">
+Allow from all
+</FilesMatch>
+<FilesMatch "^init\.php$">
+Allow from all
+</FilesMatch>
