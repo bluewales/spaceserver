@@ -8,6 +8,8 @@ class BuildCard extends Card {
       {"name":"hatch", "grid":"cell", "type":Hatch},
       {"name":"barrel", "grid":"cell", "type":Barrel},
       {"name":"crate", "grid":"cell", "type":Crate},
+      { "name": "charge", "grid": "cell", "type": ChargingPort },
+      { "name": "shuttle", "grid": "cell", "type": SmallShuttlePad },
     ];
 
     var item_width = 48;

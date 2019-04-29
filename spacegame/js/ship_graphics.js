@@ -51,7 +51,6 @@ class ShipGraphics extends createjs.Container {
 
   add_thing(pos, thing) {
     let layer_index = this.layer_indexes[thing.layer];
-    console.log(thing.layer + " " + layer_index);
     if (this.levels[pos.z] === undefined) {
       this.levels[pos.z] = new Level();
     }
@@ -71,7 +70,7 @@ class ShipGraphics extends createjs.Container {
   }
 
 
-  draw_highlight(pos) {
+  draw_highlight(pos, size=1) {
 
     var grid = this.grid_width + this.padding * 2;
     var pad = this.padding;
@@ -90,12 +89,24 @@ class ShipGraphics extends createjs.Container {
         corner(shape, x6, x5, x4, y6, y5, y4);
       }
 
-      this.highlight['square'] = new createjs.Shape();
-      this.highlight['square'].is_highlight = true;
+      function square_corners(shape, size) {
+        corners(shape,
+          -((grid) * size) + grid - pad, -((grid) * size) + grid, -((grid) * size) + grid * 1.25, grid * 0.75 - 2 * pad, grid - 2 * pad, grid - 1 * pad, 
+          -((grid) * size) + grid - pad, -((grid) * size) + grid, -((grid) * size) + grid * 1.25, grid * 0.75 - 2 * pad, grid - 2 * pad, grid - 1 * pad);
+          //-2 * pad - (grid * (size-1)), -pad - (grid * (size-1)), grid / 4 - (grid * (size-1)), grid - grid / 4 - 2 * pad, grid - pad, grid,
+          //-2 * pad - (grid * (size-1)), -pad - (grid * (size-1)), grid / 4 - (grid * (size-1)), grid - grid / 4 - 2 * pad, grid - pad, grid);
+      }
 
-      corners(this.highlight['square'],
-        -2 * pad, -pad, grid / 4, grid - grid / 4 - 2 * pad, grid - pad, grid,
-        -2 * pad, -pad, grid / 4, grid - grid / 4 - 2 * pad, grid - pad, grid);
+
+      this.highlight[1] = new createjs.Shape();
+      this.highlight[1].is_highlight = true;
+
+      this.highlight[2] = new createjs.Shape();
+      this.highlight[2].is_highlight = true;
+
+      square_corners(this.highlight[1], 1);
+      square_corners(this.highlight[2], 2);
+      
 
       this.highlight["|"] = new createjs.Shape();
       this.highlight["|"].is_highlight = true;
@@ -113,13 +124,15 @@ class ShipGraphics extends createjs.Container {
     if (pos.ori) {
       this.highlight_shape = this.highlight[pos.ori];
     } else {
-      this.highlight_shape = this.highlight['square'];
+      this.highlight_shape = this.highlight[size];
     }
 
     this.highlight_shape.y = this.position_transform(pos.y);
     this.highlight_shape.x = this.position_transform(pos.x);
 
     this.addChild(this.highlight_shape);
+
+    return this.highlight_shape;
   }
 
   clear_highlight() {

@@ -1,14 +1,14 @@
 
 
-class ChargingPad extends Furniture {
+class ChargingPort extends Furniture {
 
     constructor() {
       super();
   
       this.uid = getUID(this.name);
-      this.label = "Charging Pad";
+      this.label = "Charging Port";
 
-      this.sprite = "charging_pad";
+      this.sprite = "charging_port";
       this.addChild(new createjs.Sprite(game.sprites[this.sprite].sprite, this.sprite));
     }
   
@@ -42,7 +42,7 @@ class ChargingPad extends Furniture {
   
     static generate_raw(pos) {
       return {
-        "type": "ChargingPad",
+        "type": "ChargingPort",
         "pos": pos,
         "progress": 0
       };

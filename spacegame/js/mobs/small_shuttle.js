@@ -8,14 +8,26 @@ class SmallShuttle extends createjs.Container {
     this.type = "SmallShuttle",
     this.sprite = "small_shuttle";
 
+    this.label = "Shuttle";
+
+    this.size = 2;
+
     this.uid = getUID(this.type);
-    let sprite_image = new createjs.Sprite(game.sprites[this.sprite].sprite, this.sprite)
+    let sprite_image = new createjs.Sprite(game.sprites[this.sprite].sprite, this.sprite);
+    this.box = new createjs.Container();
+    
+    this.addChild(this.box);
+    this.box.addChild(sprite_image);
 
     if(ship === undefined) return;
 
-    sprite_image.x = -24;
-    sprite_image.y = -24;
-    this.addChild(sprite_image);
+    this.box.x = -this.ship.graphics.padding;
+    this.box.y = -this.ship.graphics.padding;
+
+    sprite_image.x = -this.ship.graphics.grid_width;
+    sprite_image.y = -this.ship.graphics.grid_width;
+
+    
 
     this.acceleration = 0.1;
     this.speed = 0.25;
@@ -27,10 +39,11 @@ class SmallShuttle extends createjs.Container {
     this.x_offset = 1200;
     this.state = "decelerating";
 
-    this.wobble_theta = 0;
-
     this.cooldown = 0;
 
+    this.flame = new createjs.Sprite(game.sprites["flame"].sprite, "flame");
+    this.flame.x = -(this.ship.graphics.grid_width + this.ship.graphics.padding) / 2;
+    this.flame.y = this.ship.graphics.grid_width - this.ship.graphics.padding * 2;
   }
   init(raw, objects) {
     this.type = raw.type;
@@ -43,21 +56,25 @@ class SmallShuttle extends createjs.Container {
 
 
     this.label = raw.name;
-
-    
-
   }
   start(raw, objects) {
   }
   
   tick(event) {
 
-    let wobble_x = Math.round(Math.sin(this.wobble_theta) * this.ship.graphics.padding);
-    let wobble_y = Math.round(Math.cos(this.wobble_theta) * this.ship.graphics.padding);
-    this.wobble_theta += 0.025;
+    this.x = this.ship.graphics.position_transform(this.pos.x) + this.x_offset;
+    this.y = this.ship.graphics.position_transform(this.pos.y);
 
-    this.x = this.ship.graphics.position_transform(this.pos.x) - this.ship.graphics.padding + this.x_offset + wobble_x;
-    this.y = this.ship.graphics.position_transform(this.pos.y) - this.ship.graphics.padding + wobble_y;
+    if ((this.state == "decelerating" || this.state == "leaving") && this.cooldown == 0) {
+      this.box.addChild(this.flame);
+    } else {
+      this.box.removeChild(this.flame);
+    }
+
+    if (this.highlight) {
+      this.highlight.x = this.x;
+      this.highlight.y = this.y;
+    }
 
     if (this.cooldown > 0) {
       this.cooldown -= 1;
@@ -65,7 +82,9 @@ class SmallShuttle extends createjs.Container {
     }
 
     
-    this.rotation = 90;
+
+    
+    this.box.rotation = 90;
 
     this.x_offset += this.dx;
 
@@ -80,7 +99,7 @@ class SmallShuttle extends createjs.Container {
         }
       }
     }
-    if (this.state == "landing") {
+    else if (this.state == "landing") {
       if(this.x_offset > 0){
         this.x_offset -= this.speed;
         if(this.x_offset <= 0) {
@@ -90,10 +109,10 @@ class SmallShuttle extends createjs.Container {
         }
       }
     }
-    if (this.state == "loading") {
+    else if (this.state == "loading") {
       this.state = "leaving";
     }
-    if (this.state == "leaving") {
+    else if (this.state == "leaving") {
       this.dx += this.acceleration;
       if(this.x_offset > 1500) {
         this.dx = -15;
@@ -101,13 +120,15 @@ class SmallShuttle extends createjs.Container {
         this.state = "decelerating";
       }
     }
-
-    
-    
-
-    this.update_interaction_card();
   }
   
+  set state(value) {
+    this._state = value;
+    this.update_interaction_card();
+  }
+  get state() {
+    return this._state;
+  }
   get_raw(callback) {
     this.raw = {};
     this.raw.pos = copy_pos(this.pos);
@@ -129,7 +150,7 @@ class SmallShuttle extends createjs.Container {
     this._interaction_card.clear_lines();
 
     this._interaction_card.add_text("Position: " + pos_to_index(this.pos));
-    this._interaction_card.add_text("Rotation: " + this.theta);
+    this._interaction_card.add_text("State: " + this.state);
   }
 
   get interaction_card() {

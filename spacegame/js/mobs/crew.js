@@ -75,6 +75,12 @@ class Crew extends createjs.Container {
     this.removeChild(item);
   }
   tick(event) {
+
+    if (this.highlight) {
+      this.highlight.x = this.x;
+      this.highlight.y = this.y;
+    }
+
     if (this.cooldown > 0) {
       this.cooldown -= 1;
     } else if (this.path) {
@@ -126,10 +132,6 @@ class Crew extends createjs.Container {
       this.y += this.speed * dy / Math.abs(dy);
     } else {
       this.y = this.ship.graphics.position_transform(this.pos.y);
-    }
-    if (this.highlight) {
-      this.highlight.x = this.x;
-      this.highlight.y = this.y;
     }
   }
   clear_path() {

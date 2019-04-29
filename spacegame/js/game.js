@@ -60,7 +60,8 @@ class Game {
       /* Furniture */
       "crate": { "sources": ["img/sliced/world_sliced/images/oryx_16bit_scifi_world_679.png"] },
       "barrel": { "sources": ["img/sliced/world_sliced/images/oryx_16bit_scifi_world_708.png"] },
-      "charging_pad": { "sources": ["img/sliced/world_sliced/images/oryx_16bit_scifi_world_306.png"] },
+      "charging_port": { "sources": ["img/sliced/world_sliced/images/oryx_16bit_scifi_world_306.png"] },
+      "small_shuttle_pad": { "sources": ["img/shuttle/shuttle_pad_48.png"] },
 
       /* Background */
       "background": { "sources": ["img/mars.jpg"] },
@@ -98,6 +99,12 @@ class Game {
           "img/sliced/FX_sm_sliced/images/oryx_16bit_scifi_FX_sm_92.png"
         ]
       },
+      "flame": {
+        "sources": [
+          "img/sliced/FX_sm_sliced/images/oryx_16bit_scifi_FX_sm_110.png"
+        ]
+      },
+      
     };
 
     this.sources = {
@@ -123,7 +130,8 @@ class Game {
       "stratified_card": { "source": "js/ui/cards/stratified_card.js" },
       "controls_card": { "source": "js/ui/cards/controls_card.js" },
       "crate": { "source": "js/structure/furniture/crate.js" },
-      "charging_pad": { "source": "js/structure/furniture/charging_pad.js" },
+      "charging_port": { "source": "js/structure/furniture/charging_port.js" },
+      "small_shuttle_pad": { "source": "js/structure/furniture/small_shuttle_pad.js" },
       "crew": { "source": "js/mobs/crew.js" },
       "small_shuttle": { "source": "js/mobs/small_shuttle.js" },
       "d3": { "source": "js/lib/d3.js" },

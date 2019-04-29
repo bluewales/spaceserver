@@ -231,6 +231,9 @@ class Ship extends createjs.Container {
 
     this.current_selection = selected;
 
+    let size = this.current_selection.size;
+    if(size === undefined) size = 1;
+
     this.interaction_card = selected.interaction_card;
 
     var x_offset = this.interaction_card.frame.border_width + 25;
@@ -238,9 +241,9 @@ class Ship extends createjs.Container {
     this.interaction_card.y = this.getStage().mouseY;
 
     this.interaction_card.active = true;
-    this.graphics.draw_highlight(selected.pos);
+    let highlight_shape = this.graphics.draw_highlight(selected.pos, size);
 
-    this.current_selection.set_highlight(this.highlight_shape);
+    this.current_selection.set_highlight(highlight_shape);
   }
 
   clear_selection() {
