@@ -16,7 +16,8 @@ var type_lookup = {
   "Deconstruct": Deconstruct,
   "CircuitBoard": CircuitBoard,
   "Plastic": Plastic,
-  "SmallShuttle": SmallShuttle
+  "SmallShuttle": SmallShuttle,
+  "SmallShuttlePad": SmallShuttlePad
 };
 
 
@@ -28,6 +29,7 @@ function deserialize(raw) {
   var raws = raw.objects;
 
   for (var i = 0; i < raws.length; i++) {
+    console.log(raws[i].type);
     var type = type_lookup[raws[i].type];
     objects.push(new type());
   }

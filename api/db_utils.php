@@ -20,7 +20,7 @@ function mysql_db_username_exists($username) {
 	$sql = "select * from " . $db_table_prefix . "_users where username='" . $username . "'";
 	$result = mysqli_query($con, $sql);
 	if($result) {
-		$user_data = mysql_fetch_assoc($result);
+		$user_data = mysqli_fetch_assoc($result);
 	} else {
 		return false;
 	}
@@ -47,7 +47,7 @@ function mysql_db_save_login($username, $hashed_password, $salt) {
 		return false;
 	}
 
-	$user_data = mysql_fetch_assoc($result);
+	$user_data = mysqli_fetch_assoc($result);
 	return $user_data['id'];
 }
 
@@ -60,7 +60,7 @@ function mysql_db_valid_login($username, $password) {
 	if(!$result) {
 		return false;
 	}
-	$user_data = mysql_fetch_assoc($result);
+	$user_data = mysqli_fetch_assoc($result);
 	if(!$user_data || empty($user_data )) {
 		return false;
 	}
@@ -82,7 +82,7 @@ function mysql_db_save_session_token($user_id, $session_token) {
 
 	$sql = "update " . $db_table_prefix . "_users set session_token='$session_token' where id='$user_id'";
 	$result = mysqli_query($con, $sql);
-	return (mysql_affected_rows() == 1);
+	return (mysqli_affected_rows($con) == 1);
 }
 
 function mysql_db_user_id_from_session_token($session_token) {
@@ -93,7 +93,7 @@ function mysql_db_user_id_from_session_token($session_token) {
 	$user_data;
 	$result = mysqli_query($con, $sql);
 	if($result) {
-		$user_data = mysql_fetch_assoc($result);
+		$user_data = mysqli_fetch_assoc($result);
 	} else {
 		return false;
 	}
@@ -146,7 +146,7 @@ function get_user_state($user_id) {
 	$data;
 	$result = mysqli_query($con, $sql);
 	if($result) {
-		$data = mysql_fetch_assoc($result);
+		$data = mysqli_fetch_assoc($result);
 	} else {
 		return false;
 	}
@@ -165,7 +165,7 @@ function save_user_state($user_id, $data) {
 
 	$saves = false;
 	if($result) {
-		$saves = mysql_fetch_assoc($result);
+		$saves = mysqli_fetch_assoc($result);
 	}
 	$save_count = 0;
 	if(!empty($saves)) {

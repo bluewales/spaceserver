@@ -11,6 +11,9 @@
   <h2>Journal</h2>
 <?php
 
+error_reporting(E_ALL);
+ini_set('display_errors', '1');
+
 $path = "entries";
 include 'Parsedown.php';
 $Parsedown = new Parsedown();
@@ -24,13 +27,15 @@ if ($handle = opendir($path)) {
     $entries[] = $file;
   }
   closedir($handle);
+} else {
+  echo "<p>Could not open entries folder</p>";
 }
 sort($entries);
 $entries = array_reverse($entries);
 foreach($entries as $file) {
   $file_path = $path . "/" . $file;
-  echo "<hr/>";
-  echo "<h4> Space Date " . str_replace(".md","",$file) . "</h4>";
+  echo "\n<hr/>\n";
+  echo "<h4> Space Date " . str_replace(".md","",$file) . "</h4>\n";
   echo $Parsedown->text(file_get_contents($file_path));
 }
 

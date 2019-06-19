@@ -22,7 +22,4 @@ if(mysql_db_user_table_exists()) {
     mysql_db_create_game_states_table();
 }
 
-phpinfo();
-
-
 ?>

@@ -15,12 +15,21 @@ class SmallShuttlePad extends Furniture {
     this.label = "Shuttle Pad";
     this.size = 2;
 
-    this.addChild(new createjs.Sprite(game.sprites[this.sprite].sprite, this.sprite));
+    
   }
 
   init(raw, objects) {
     super.init(raw, objects);
 
+    var g = this.ship.graphics.grid_width;
+    var p = this.ship.graphics.padding;
+
+    this.sprite_object = new createjs.Sprite(game.sprites[this.sprite].sprite, this.sprite);
+
+    this.sprite_object.x -= p*2 + g;
+    this.sprite_object.y -= p*2 + g;
+
+    this.addChild(this.sprite_object);
   }
 
   start(raw, objects) {
@@ -64,6 +73,6 @@ class SmallShuttlePad extends Furniture {
   }
 
   static get materials() {
-    return ["Steel", "Steel"];
+    return ["Steel", "Steel", "Steel", "Steel"];
   }
 }

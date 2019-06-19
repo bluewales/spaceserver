@@ -132,9 +132,9 @@ class Parsedown
             }
 
             $count = 1;
-            while($count > 0) $line = preg_replace('/\~([^\~]*)\~/', '<sub>${1}${2}</sub>', $line, 1, &$count);
+            //while($count > 0) $line = preg_replace('/\~([^\~]*)\~/', '<sub>${1}${2}</sub>', $line, 1, &$count);
             $count = 1;
-            while($count > 0) $line = preg_replace('/\^([^\^]*)\^/', '<sup>${1}${2}</sup>', $line, 1, &$count);
+            //while($count > 0) $line = preg_replace('/\^([^\^]*)\^/', '<sup>${1}${2}</sup>', $line, 1, &$count);
 
             if (strpos($line, "\t") !== false)
             {
@@ -990,13 +990,15 @@ class Parsedown
         '[' => array('Link'),
         '_' => array('Emphasis'),
         '`' => array('Code'),
-        '~' => array('Strikethrough'),
+        '~' => array('Tilde'),
+        '^' => array('Superscript'),
         '\\' => array('EscapeSequence'),
     );
 
     # ~
 
-    protected $inlineMarkerList = '!"*_&[:<>`~\\';
+    protected $inlineMarkerList = '!"*_&[:<>`~\\^';
+    
 
     #
     # ~
@@ -1319,21 +1321,46 @@ class Parsedown
         }
     }
 
-    protected function inlineStrikethrough($Excerpt)
+    protected function inlineTilde($Excerpt)
     {
         if ( ! isset($Excerpt['text'][1]))
         {
             return;
         }
 
-        if ($Excerpt['text'][1] === '~' and preg_match('/^~~(?=\S)(.+?)(?<=\S)~~/', $Excerpt['text'], $matches))
+        $marker = $Excerpt['text'][0];
+
+        if ($Excerpt['text'][1] === $marker and preg_match('/^~~(?=\S)(.+?)(?<=\S)~~/', $Excerpt['text'], $matches))
+        {
+            $emphasis = 'del';
+        }
+        elseif (preg_match('/^~(?=\S)(.+?)(?<=\S)~/', $Excerpt['text'], $matches))
+        {
+            $emphasis = 'sub';
+        }
+        else
+        {
+            return;
+        }
+
+        return array(
+            'extent' => strlen($matches[0]),
+            'element' => array(
+                'name' => $emphasis,
+                'text' => $matches[1]
+            ),
+        );
+    }
+
+    protected function inlineSuperscript($Excerpt)
+    {
+        if (preg_match('/^\^(.+?)\^/', $Excerpt['text'], $matches))
         {
             return array(
                 'extent' => strlen($matches[0]),
                 'element' => array(
-                    'name' => 'del',
-                    'text' => $matches[1],
-                    'handler' => 'line',
+                    'name' => 'sup',
+                    'text' => $matches[1]
                 ),
             );
         }
