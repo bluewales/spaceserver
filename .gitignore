@@ -11,3 +11,4 @@ matrix.py
 *.pyc
 economy/history.json
 /api/db_password.php
+/three
