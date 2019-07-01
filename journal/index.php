@@ -39,7 +39,7 @@ foreach($entries as $file) {
   echo $Parsedown->text(file_get_contents($file_path));
 }
 
- ?>
+?>
 </div>
 </body>
 </html>

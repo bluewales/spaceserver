@@ -52,7 +52,6 @@
 				<span style="font-size:36px">Click to play</span>
 				<br /><br />
 				Move: WASD<br/>
-				Jump: SPACE<br/>
 				Look: MOUSE
 			</div>
 
@@ -60,9 +59,14 @@
 
     <script src="js/lib/three.min.js"></script>
 		<script src="js/lib/PointerLockControls.js"></script>
-		<script src="js/Floor.js"></script>
+		<script src="js/Panel.js"></script>
+		<script src="js/Ship.js"></script>
+		<script src="js/GridCube.js"></script>
+		<script src="js/Wall.js"></script>
 
 		<script>
+
+			(function(){var script=document.createElement('script');script.onload=function(){var stats=new Stats();document.body.appendChild(stats.dom);requestAnimationFrame(function loop(){stats.update();requestAnimationFrame(loop)});};script.src='//mrdoob.github.io/stats.js/build/stats.min.js';document.head.appendChild(script);})()
 
 			// player motion parameters
 
@@ -152,7 +156,7 @@
 
           if ( ! motion.airborne ) {
 						//jump
- 						var vy = keysPressed[ keys.SP ] ? 0.7 : 0;
+ 						var vy = keysPressed[ keys.SP ] ? 0.1 : 0;
  						motion.velocity.y += vy;
 
 					}
@@ -167,7 +171,7 @@
 				var timeStep = 5;
 				var timeLeft = timeStep + 1;
 
-				var birdsEye = 100;
+				var camera_height = 1.6;
 				var kneeDeep = 0.3;
 
 				var raycaster = new THREE.Raycaster();
@@ -178,7 +182,6 @@
 
 				return function ( dt ) {
 
-					var platform = scene.getObjectByName( "platform", true );
 					if ( true ) {
 
 						timeLeft += dt;
@@ -188,12 +191,12 @@
 						dt = 5;
 						while ( timeLeft >= dt ) {
 
-							var time = 0.3, damping = 0.93, gravity = 0.01, tau = 2 * Math.PI;
+							var time = 0.3, damping = 0.93, gravity = 0.0004, tau = 2 * Math.PI;
 
 							raycaster.ray.origin.copy( motion.position );
-							raycaster.ray.origin.y += birdsEye;
+							raycaster.ray.origin.y += camera_height;
 
-							var hits = raycaster.intersectObjects( objects_to_stand_on );
+							var hits = raycaster.intersectObject( ship , true);
 							
 
 							//var hits = raycaster.intersectObject( platform );
@@ -205,7 +208,7 @@
 
 							if ( ( hits.length > 0 )) {
 
-								var actualHeight = hits[ 0 ].distance - birdsEye;
+								var actualHeight = hits[ 0 ].distance - camera_height;
 
 								// collision: stick to the surface if landing on it
 
@@ -306,22 +309,17 @@
       light.position.set( 0.5, 1, 0.75 );
       scene.add( light );
 
-      var directionalLight = new THREE.DirectionalLight( 0xffffff, 0.5 );
+      var directionalLight = new THREE.DirectionalLight( 0xffa71a, 0.5 );
       directionalLight.position.set( 1, 1, 1 );
       scene.add( directionalLight );
       
 			var geometry = new THREE.SphereGeometry( 0.34, 32, 32 );
-			//geometry.wireframe = true;
-      var material = new THREE.MeshToonMaterial  ( { color: 0xffffff } );
-			var cube = new THREE.Mesh( geometry, material );
-			cube.position.y = 3;
-      scene.add( cube );
 
-      var material = new THREE.MeshToonMaterial  ( { color: 0xabcdef } );
+      var material = new THREE.MeshToonMaterial  ( { color: 0xffa71a } );
       var cube = new THREE.Mesh( geometry, material );
 			scene.add( cube );
 			
-			var geometry = new THREE.SphereGeometry( 0.1, 32, 32 );
+			var geometry = new THREE.BoxGeometry( 0.1, 0.1, 0.1, 1, 1 );
 			var material = new THREE.MeshToonMaterial  ( { color: 0xfedcba } );
 			var moon_cube = new THREE.Mesh( geometry, material );
 			cube.add( moon_cube );
@@ -329,44 +327,25 @@
 			var geometry = new THREE.PlaneGeometry(2, 2);
 			var material = new THREE.MeshToonMaterial( {color: 0xbbbbbb, side: THREE.DoubleSide} );
 
-			var floors = [];
-
-			for(var i = -10; i < 11; i++) {
-				for(var j = -10; j < 11; j++) {
-					if(i%2 && j%2) continue;
-					var floor = new Floor();
-					floor.position.x = i * 2;
-					floor.position.z = j * 2;
-					scene.add( floor );
-					floors.push(floor);
-					objects_to_stand_on.push(floor);
-
-					var ceiling = new Floor();
-					ceiling.position.x = i * 2;
-					ceiling.position.z = j * 2;
-					ceiling.position.y = 2;
-					scene.add( ceiling );
-				}
-			}
-
 			
 
+
+			var ship = new Ship();
+
+			scene.add(ship);
+
 			
-
-      var line = new THREE.Line( geometry, material );
-
-      //scene.add( line );
 
       
 
 
 			var envMap = new THREE.CubeTextureLoader().load( [
-				'/three/examples/textures/cube/MilkyWay/dark-s_px.jpg', // right
-				'/three/examples/textures/cube/MilkyWay/dark-s_nx.jpg', // left
-				'/three/examples/textures/cube/MilkyWay/dark-s_py.jpg', // top
-				'/three/examples/textures/cube/MilkyWay/dark-s_ny.jpg', // bottom
-				'/three/examples/textures/cube/MilkyWay/dark-s_pz.jpg', // back
-				'/three/examples/textures/cube/MilkyWay/dark-s_nz.jpg' // front
+				'img/MilkyWay/dark-s_px.jpg', // right
+				'img/MilkyWay/dark-s_nx.jpg', // left
+				'img/MilkyWay/dark-s_py.jpg', // top
+				'img/MilkyWay/dark-s_ny.jpg', // bottom
+				'img/MilkyWay/dark-s_pz.jpg', // back
+				'img/MilkyWay/dark-s_nz.jpg' // front
 			] );
 			envMap.format = THREE.RGBFormat;
 

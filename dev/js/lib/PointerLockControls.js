@@ -20,7 +20,7 @@ THREE.PointerLockControls = function ( camera, domElement ) {
 
 	var euler = new THREE.Euler( 0, 0, 0, 'YXZ' );
 
-	var PI_2 = Math.PI / 2;
+	var PI_2 = 0.99 * Math.PI / 2;
 
 	function onMouseMove( event ) {
 
