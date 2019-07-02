@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<title>three.js - platformer demo</title>
+		<title>three.js - graphics experiment</title>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
     <link type="text/css" rel="stylesheet" href="css/main.css">
@@ -309,7 +309,7 @@
       light.position.set( 0.5, 1, 0.75 );
       scene.add( light );
 
-      var directionalLight = new THREE.DirectionalLight( 0xffa71a, 0.5 );
+      var directionalLight = new THREE.DirectionalLight( 0x555555, 0.5 );
       directionalLight.position.set( 1, 1, 1 );
       scene.add( directionalLight );
       

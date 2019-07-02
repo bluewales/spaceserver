@@ -13,7 +13,7 @@
     <li><a href="/journal">Journal</a></li>
     <li><a href="/todo">To-do List</a></li>
   </ul>
-  <p>This is hobby project.  It's going to be a computer game about a space ship.</p>
+  <p>I want to make a computer game about a space ship.</p>
   <p>You can login and click on stuff and try it out.  You can build things and watch the robot run arround.  There's not much to see or do, yet.  Development is ongoing, so check back later.</p>
   <hr noshade/>
   <h2>How to contact me:</h2>

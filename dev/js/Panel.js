@@ -9,14 +9,14 @@ class Panel extends THREE.Object3D {
     var geometry = new THREE.PlaneGeometry(this.ship.panel_size, this.ship.panel_size);
 
     if(transparent) {
-      var material = new this.ship.material_type({ color: 0xffffff, side: THREE.DoubleSide, transparent: true, opacity: 0.5 });
+      var material = this.ship.window_material;
     } else {
-      var material = new this.ship.material_type({ color: 0xffffff, side: THREE.DoubleSide });
+      var material = this.ship.base_material;
     }
 
-    var main_panel = new THREE.Mesh(geometry, material);
+    var material = this.ship.base_material;
 
-    this.add(main_panel);
+    this.add(new THREE.Mesh(geometry, material));
 
     var edges = [
       { x: 1, y: 0 },
@@ -28,20 +28,20 @@ class Panel extends THREE.Object3D {
     var boarder_width = 0.1;
     var boarder_height = 0.01;
 
-    var material = new this.ship.material_type({ color: 0xd0dddf, side: THREE.DoubleSide });
+    var trim_geometry = new THREE.Geometry();
 
     for (var i = 0; i < 4; i++) {
       var cylinder_geometry = new THREE.BoxGeometry(edges[i].x == 0 ? 2 : boarder_width, edges[i].y == 0 ? 2 : boarder_width, boarder_height);
-      var boarder = new THREE.Mesh(cylinder_geometry, material);
+      var boarder = new THREE.Mesh(cylinder_geometry);
 
       boarder.position.x = (1 - boarder_width / 2) * edges[i].x;
       boarder.position.y = (1 - boarder_width / 2) * edges[i].y;
-      this.add(boarder);
+      trim_geometry.mergeMesh(boarder);
     }
 
-
+    trim_geometry.mergeVertices(); // optional
+    this.add(new THREE.Mesh(trim_geometry, this.ship.trim_material));
   }
-
 }
 
 class PanelCorner extends THREE.Object3D {
@@ -52,54 +52,56 @@ class PanelCorner extends THREE.Object3D {
     var curve_detail = this.ship.curve_detail;
 
     var geometry = new THREE.CylinderGeometry(this.ship.corner_padding, this.ship.corner_padding, this.ship.panel_size, curve_detail, 1, true, 0, Math.PI / 2);
-    var material = new this.ship.material_type({ color: 0xffffff, side: THREE.DoubleSide });
-    var cylinder = new THREE.Mesh(geometry, material);
+    var cylinder = new THREE.Mesh(geometry, this.ship.base_material);
 
     this.add(cylinder);
+
+    var trim_geometry = new THREE.Geometry();
 
     var boarder_width = 0.1;
     var boarder_height = 0.01;
 
-    material = new this.ship.material_type({ color: 0xd0dddf, side: THREE.DoubleSide });
-
     var end_ring_geometry = new THREE.RingGeometry(this.ship.corner_padding - boarder_height / 2, this.ship.corner_padding + boarder_height / 2, curve_detail, 1, 0, Math.PI / 2);
-    var end_ring = new THREE.Mesh(end_ring_geometry, material);
+    var end_ring = new THREE.Mesh(end_ring_geometry);
     end_ring.position.y = this.ship.panel_size / 2 - boarder_width;
     end_ring.rotation.x = Math.PI / 2;
-    this.add(end_ring);
+    trim_geometry.mergeMesh(end_ring);
 
-    end_ring = new THREE.Mesh(end_ring_geometry, material);
+    var end_ring = new THREE.Mesh(end_ring_geometry);
     end_ring.position.y = this.ship.panel_size / 2;
     end_ring.rotation.x = Math.PI / 2;
-    this.add(end_ring);
+    trim_geometry.mergeMesh(end_ring);
 
     var inner_end_curve_geometry = new THREE.CylinderGeometry(this.ship.corner_padding - boarder_height / 2, this.ship.corner_padding - boarder_height / 2, boarder_width, curve_detail, 1, true, 0, Math.PI / 2);
-    var end_curve = new THREE.Mesh(inner_end_curve_geometry, material);
+    var end_curve = new THREE.Mesh(inner_end_curve_geometry);
     end_curve.position.y = this.ship.panel_size / 2 - boarder_width / 2;
-    this.add(end_curve);
+    trim_geometry.mergeMesh(end_curve);
 
     var outer_end_curve_geometry = new THREE.CylinderGeometry(this.ship.corner_padding + boarder_height / 2, this.ship.corner_padding + boarder_height / 2, boarder_width, curve_detail, 1, true, 0, Math.PI / 2);
-    end_curve = new THREE.Mesh(outer_end_curve_geometry, material);
+    var end_curve = new THREE.Mesh(outer_end_curve_geometry);
     end_curve.position.y = this.ship.panel_size / 2 - boarder_width / 2;
-    this.add(end_curve);
+    trim_geometry.mergeMesh(end_curve);
 
-    end_ring = new THREE.Mesh(end_ring_geometry, material);
+    var end_ring = new THREE.Mesh(end_ring_geometry);
     end_ring.position.y = -this.ship.panel_size / 2;
     end_ring.rotation.x = Math.PI / 2;
-    this.add(end_ring);
+    trim_geometry.mergeMesh(end_ring);
 
-    end_ring = new THREE.Mesh(end_ring_geometry, material);
+    var end_ring = new THREE.Mesh(end_ring_geometry);
     end_ring.position.y = -this.ship.panel_size / 2 + boarder_width;
     end_ring.rotation.x = Math.PI / 2;
-    this.add(end_ring);
+    trim_geometry.mergeMesh(end_ring);
 
-    end_curve = new THREE.Mesh(inner_end_curve_geometry, material);
+    var end_curve = new THREE.Mesh(inner_end_curve_geometry);
     end_curve.position.y = -this.ship.panel_size / 2 + boarder_width / 2;
-    this.add(end_curve);
+    trim_geometry.mergeMesh(end_curve);
 
-    end_curve = new THREE.Mesh(outer_end_curve_geometry, material);
+    var end_curve = new THREE.Mesh(outer_end_curve_geometry);
     end_curve.position.y = -this.ship.panel_size / 2 + boarder_width / 2;
-    this.add(end_curve);
+    trim_geometry.mergeMesh(end_curve);
+
+    trim_geometry.mergeVertices(); // optional
+    this.add(new THREE.Mesh(trim_geometry, this.ship.trim_material));
   }
 }
 
@@ -110,21 +112,23 @@ class PanelLink extends THREE.Object3D {
 
     var curve_detail = this.ship.curve_detail;
 
-    var geometry = new THREE.PlaneGeometry(this.ship.panel_size, this.ship.corner_padding + this.ship.void_padding / 2);
-    var material = new this.ship.material_type({ color: 0xffffff, side: THREE.DoubleSide });
+    var link_geometry = new THREE.Geometry();
 
-    var plane = new THREE.Mesh(geometry, material);
+    var geometry = new THREE.PlaneGeometry(this.ship.panel_size, this.ship.corner_padding + this.ship.void_padding / 2);
+
+    var plane = new THREE.Mesh(geometry);
     plane.position.z = this.ship.panel_size / 2 + (this.ship.corner_padding * 2 + this.ship.void_padding) / 4;
     plane.rotation.x = Math.PI / 2;
-    this.add(plane);
+    link_geometry.mergeMesh(plane);
 
-    plane = new THREE.Mesh(geometry, material);
+    var plane = new THREE.Mesh(geometry);
     plane.position.y = this.ship.panel_size + this.ship.corner_padding * 2;
     plane.position.z = this.ship.panel_size / 2 + (this.ship.corner_padding * 2 + this.ship.void_padding) / 4;
     plane.rotation.x = Math.PI / 2;
-    this.add(plane);
+    link_geometry.mergeMesh(plane);
 
-    return;
+    link_geometry.mergeVertices(); // optional
+    this.add(new THREE.Mesh(link_geometry, this.ship.base_material));
   }
 }
 
@@ -135,23 +139,26 @@ class PanelFloorFill extends THREE.Object3D {
 
     var curve_detail = this.ship.curve_detail;
 
-    var geometry = new THREE.PlaneGeometry(this.ship.corner_padding + this.ship.void_padding / 2, this.ship.corner_padding + this.ship.void_padding / 2);
-    var material = new this.ship.material_type({ color: 0xffffff, side: THREE.DoubleSide });
+    var fill_geometry = new THREE.Geometry();
 
-    var plane = new THREE.Mesh(geometry, material);
+    var geometry = new THREE.PlaneGeometry(this.ship.corner_padding + this.ship.void_padding / 2, this.ship.corner_padding + this.ship.void_padding / 2);
+    var material = this.ship.base_material;
+
+    var plane = new THREE.Mesh(geometry);
     plane.position.x = this.ship.panel_size / 2 + (this.ship.corner_padding * 2 + this.ship.void_padding) / 4;
     plane.position.z = this.ship.panel_size / 2 + (this.ship.corner_padding * 2 + this.ship.void_padding) / 4;
     plane.rotation.x = Math.PI / 2;
-    this.add(plane);
+    fill_geometry.mergeMesh(plane);
 
-    plane = new THREE.Mesh(geometry, material);
+    plane = new THREE.Mesh(geometry);
     plane.position.x = this.ship.panel_size / 2 + (this.ship.corner_padding * 2 + this.ship.void_padding) / 4;
     plane.position.y = this.ship.panel_size + this.ship.corner_padding * 2;
     plane.position.z = this.ship.panel_size / 2 + (this.ship.corner_padding * 2 + this.ship.void_padding) / 4;
     plane.rotation.x = Math.PI / 2;
-    this.add(plane);
+    fill_geometry.mergeMesh(plane);
 
-    return;
+    fill_geometry.mergeVertices(); // optional
+    this.add(new THREE.Mesh(fill_geometry, this.ship.base_material));
   }
 }
 
@@ -211,7 +218,7 @@ class ColumnShoe extends THREE.Object3D {
       normals.setXYZ(i, normal.x, normal.y, normal.z);
     }
 
-    var material = new this.ship.material_type({ color: 0xffffff, side: THREE.DoubleSide });
+    var material = this.ship.base_material;
 
     var plane = new THREE.Mesh(geometry, material);
 

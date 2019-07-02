@@ -9,8 +9,12 @@ class Ship extends THREE.Object3D {
     this.void_padding = 0.5;
     this.grid_size = this.panel_size + this.corner_padding * 2 + this.void_padding;
 
-    this.curve_detail = 8;
-    this.material_type = THREE.MeshLambertMaterial;
+    this.curve_detail = 4;
+    this.material_type = THREE.MeshPhongMaterial;
+
+    this.base_material = new THREE.MeshPhongMaterial({ color: 0xffffff, side: THREE.DoubleSide });
+    this.trim_material = new THREE.MeshPhongMaterial({ color: 0xd0dddf, side: THREE.DoubleSide });
+    this.window_material = new THREE.MeshPhongMaterial({ color: 0xffffff, side: THREE.DoubleSide, transparent: true, opacity: 0.5 });
 
 
     var ship_data = {
