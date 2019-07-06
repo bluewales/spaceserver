@@ -7,6 +7,20 @@
     <link type="text/css" rel="stylesheet" href="css/main.css">
     
 		<style>
+
+			#status {
+				position: absolute;
+				color: #ffffff;
+				background-color: rgba(0,0,0,0.5);
+				padding:3px;
+			}
+
+			#status p {
+				padding:0px;
+				margin:0px;
+				line-height:13px;
+			}
+
 			#blocker {
 				position: absolute;
 				width: 100%;
@@ -46,6 +60,13 @@
 	</head>
 	<body>
 
+
+		<div id="status">
+			<p id="fps"></p>
+			<p id="triangles"></p>
+			<p id="calls"></p>
+		</div>
+
 		<div id="blocker">
 
 			<div id="instructions">
@@ -65,8 +86,6 @@
 		<script src="js/Wall.js"></script>
 
 		<script>
-
-			(function(){var script=document.createElement('script');script.onload=function(){var stats=new Stats();document.body.appendChild(stats.dom);requestAnimationFrame(function loop(){stats.update();requestAnimationFrame(loop)});};script.src='//mrdoob.github.io/stats.js/build/stats.min.js';document.head.appendChild(script);})()
 
 			// player motion parameters
 
@@ -312,20 +331,6 @@
       var directionalLight = new THREE.DirectionalLight( 0x555555, 0.5 );
       directionalLight.position.set( 1, 1, 1 );
       scene.add( directionalLight );
-      
-			var geometry = new THREE.SphereGeometry( 0.34, 32, 32 );
-
-      var material = new THREE.MeshToonMaterial  ( { color: 0xffa71a } );
-      var cube = new THREE.Mesh( geometry, material );
-			scene.add( cube );
-			
-			var geometry = new THREE.BoxGeometry( 0.1, 0.1, 0.1, 1, 1 );
-			var material = new THREE.MeshToonMaterial  ( { color: 0xfedcba } );
-			var moon_cube = new THREE.Mesh( geometry, material );
-			cube.add( moon_cube );
-
-			var geometry = new THREE.PlaneGeometry(2, 2);
-			var material = new THREE.MeshToonMaterial( {color: 0xbbbbbb, side: THREE.DoubleSide} );
 
 			
 
@@ -335,7 +340,23 @@
 			scene.add(ship);
 
 			
+			var framerate_sum = 0;
+			var framerates = [];
+			function stats(dt) {
+				if(dt == 0) return;
 
+				let new_framerate = 1000 / dt;
+				framerates.push(new_framerate);
+				framerate_sum += new_framerate;
+
+				if(framerates.length > 60) {
+					framerate_sum -= framerates.shift();
+				}
+
+				document.getElementById("fps").innerHTML = "FPS " + Math.round(framerate_sum / framerates.length);
+				document.getElementById("triangles").innerHTML = renderer.info.render.triangles + " triangles rendered";
+				document.getElementById("calls").innerHTML = renderer.info.render.calls + " draw calls";
+			}
       
 
 
@@ -357,6 +378,7 @@
 			// start the game
 
 			var start = function ( gameLoop, gameViewportSize ) {
+
 
 				var resize = function () {
 
@@ -382,32 +404,18 @@
 					renderer.render( scene, camera );
 					requestAnimationFrame( render );
 
+					var time = ( performance || Date ).now();
+					stats(timeElapsed)
 				};
 
 				requestAnimationFrame( render );
-
-      };
+			};
+			
       
       var t = 0;
 
 
 			var gameLoop = function ( dt ) {
-
-        t += 0.005;
-
-        cube.rotation.x = Math.sin(t/3)/7;
-        cube.rotation.y -= 0.02;
-
-        cube.position.x = 6.5*Math.sin(t);
-        cube.position.z = 6.5*Math.cos(t);
-				cube.position.y = 3;
-
-				moon_cube.rotation.x += 0.01;
-        moon_cube.rotation.y += 0.01;
-
-        moon_cube.position.x = 1*Math.sin(t*10);
-        moon_cube.position.z = 1*Math.cos(t*10);
-				moon_cube.position.y = 0;
 				
 				
         

@@ -1,5 +1,4 @@
-class Panel extends THREE.Object3D {
-
+class Panel extends THREE.Group {
   constructor(ship, transparent=false) {
 
     super();
@@ -13,8 +12,6 @@ class Panel extends THREE.Object3D {
     } else {
       var material = this.ship.base_material;
     }
-
-    var material = this.ship.base_material;
 
     this.add(new THREE.Mesh(geometry, material));
 
@@ -44,7 +41,7 @@ class Panel extends THREE.Object3D {
   }
 }
 
-class PanelCorner extends THREE.Object3D {
+class PanelCorner extends THREE.Group {
   constructor(ship) {
     super();
     this.ship = ship;
@@ -105,82 +102,76 @@ class PanelCorner extends THREE.Object3D {
   }
 }
 
-class PanelLink extends THREE.Object3D {
+class PanelLink extends THREE.Mesh {
   constructor(ship) {
-    super();
-    this.ship = ship;
-
-    var curve_detail = this.ship.curve_detail;
-
     var link_geometry = new THREE.Geometry();
 
-    var geometry = new THREE.PlaneGeometry(this.ship.panel_size, this.ship.corner_padding + this.ship.void_padding / 2);
+    var geometry = new THREE.PlaneGeometry(ship.panel_size, ship.corner_padding + ship.void_padding / 2);
 
     var plane = new THREE.Mesh(geometry);
-    plane.position.z = this.ship.panel_size / 2 + (this.ship.corner_padding * 2 + this.ship.void_padding) / 4;
+    plane.position.z = ship.panel_size / 2 + (ship.corner_padding * 2 + ship.void_padding) / 4;
     plane.rotation.x = Math.PI / 2;
     link_geometry.mergeMesh(plane);
 
     var plane = new THREE.Mesh(geometry);
-    plane.position.y = this.ship.panel_size + this.ship.corner_padding * 2;
-    plane.position.z = this.ship.panel_size / 2 + (this.ship.corner_padding * 2 + this.ship.void_padding) / 4;
+    plane.position.y = ship.panel_size + ship.corner_padding * 2;
+    plane.position.z = ship.panel_size / 2 + (ship.corner_padding * 2 + ship.void_padding) / 4;
     plane.rotation.x = Math.PI / 2;
     link_geometry.mergeMesh(plane);
 
     link_geometry.mergeVertices(); // optional
-    this.add(new THREE.Mesh(link_geometry, this.ship.base_material));
+    super(link_geometry, ship.base_material);
   }
 }
 
-class PanelFloorFill extends THREE.Object3D {
+class PanelFloorFill extends THREE.Mesh {
   constructor(ship) {
-    super();
-    this.ship = ship;
-
-    var curve_detail = this.ship.curve_detail;
-
     var fill_geometry = new THREE.Geometry();
 
-    var geometry = new THREE.PlaneGeometry(this.ship.corner_padding + this.ship.void_padding / 2, this.ship.corner_padding + this.ship.void_padding / 2);
-    var material = this.ship.base_material;
+    var geometry = new THREE.PlaneGeometry(ship.corner_padding + ship.void_padding / 2, ship.corner_padding + ship.void_padding / 2);
 
     var plane = new THREE.Mesh(geometry);
-    plane.position.x = this.ship.panel_size / 2 + (this.ship.corner_padding * 2 + this.ship.void_padding) / 4;
-    plane.position.z = this.ship.panel_size / 2 + (this.ship.corner_padding * 2 + this.ship.void_padding) / 4;
+    plane.position.x = ship.panel_size / 2 + (ship.corner_padding * 2 + ship.void_padding) / 4;
+    plane.position.z = ship.panel_size / 2 + (ship.corner_padding * 2 + ship.void_padding) / 4;
     plane.rotation.x = Math.PI / 2;
     fill_geometry.mergeMesh(plane);
 
     plane = new THREE.Mesh(geometry);
-    plane.position.x = this.ship.panel_size / 2 + (this.ship.corner_padding * 2 + this.ship.void_padding) / 4;
-    plane.position.y = this.ship.panel_size + this.ship.corner_padding * 2;
-    plane.position.z = this.ship.panel_size / 2 + (this.ship.corner_padding * 2 + this.ship.void_padding) / 4;
+    plane.position.x = ship.panel_size / 2 + (ship.corner_padding * 2 + ship.void_padding) / 4;
+    plane.position.y = ship.panel_size + ship.corner_padding * 2;
+    plane.position.z = ship.panel_size / 2 + (ship.corner_padding * 2 + ship.void_padding) / 4;
     plane.rotation.x = Math.PI / 2;
     fill_geometry.mergeMesh(plane);
 
     fill_geometry.mergeVertices(); // optional
-    this.add(new THREE.Mesh(fill_geometry, this.ship.base_material));
+    super(fill_geometry, ship.base_material);
   }
 }
 
-class ColumnShoe extends THREE.Object3D {
+class ColumnShoe extends THREE.Mesh {
   constructor(ship, inner_radius, slope_radius) {
-    super();
-    this.ship = ship;
+    
 
 
-    var curve_detail = this.ship.curve_detail;
+    var curve_detail = ship.curve_detail;
 
-    var vertex = new THREE.Vector3();
+    //var vertex = new THREE.Vector3();
     var normal = new THREE.Vector3();
 
-    //var geometry = new THREE.PlaneGeometry(this.ship.corner_padding, this.ship.corner_padding);
-    var geometry = new THREE.PlaneBufferGeometry(this.ship.corner_padding, this.ship.corner_padding, curve_detail, curve_detail + 1);
+    var plane_geometry = new THREE.PlaneGeometry(1, 1, curve_detail, curve_detail + 1);
 
-    var positions = geometry.attributes.position;
-    var normals = geometry.attributes.normal;
+    
+
+    //var positions = plane_geometry.attributes.position;
+    var normals = [];
 
     for(let row = 0; row <= curve_detail; row++) {
       for (let column = 0; column <= curve_detail; column++) {
+
+        i = row * (curve_detail + 1) + column;
+
+        var vertex = plane_geometry.vertices[i];
+
         let theta = column / (curve_detail) * Math.PI / 2;
         let phi = row / (curve_detail) * Math.PI / 2;
 
@@ -192,18 +183,17 @@ class ColumnShoe extends THREE.Object3D {
 
         normal.x = -Math.sin(theta) * (inner_radius + slope_radius);
         normal.y = 0;
-        normal.z = -Math.cos(theta) * (inner_radius + slope_radius)
+        normal.z = -Math.cos(theta) * (inner_radius + slope_radius);
 
         normal.sub(vertex);
         normal.normalize();
-
-        i = row * (curve_detail + 1) + column;
-
-        positions.setXYZ(i, vertex.x, vertex.y, vertex.z);
-        normals.setXYZ(i, normal.x, normal.y, normal.z);
+        
+        normals[i] = new THREE.Vector3(normal.x, normal.y, normal.z);
       }
     }
 
+
+    var vertex = new THREE.Vector3();
     vertex.x = -(inner_radius + slope_radius);
     vertex.y = -slope_radius;
     vertex.z = -(inner_radius + slope_radius);
@@ -213,15 +203,22 @@ class ColumnShoe extends THREE.Object3D {
     normal.z = 0;
     normal.normalize();
 
-    for (var i = (curve_detail + 1) * (curve_detail + 1); i < positions.count; i++) {
-      positions.setXYZ(i, vertex.x, vertex.y, vertex.z);
-      normals.setXYZ(i, normal.x, normal.y, normal.z);
+    for (var i = (curve_detail + 1) * (curve_detail + 1); i < plane_geometry.vertices.length; i++) {
+      plane_geometry.vertices[i].set(vertex.x, vertex.y, vertex.z);
+      normals[i] = new THREE.Vector3(normal.x, normal.y, normal.z);
     }
 
-    var material = this.ship.base_material;
+    for(var i = 0; i < plane_geometry.faces.length; i++) {
+      var a = plane_geometry.faces[i].a;
+      var b = plane_geometry.faces[i].b;
+      var c = plane_geometry.faces[i].c;
 
-    var plane = new THREE.Mesh(geometry, material);
+      plane_geometry.faces[i].vertexNormals[0] = normals[a];
+      plane_geometry.faces[i].vertexNormals[1] = normals[b];
+      plane_geometry.faces[i].vertexNormals[2] = normals[c];
+    }
 
-    this.add(plane);
+
+    super(plane_geometry, ship.base_material);
   }
 }

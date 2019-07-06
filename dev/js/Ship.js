@@ -9,11 +9,11 @@ class Ship extends THREE.Object3D {
     this.void_padding = 0.5;
     this.grid_size = this.panel_size + this.corner_padding * 2 + this.void_padding;
 
-    this.curve_detail = 4;
+    this.curve_detail = 5;
     this.material_type = THREE.MeshPhongMaterial;
 
-    this.base_material = new THREE.MeshPhongMaterial({ color: 0xffffff, side: THREE.DoubleSide });
-    this.trim_material = new THREE.MeshPhongMaterial({ color: 0xd0dddf, side: THREE.DoubleSide });
+    this.base_material = new THREE.MeshToonMaterial({ color: 0xffffff, side: THREE.DoubleSide });
+    this.trim_material = new THREE.MeshToonMaterial({ color: 0xd0dddf, side: THREE.DoubleSide });
     this.window_material = new THREE.MeshPhongMaterial({ color: 0xffffff, side: THREE.DoubleSide, transparent: true, opacity: 0.5 });
 
 
@@ -47,20 +47,21 @@ class Ship extends THREE.Object3D {
           "           ",
           "|o o o o o|",
           " - - - - - "
+        ],
+        [
+          "         ",
+          "         ",
+          "   - - -",
+          "  |o o o|",
+          "         ",
+          "  |o o o|",
+          "         ",
+          "  |o o o|",
+          "   - - - "
         ]
       ]
     };
-/*
-    ship_data.grid = [
-      [
-        " - - ",
-        "|o o|",
-        "     ",
-        "|o o|",
-        " - - "
-      ]
-    ];
-*/
+    
     for (let grid_y = 0; grid_y < ship_data.grid.length; grid_y += 1) {
       let ship_y = grid_y + ship_data.grid_offset.y;
 
@@ -73,10 +74,8 @@ class Ship extends THREE.Object3D {
           if (ship_data.grid[grid_y][grid_z][grid_x] != 'o') continue;
 
           let wall_config = [];
-
           for (let wall_z = -2; wall_z <= 2; wall_z += 1) {
             wall_config[wall_z] = [];
-
             for (let wall_x = -2; wall_x <= 2; wall_x += 1) {
               let wall = false;
               if (ship_data.grid[grid_y][grid_z + wall_z]) {
