@@ -12,11 +12,6 @@ p {
     left: 10px;
     top: 50px;
 }
-#fps {
-    position: absolute;
-    left: 10px;
-    top: 106px;
-}
 #loading-notification {
     position: absolute;
     left: 50%;
@@ -41,7 +36,7 @@ h1 {
 }
 
 html, body { margin:0; padding:0; overflow:hidden; }
-canvas, svg { position:fixed; top:0; bottom:0; left:0; right:0; height:100%; width:100%; }
+#game, canvas, svg { position:fixed; top:0; bottom:0; left:0; right:0; height:100%; width:100%; }
 
 #menus ul{
     position: absolute;

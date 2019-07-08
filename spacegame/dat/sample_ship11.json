@@ -1,33 +1,91 @@
 {
-  "root": 17,
-  "objects": [
-    {"pos": {"x": 0, "y": 0, "z": 0}, "progress": 100, "type": "FloorPlate", "ship": 17},
-    {"pos": {"x": 0, "y": 1, "z": 0}, "progress": 100, "type": "FloorPlate", "ship": 17},
-    {"pos": {"x": 1, "y": 0, "z": 0}, "progress": 100, "type": "FloorPlate", "ship": 17},
-    {"pos": {"x": 1, "y": 1, "z": 0}, "progress": 100, "type": "FloorPlate", "ship": 17},
-
-    {"pos": {"x": 1, "y": -1, "z": 0, "ori": "-"}, "progress": 100, "type": "WallPanel", "ship": 17},
-    {"pos": {"x": 0, "y": -1, "z": 0, "ori": "-"}, "progress": 100, "type": "WallPanel", "ship": 17},
-    {"pos": {"x": -1, "y": 0, "z": 0, "ori": "|"}, "progress": 100, "type": "WallPanel", "ship": 17},
-    {"pos": {"x": -1, "y": 1, "z": 0, "ori": "|"}, "progress": 100, "type": "WallPanel", "ship": 17},
-    {"pos": {"x": 0, "y": 1, "z": 0, "ori": "-"}, "progress": 100, "type": "WallPanel", "ship": 17},
-    {"pos": {"x": 1, "y": 1, "z": 0, "ori": "-"}, "progress": 100, "type": "Door", "ship": 17},
-    {"pos": {"x": 1, "y": 1, "z": 0, "ori": "|"}, "progress": 100, "type": "WallPanel", "ship": 17},
-    {"pos": {"x": 1, "y": 0, "z": 0, "ori": "|"}, "progress": 100, "type": "WallPanel", "ship": 17},
-
-    {"pos": {"x": 1, "y": -1, "z": 0}, "progress": 100, "ship": 17, "type": "Barrel"},
-    {"pos": {"x": -1, "y": -1, "z": 0}, "progress": 100, "ship": 17, "type": "Crate", "item": [14]},
-    {"pos": {"x": 0, "y": 1, "z": 0}, "type": "Steel", "ship": 17, "container": 13, "claimed": false},
-    {"pos": {"x": 0, "y": 1, "z": 0}, "type": "Steel", "ship": 17, "container": 17, "claimed": false},
-    {"pos": {"x": 1, "y": 1, "z": 0}, "name": "Constructor Bot", "ship": 17, "type": "Crew", "path_progress": 0, "cooldown": 0},
-    {
-      "type": "Ship",
-      "floor": [0,1,2,3],
-      "wall": [4,5,6,7,8,9,10,11],
-      "furniture": [12,13],
-      "crew": [16],
-      "jobs": [],
-      "item": [15]
-    }
-  ]
+  "ship": {
+    "grid_offset": {
+      "x": -2,
+      "y": 0,
+      "z": -2
+    },
+    "grid": [
+      [
+        [
+          {"walls":{"n": true, "s": false, "e": false, "w": true}},
+          {"walls":{"n": false, "s": true, "e": false, "w": true}},
+          {"walls":{"n": true, "s": false, "e": false, "w": true}},
+          {"walls":{"n": false, "s": false, "e": false, "w": true}},
+          {"walls":{"n": false, "s": true, "e": false, "w": true}}
+        ],
+        [
+          {"walls":{"n": true, "s": false, "e": false, "w": true}},
+          {"walls":{"n": false, "s": true, "e": false, "w": true}},
+          {"walls":{"n": true, "s": false, "e": false, "w": true}},
+          {"walls":{"n": false, "s": false, "e": false, "w": true}},
+          {"walls":{"n": false, "s": true, "e": false, "w": true}}
+        ]
+      ],
+      [
+        [
+          {"walls":{"n": true, "s": false, "e": false, "w": false}},
+          {"walls":{"n": false, "s": true, "e": true, "w": false}},
+          {"walls":{"n": true, "s": false, "e": false, "w": false}},
+          {"walls":{"n": false, "s": false, "e": false, "w": false}},
+          {"walls":{"n": false, "s": true, "e": false, "w": false}}
+        ],
+        [
+          {"walls":{"n": true, "s": false, "e": false, "w": false}},
+          {"walls":{"n": false, "s": true, "e": true, "w": false}},
+          {"walls":{"n": true, "s": false, "e": false, "w": false}},
+          {"walls":{"n": false, "s": false, "e": false, "w": false}},
+          {"walls":{"n": false, "s": true, "e": false, "w": false}}
+        ]
+      ],
+      [
+        [
+          {"walls":{"n": true, "s": false, "e": false, "w": false}},
+          {"walls":{"n": false, "s": false, "e": true, "w": true}},
+          {"walls":{"n": false, "s": false, "e": false, "w": false}},
+          {"walls":{"n": false, "s": false, "e": false, "w": false}},
+          {"walls":{"n": false, "s": true, "e": false, "w": false}}
+        ],
+        [
+          {"walls":{"n": true, "s": false, "e": false, "w": false}},
+          {"walls":{"n": false, "s": false, "e": true, "w": true}},
+          {"walls":{"n": false, "s": false, "e": false, "w": false}},
+          {"walls":{"n": false, "s": false, "e": false, "w": false}},
+          {"walls":{"n": false, "s": true, "e": false, "w": false}}
+        ]
+      ],
+      [
+        [
+          {"walls":{"n": true, "s": false, "e": false, "w": false}},
+          {"walls":{"n": false, "s": true, "e": false, "w": true}},
+          {"walls":{"n": true, "s": false, "e": false, "w": false}},
+          {"walls":{"n": false, "s": false, "e": false, "w": false}},
+          {"walls":{"n": false, "s": true, "e": false, "w": false}}
+        ],
+        [
+          {"walls":{"n": true, "s": false, "e": false, "w": false}},
+          {"walls":{"n": false, "s": true, "e": false, "w": true}},
+          {"walls":{"n": true, "s": false, "e": false, "w": false}},
+          {"walls":{"n": false, "s": false, "e": false, "w": false}},
+          {"walls":{"n": false, "s": true, "e": false, "w": false}}
+        ]
+      ],
+      [
+        [
+          {"walls":{"n": true, "s": false, "e": true, "w": false}},
+          {"walls":{"n": false, "s": true, "e": true, "w": false}},
+          {"walls":{"n": true, "s": false, "e": true, "w": false}},
+          {"walls":{"n": false, "s": false, "e": true, "w": false}},
+          {"walls":{"n": false, "s": true, "e": true, "w": false}}
+        ],
+        [
+          {"walls":{"n": true, "s": false, "e": true, "w": false}},
+          {"walls":{"n": false, "s": true, "e": true, "w": false}},
+          {"walls":{"n": true, "s": false, "e": true, "w": false}},
+          {"walls":{"n": false, "s": false, "e": true, "w": false}},
+          {"walls":{"n": false, "s": true, "e": true, "w": false}}
+        ]
+      ]
+    ]
+  }
 }

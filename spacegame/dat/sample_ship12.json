@@ -1,0 +1,17 @@
+{
+  "ship": {
+    "grid_offset": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "grid": [
+      [
+        [
+          {"walls":{"n": true, "s": false, "e": false, "w": true}},
+          {"walls":{"n": false, "s": true, "e": false, "w": true}}
+        ]
+      ]
+    ]
+  }
+}

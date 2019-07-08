@@ -14,7 +14,7 @@
     <li><a href="/todo">To-do List</a></li>
   </ul>
   <p>I want to make a computer game about a space ship.</p>
-  <p>You can login and click on stuff and try it out.  You can build things and watch the robot run arround.  There's not much to see or do, yet.  Development is ongoing, so check back later.</p>
+  <p>You can login and run around and try it out.  There's not much to see or do, yet.  Development is ongoing, so check back later.</p>
   <hr noshade/>
   <h2>How to contact me:</h2>
   <p>Email<?php if(isset($_COOKIE['auth_token'])) echo " at <a href='mailto:developer@safiina.com'>developer@safiina.com</a>";?>.</p>

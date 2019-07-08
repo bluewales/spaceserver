@@ -4,618 +4,322 @@
 /*jshint esversion: 6 */
 
 class Game {
-  constructor() {
-    this.width = d3.select("canvas").node().getBoundingClientRect().width - 1;
-    this.height = d3.select("canvas").node().getBoundingClientRect().height - 1;
+  constructor(raw) {
+    this.raw = raw;
 
-    this.pan_x = 0;
-    this.pan_y = 0;
-    this.z_level = 1;
-    this.zoom = 0;
-    this.default_zoom = 15;
+    this.renderer = new THREE.WebGLRenderer({ antialias: true });
+    this.renderer.setPixelRatio(window.devicePixelRatio);
+    document.getElementById('game').appendChild(this.renderer.domElement);
 
-    this.index = {};
+    this.camera = new THREE.PerspectiveCamera(45, 1, 0.1, 9000);
 
-    d3.select("canvas")
-      .attr("width", this.width)
-      .attr("height", this.height);
+    this.controls = new THREE.PointerLockControls(this.camera);
 
-    this.sprites = {
-      /* Crew */
-      "builder_crew": {
-        "sources": [
-          "img/sliced/creatures_sliced/images/oryx_16bit_scifi_creatures_1249.png",
-          "img/sliced/creatures_sliced/images/oryx_16bit_scifi_creatures_1250.png"
-        ]
-      },
-      "hat_crew": {
-        "sources": [
-          "img/sliced/creatures_sliced/images/oryx_16bit_scifi_creatures_01.png",
-          "img/sliced/creatures_sliced/images/oryx_16bit_scifi_creatures_02.png"
-        ]
-      },
-      "blue_crew": {
-        "sources": [
-          "img/sliced/creatures_sliced/images/oryx_16bit_scifi_creatures_33.png",
-          "img/sliced/creatures_sliced/images/oryx_16bit_scifi_creatures_34.png"
-        ]
-      },
-      "green_crew": {
-        "sources": [
-          "img/sliced/creatures_sliced/images/oryx_16bit_scifi_creatures_65.png",
-          "img/sliced/creatures_sliced/images/oryx_16bit_scifi_creatures_66.png"
-        ]
-      },
-      "blonde_crew": {
-        "sources": [
-          "img/sliced/creatures_sliced/images/oryx_16bit_scifi_creatures_96.png",
-          "img/sliced/creatures_sliced/images/oryx_16bit_scifi_creatures_97.png"
-        ]
-      },
 
-      /* Structure */
-      /* Floors */
-      "floor_plate": { "sources": ["img/sliced/world_sliced/images/oryx_16bit_scifi_world_01.png"] },
-
-      /* Furniture */
-      "crate": { "sources": ["img/sliced/world_sliced/images/oryx_16bit_scifi_world_679.png"] },
-      "barrel": { "sources": ["img/sliced/world_sliced/images/oryx_16bit_scifi_world_708.png"] },
-      "charging_port": { "sources": ["img/sliced/world_sliced/images/oryx_16bit_scifi_world_306.png"] },
-      "small_shuttle_pad": { "sources": ["img/shuttle/shuttle_pad_48.png"] },
-
-      /* Background */
-      "background": { "sources": ["img/mars.jpg"] },
-
-      /* Items */
-      "steel_sprite": { "sources": ["img/sliced/items_sliced/oryx_16bit_scifi_items_06.png"] },
-      "plastic_sprite": { "sources": ["img/sliced/items_sliced/oryx_16bit_scifi_items_43.png"] },
-      "circuit_board_sprite": { "sources": ["img/sliced/items_sliced/oryx_16bit_scifi_items_65.png"] },
-
-      /* Vehicles */
-      "small_shuttle": { "sources": ["img/shuttle/shuttle_48.png"] },
-
-      /* Effects */
-      "sparks_1": {
-        "sources": [
-          "img/sliced/FX_sm_sliced/images/oryx_16bit_scifi_FX_sm_79.png",
-          "img/sliced/FX_sm_sliced/images/oryx_16bit_scifi_FX_sm_89.png"
-        ]
-      },
-      "sparks_2": {
-        "sources": [
-          "img/sliced/FX_sm_sliced/images/oryx_16bit_scifi_FX_sm_80.png",
-          "img/sliced/FX_sm_sliced/images/oryx_16bit_scifi_FX_sm_90.png"
-        ]
-      },
-      "sparks_3": {
-        "sources": [
-          "img/sliced/FX_sm_sliced/images/oryx_16bit_scifi_FX_sm_81.png",
-          "img/sliced/FX_sm_sliced/images/oryx_16bit_scifi_FX_sm_91.png"
-        ]
-      },
-      "sparks_4": {
-        "sources": [
-          "img/sliced/FX_sm_sliced/images/oryx_16bit_scifi_FX_sm_82.png",
-          "img/sliced/FX_sm_sliced/images/oryx_16bit_scifi_FX_sm_92.png"
-        ]
-      },
-      "flame": {
-        "sources": [
-          "img/sliced/FX_sm_sliced/images/oryx_16bit_scifi_FX_sm_110.png"
-        ]
-      },
-      
-    };
-
-    this.sources = {
-      /* javascript */
-      "api": { "source": "js/api.js" },
-      "astar": { "source": "js/lib/astar.js" },
-      "easel": { "source": "js/lib/easel.js" },
-      "structure": { "source": "js/structure/structure.js" },
-      "furniture": { "source": "js/structure/furniture/furniture.js" },
-      "barrel": { "source": "js/structure/furniture/barrel.js" },
-      "bar": { "source": "js/ui/bar.js" },
-      "bottom_bar": { "source": "js/ui/bottom_bar.js" },
-      "card": { "source": "js/ui/cards/card.js" },
-      "build_card": { "source": "js/ui/cards/build_card.js" },
-      "button": { "source": "js/ui/button.js" },
-      "card_frame": { "source": "js/ui/cards/card_frame.js" },
-      "card_table": { "source": "js/ui/card_table.js" },
-      "jobs": { "source": "js/jobs.js" },
-      "construction_utils": { "source": "js/construction/construction_utils.js" },
-      "construct": { "source": "js/construction/construct.js" },
-      "deconstruct": { "source": "js/construction/deconstruct.js" },
-      "columnated_card": { "source": "js/ui/cards/columnated_card.js" },
-      "stratified_card": { "source": "js/ui/cards/stratified_card.js" },
-      "controls_card": { "source": "js/ui/cards/controls_card.js" },
-      "crate": { "source": "js/structure/furniture/crate.js" },
-      "charging_port": { "source": "js/structure/furniture/charging_port.js" },
-      "small_shuttle_pad": { "source": "js/structure/furniture/small_shuttle_pad.js" },
-      "crew": { "source": "js/mobs/crew.js" },
-      "small_shuttle": { "source": "js/mobs/small_shuttle.js" },
-      "d3": { "source": "js/lib/d3.js" },
-      "wall": { "source": "js/structure/walls/wall.js" },
-      "door": { "source": "js/structure/walls/door.js" },
-      "floor": { "source": "js/structure/floors/floor.js" },
-      "floor_plate": { "source": "js/structure/floors/floor_plate.js" },
-      "graph": { "source": "js/graph.js" },
-      "hatch": { "source": "js/structure/floors/hatch.js" },
-      "hud": { "source": "js/ui/hud.js" },
-      "palettes": { "source": "js/palettes.js" },
-      "pathfinding": { "source": "js/pathfinding.js" },
-      "rooms": { "source": "js/rooms.js" },
-      "number_picker": { "source": "js/ui/number_picker.js" },
-      "ship": { "source": "js/ship.js" },
-      "top_bar": { "source": "js/ui/top_bar.js" },
-      "wall_panel": { "source": "js/structure/walls/wall_panel.js" },
-      "ui_level": { "source": "js/ui/level.js" },
-      "logo": { "source": "js/ui/logo.js" },
-      "item": { "source": "js/items/item.js" },
-      "steel": { "source": "js/items/steel.js" },
-      "item_store": { "source": "js/item_store.js" },
-      "interaction_card": { "source": "js/ui/cards/interaction_card.js" },
-      "login_prompt": { "source": "js/ui/cards/login_prompt.js" },
-      "canvas_input": { "source": "js/lib/CreateJSTextInput.js" },
-      "tabbed_card": { "source": "js/ui/cards/tabbed_card.js" },
-      "market": { "source": "js/market.js" },
-      "market_card": { "source": "js/ui/cards/market_card.js" },
-      "circuit_board": { "source": "js/items/circuit_board.js" },
-      "plastic": { "source": "js/items/plastic.js" },
-      "serialization": { "source": "js/serialization.js" },
-      "ship_graphics": { "source": "js/ship_graphics.js" },
-    };
-
-    this.manifest = [];
-
-    for (var name in this.sprites) {
-      var source = this.sprites[name];
-      for (var j = 0; j < source.sources.length; j++) {
-        this.manifest.push(
-          { src: source.sources[j], id: name + (source.sources.length > 0 ? ("_" + j) : "") }
-        );
-      }
-    }
-
-    for (var name in this.sources) {
-      var source = this.sources[name];
-      this.manifest.push({ src: source.source + "?a=" + Math.random(), id: name });
-      //this.manifest.push({ src: source.source, id: name });
-    }
-
-    for (var name in this.data) {
-      var source = this.data[name];
-      this.manifest.push({ src: source.source, id: name });
-    }
-
-    this.loader = new createjs.LoadQueue(false);
-    this.loader.on("complete", this.on_asset_load.bind(this));
-
-    var loading_div = d3.select("body")
-      .style("width", this.width + "px")
-      .style("background-color", "white")
+    this.blocker = d3.select("#game")
       .append("div")
-      .attr("id", "loading")
-      .style("color", "#333")
-      .style("top", (this.height / 2 - 150) + "px")
+      .attr("id", "blocker")
       .style("position", "absolute")
-      .style("margin", "auto")
-      .style("width", this.width + "px");
+      .style("width", "100%")
+      .style("height", "100%")
+      .style("background-color", "rgba(0, 0, 0, 0.5)")
+      
 
-    loading_div.append("h1")
-      .style("color", "#333")
-      .text("Safiina")
-      .style("margin", "auto")
-      .style("position", "static")
-      .style("text-align", "center")
-      .style("padding", "20px");
-
-    loading_div.append("p")
-      .style("color", "#333")
-      .text("Loading")
-      .style("text-align", "center")
-      .style("margin", "auto");
-
-    loading_div.append("div")
-      .attr("id", "loading_box")
-      .style("border", "1px solid #333")
-      .style("margin", "auto")
-      .style("width", "300px")
-      .style("height", "25px")
+    this.menu = this.blocker
       .append("div")
-      .attr("id", "loading_bar")
-      .style("background-color", "#333")
-      .style("width", "0px")
-      .style("height", "25px");
+      .attr("id", "menu")
+      .text("Click to play!")
+      .style("width", "100%")
+      .style("height", "100%")
+      .style("display", "-webkit-box")
+      .style("display", "-moz-box")
+      .style("display", "box")
+      .style("-webkit-box-orient", "horizontal")
+      .style("-moz-box-orient", "horizontal")
+      .style("box-orient", "horizontal")
+      .style("-webkit-box-pack", "center")
+      .style("-moz-box-pack", "center")
+      .style("box-pack", "center")
+      .style("-webkit-box-align", "center")
+      .style("-moz-box-align", "center")
+      .style("box-align", "center")
+      .style("color", "#ffffff")
+      .style("text-align", "center")
+      .style("font-family", "Arial")
+      .style("font-size", "14px")
+      .style("line-height", "24px")
+      .style("cursor", "pointer");
+    
 
-    this.loader.on("progress", (function (event) {
-      console.log(Math.round(event.progress * 100) + " % loaded");
-      d3.select("#loading_bar").style("width", (event.progress * 100) + "%");
-    }).bind(this));
 
-    this.loader.loadManifest(this.manifest, true, "");
 
-    this.currentlyPressedKeys = {};
-  }
+    menu.addEventListener('click', function () {
+      this.controls.lock();
+    }.bind(this), false);
 
-  on_asset_load() {
-    this.api = new API();
-    this.market = new Market();
+    this.controls.addEventListener('lock', function () {
+      this.blocker.attr("hidden", true);
+    }.bind(this));
 
-    this.load_save();
-  }
+    this.controls.addEventListener('unlock', function () {
+      this.blocker.attr("hidden", null);
+    }.bind(this));
 
-  load_save() {
-    this.api.download_save_state((function (game_state) {
-      var loading_div = d3.select("#loading").remove();
+    this.scene = new THREE.Scene();
 
-      this.game_state = game_state;
-      this.start_game();
-      if (!this.api.logged_in) {
-        this.login(true);
-      }
-    }).bind(this));
-  }
 
-  start_game() {
+    this.resize = function () {
+      this.renderer.setSize(window.innerWidth, window.innerHeight);
+      this.camera.aspect = window.innerWidth / window.innerHeight;
+      this.camera.updateProjectionMatrix();
+    };
+
+    window.addEventListener('resize', this.resize.bind(this), false);
+    this.resize();
+
+    let light = new THREE.HemisphereLight(0xffffdb, 0x684860, 0.75);
+    light.position.set(0.5, 1, 0.75);
+    this.scene.add(light);
+
+    let directionalLight = new THREE.DirectionalLight(0x555555, 0.5);
+    directionalLight.position.set(1, 1, 1);
+    this.scene.add(directionalLight);
+
+    let envMap = new THREE.CubeTextureLoader().load([
+      'img/cube/dark-s_px.jpg', // right
+      'img/cube/dark-s_nx.jpg', // left
+      'img/cube/dark-s_py.jpg', // top
+      'img/cube/dark-s_ny.jpg', // bottom
+      'img/cube/dark-s_pz.jpg', // back
+      'img/cube/dark-s_nz.jpg' // front
+    ]);
+    envMap.format = THREE.RGBFormat;
+    this.scene.background = envMap;
+
+    this.ship = new Ship(this.raw.ship);
+    this.scene.add(this.ship);
+
+    this.camera_euler = new THREE.Euler(0, 0, 0, 'YXZ');
+
+
+    this.phisics_state = {
+      timeStep: 5,
+      timeLeft: 6,
+      camera_height: 1.6,
+      kneeDeep: 0.3,
+      raycaster: new THREE.Raycaster(new THREE.Vector3(0, 0, 0), new THREE.Vector3(0, - 1, 0)),
+      angles: new THREE.Vector2(),
+      displacement: new THREE.Vector3(),
+    };
+
+    this.motion = {
+      airborne: false,
+      position: new THREE.Vector3(0, -1500, 0),
+      velocity: new THREE.Vector3(),
+      rotation: new THREE.Vector3(),
+      spinning: new THREE.Vector2()
+    }
+
+
+
+    this.keys = { SP: 32, W: 87, A: 65, S: 83, D: 68, UP: 38, LT: 37, DN: 40, RT: 39 };
+
+    window.keysPressed = {};
+
+    var watchedKeyCodes = [this.keys.SP, this.keys.W, this.keys.A, this.keys.S, this.keys.D, this.keys.UP, this.keys.LT, this.keys.DN, this.keys.RT];
+
+    var keypress_handler = function (down) {
+      return function (e) {
+        var index = watchedKeyCodes.indexOf(e.keyCode);
+        if (index >= 0) {
+          window.keysPressed[watchedKeyCodes[index]] = down;
+          e.preventDefault();
+        }
+      };
+    };
+
+    window.addEventListener("keydown", keypress_handler(true), false);
+    window.addEventListener("keyup", keypress_handler(false), false);
+
+    this.forward = new THREE.Vector3();
+    this.sideways = new THREE.Vector3();
 
     
 
-    this.canvas = document.getElementById("easel");
 
-    var ctx = this.canvas.getContext('2d');
-    ctx.webkitImageSmoothingEnabled = false;
-    ctx.msImageSmoothingEnabled = false;
-    ctx.imageSmoothingEnabled = false;
-
-    for (var name in this.sprites) {
-      var source = this.sprites[name];
-      var sprite_obj = {
-        framerate: 2,
-        images: [],
-        frames: {},
-        animations: {}
-      }
-      for (var j = 0; j < source.sources.length; j++) {
-        var image = this.loader.getResult(name + (source.sources.length > 0 ? ("_" + j) : ""));
-        sprite_obj.images.push(image);
-
-        sprite_obj.frames.width = image.width;
-        sprite_obj.frames.height = image.height;
-        sprite_obj.frames.regX = (image.width - image.width) / 2;
-        sprite_obj.frames.regY = (image.height - image.height) / 2;
-
-        if (sprite_obj.animations[name])
-          sprite_obj.animations[name].push(j);
-        else
-          sprite_obj.animations[name] = [j];
-      }
-      source.sprite = new createjs.SpriteSheet(sprite_obj);
-    }
-
-    this.ship = deserialize(this.game_state);
-
-    this.ship.set_display_level(this.z_level);
-
-    this.ui_level = new UILevel(this.z_level);
-    this.logo = new Logo(this.z_level);
-
-    this.bg_img = document.createElement("img");
-    this.bg_img.onload = (function() {
-      this.background.graphics
-        .beginBitmapFill(this.bg_img, "repeat")
-        .drawRect(0, 0, this.width, this.height);
-    }).bind(this);
-    this.bg_img.src = "img/mars.jpg";
-    this.background = new createjs.Shape();
-    
-
-    this.space = new createjs.Container();
-    this.space.addChild(this.ship);
-
-    this.card_table = new CardTable();
-
-    this.hud = new HUD();
-    this.hud.addChild(this.ui_level);
-    this.hud.addChild(this.logo);
-    this.hud.on("click", function (evt) { }.bind(this));
-
-    this.stage = new createjs.Stage(this.canvas);
-    this.stage.addChild(this.background);
-    this.stage.addChild(this.space);
-    this.stage.addChild(this.hud);
-    this.stage.addChild(this.card_table);
-
-    this.re_center();
-
-
-
-    createjs.Ticker.setFPS(32);
-    createjs.Ticker.on("tick", this.tick.bind(this));
-
-
-    this.now = Date.now() / 1000;
-    this.last_save = this.now;
-
-    // setup inputs
-
-    this.space.on("mousedown", this.start_drag.bind(this));
-    this.background.on("mousedown", this.start_drag.bind(this));
-
-    this.space.on("pressmove", this.handle_drag.bind(this));
-    this.background.on("pressmove", this.handle_drag.bind(this));
-
-    this.space.on("pressup", this.stop_drag.bind(this));
-    this.background.on("pressup", this.stop_drag.bind(this));
-
-    this.space.on("click", this.handle_click.bind(this));
-    this.background.on("click", this.handle_click.bind(this));
-
-    document.onkeydown = this.handleKeyDown.bind(this);
-    document.onkeyup = this.handleKeyUp.bind(this);
-    document.onmousewheel = this.handleMouseWheel.bind(this);
-
-    console.log("Stage:")
-    console.log(this.stage);
+    this.lastTimeStamp;
+    requestAnimationFrame(this.loop.bind(this));
   }
 
 
-  tick(event) {
-    this.now = Date.now() / 1000;
+  loop(timeStamp) {
+    var timeElapsed = this.lastTimeStamp ? timeStamp - this.lastTimeStamp : 0;
+    this.lastTimeStamp = timeStamp;
 
-    this.crew_ticks = 0;
+    this.resetPlayer();
+    this.keyboardControls();
+    this.applyPhysics(timeElapsed);
+    this.updateCamera();
+    this.stats(timeElapsed)
 
-    var ctx = this.canvas.getContext('2d');
-    ctx.webkitImageSmoothingEnabled = false;
-    ctx.msImageSmoothingEnabled = false;
-    ctx.imageSmoothingEnabled = false;
+    this.renderer.render(this.scene, this.camera);
+    requestAnimationFrame(this.loop.bind(this));
+  }
 
-    var new_width = this.canvas.getBoundingClientRect().width;
-    var new_height = this.canvas.getBoundingClientRect().height;
-    if (new_width != this.width || new_height != this.height) {
-      this.width = new_width;
-      this.height = new_height;
-
-      d3.select("canvas")
-        .attr("width", this.width)
-        .attr("height", this.height);
-
-      this.background.graphics
-        .clear()
-        .beginBitmapFill(this.bg_img, "repeat")
-        .drawRect(0, 0, this.width, this.height);
-
-      this.hud.resize(this.width, this.height);
-      this.card_table.resize(this.width, this.height);
+  resetPlayer() {
+    if (this.motion.position.y < - 123) {
+      this.motion.position.set(0, 0, 0);
+      this.motion.velocity.multiplyScalar(0);
     }
+  }
 
-    this.hud.tick();
-    this.card_table.tick();
+  keyboardControls() {
 
-    var centerX = this.canvas.width / 2;
-    var centerY = this.canvas.height / 2;
+    // look around
+    var sx = window.keysPressed[this.keys.UP] ? 0.03 : (window.keysPressed[this.keys.DN] ? - 0.03 : 0);
+    var sy = window.keysPressed[this.keys.LT] ? 0.03 : (window.keysPressed[this.keys.RT] ? - 0.03 : 0);
 
+    if (Math.abs(sx) >= Math.abs(this.motion.spinning.x)) this.motion.spinning.x = sx;
+    if (Math.abs(sy) >= Math.abs(this.motion.spinning.y)) this.motion.spinning.y = sy;
 
-    this.ship.scaleX = this.zoom_multiplier;
-    this.ship.scaleY = this.zoom_multiplier;
+    this.motion.rotation.set(0, 0, 1);
+    this.motion.rotation.applyEuler(this.camera.rotation);
 
-    this.ship.x = centerX + this.pan_x * this.zoom_multiplier;
-    this.ship.y = centerY + this.pan_y * this.zoom_multiplier;
+    this.motion.rotation.y = 0;
+    this.motion.rotation.normalize();
 
-    if (this.currentlyPressedKeys[65]) this.pan(-5, 0);
-    if (this.currentlyPressedKeys[68]) this.pan(5, 0);
-    if (this.currentlyPressedKeys[83]) this.pan(0, 5);
-    if (this.currentlyPressedKeys[87]) this.pan(0, -5);
+    // move around
+    this.forward.set(this.motion.rotation.x, 0, this.motion.rotation.z);
+    this.sideways.set(this.forward.z, 0, - this.forward.x);
 
-    if (!this.paused) {
-      this.ship.tick(event);
-      this.market.tick(event);
+    this.forward.multiplyScalar(window.keysPressed[this.keys.W] ? - 0.044 : (window.keysPressed[this.keys.S] ? 0.044 : 0));
+    this.sideways.multiplyScalar(window.keysPressed[this.keys.A] ? - 0.044 : (window.keysPressed[this.keys.D] ? 0.044 : 0));
+
+    var combined = this.forward.add(this.sideways);
+    if (Math.abs(combined.x) >= Math.abs(this.motion.velocity.x)) this.motion.velocity.x = combined.x;
+    if (Math.abs(combined.y) >= Math.abs(this.motion.velocity.y)) this.motion.velocity.y = combined.y;
+    if (Math.abs(combined.z) >= Math.abs(this.motion.velocity.z)) this.motion.velocity.z = combined.z;
+
+    if (!this.motion.airborne) {
+      //jump
+      var vy = window.keysPressed[this.keys.SP] ? 0.1 : 0;
+      this.motion.velocity.y += vy;
+
     }
+  }
+
+  applyPhysics(dt) {
+
+    if (true) {
+
+      this.phisics_state.timeLeft += dt;
+
+      // run several fixed-step iterations to approximate varying-step
+
+      dt = 5;
+      while (this.phisics_state.timeLeft >= dt) {
+
+        var time = 0.3, damping = 0.93, gravity = 0.0004, tau = 2 * Math.PI;
+
+        this.phisics_state.raycaster.ray.origin.copy(this.motion.position);
+        this.phisics_state.raycaster.ray.origin.y += this.phisics_state.camera_height;
+
+        var hits = this.phisics_state.raycaster.intersectObject(this.ship, true);
+
+        this.motion.airborne = true;
 
 
-    this.stage.update(event);
+        // are we above, or at most knee deep in, the platform?
 
-    if (this.now - this.last_save > 5 * 60) {
-      this.last_save = this.now;
-      this.save(false);
-      this.market.reload_prices();
-    }
+        if ((hits.length > 0)) {
+          var actualHeight = hits[0].distance - this.phisics_state.camera_height;
 
-    if (this.cell_cursor || this.wall_cursor) {
-      var mouse_hits_ui = this.hud.hitTest(this.stage.mouseX, this.stage.mouseY) || this.card_table.hitTest(this.stage.mouseX, this.stage.mouseY);
-      this.ship.graphics.clear_highlight();
+          // collision: stick to the surface if landing on it
 
-      if (mouse_hits_ui) {
+          if ((this.motion.velocity.y <= 0) && (Math.abs(actualHeight) < this.phisics_state.kneeDeep)) {
+            this.motion.position.y -= actualHeight;
+            this.motion.velocity.y = 0;
+            this.motion.airborne = false;
 
-      } else {
-        if (this.cell_cursor) {
-          var pos = this.pos_from_coord(this.stage.mouseX, this.stage.mouseY);
-          this.ship.graphics.draw_highlight(pos);
+          }
         }
-        if (this.wall_cursor) {
-          var pos = this.wall_pos_from_coord(this.stage.mouseX, this.stage.mouseY);
-          this.ship.graphics.draw_highlight(pos);
-        }
+
+        if (this.motion.airborne) this.motion.velocity.y -= gravity;
+
+        this.phisics_state.angles.copy(this.motion.spinning).multiplyScalar(time);
+        this.motion.spinning.multiplyScalar(damping);
+
+        this.phisics_state.displacement.copy(this.motion.velocity).multiplyScalar(time);
+        if (!this.motion.airborne) this.motion.velocity.multiplyScalar(damping);
+
+        this.motion.rotation.add(this.phisics_state.angles);
+        this.motion.position.add(this.phisics_state.displacement);
+
+        this.phisics_state.timeLeft -= dt;
       }
     }
   }
 
-  re_center() {
-    this.change_z(-this.z_level);
-    this.change_zoom(-this.zoom + this.default_zoom);
-
-    var mid_x = (this.ship.graph.max_bound.x + this.ship.graph.min_bound.x + 1) / 2;
-    var mid_y = (this.ship.graph.max_bound.y + this.ship.graph.min_bound.y + 1) / 2;
-
-    this.pan_x = -(this.ship.graphics.grid_width + this.ship.graphics.padding * 2) * mid_x;
-    this.pan_y = -(this.ship.graphics.grid_width + this.ship.graphics.padding * 2) * mid_y;
-
-    this.clear_highlight();
+  updateCamera() {
+    this.camera_euler.x = this.motion.rotation.x;
+    this.camera_euler.y = this.motion.rotation.y;
+    this.camera.position.copy(this.motion.position);
+    this.camera.position.y += 1.6;
   }
 
+  stats(dt) {
+    if (dt == 0) {
+      this.framerate_sum = 0;
+      this.framerates = [];
 
-  change_z(dz) {
-    this.z_level += dz;
-    this.ship.set_display_level(this.z_level);
-    this.ui_level.set_level(this.z_level);
-    if (this.highlighted_square) this.clear_highlight();
-    this.ship.clear_selection();
-  }
+      this.status_div = d3.select("body")
+        .append("div")
+        .attr("id", "status")
+        .style("position", "absolute")
+        .style("color", "#ffffff")
+        .style("background-color", "rgba(0, 0, 0, 0.5)")
+        .style("padding", "3px");
 
-  change_zoom(delta_zoom) {
-    this.zoom += delta_zoom;
-    this.zoom_multiplier = Math.pow(seventh_root_of_two, this.zoom);
-  }
+      this.status_div
+        .append("p")
+        .attr("id", "fps");
 
-  pan(dx, dy) {
-    var pan_ratio = this.zoom_multiplier;
-    this.pan_x += dx / pan_ratio;
-    this.pan_y += dy / pan_ratio;
-  }
+      this.status_div
+        .append("p")
+        .attr("id", "triangles");
+        
+      this.status_div
+        .append("p")
+        .attr("id", "calls");
 
-  highlight_square(pos) {
-    if (this.highlighted_square) this.clear_highlight();
-    this.highlighted_square = pos;
-  }
+      this.status_div
+        .append("p")
+        .attr("id", "debug");
 
-  clear_highlight(clear_focus = true) {
-    this.highlighted_square = null;
-    if (clear_focus) {
-      this.card_table.focus(undefined);
-    }
-  }
+      this.status_div
+        .selectAll("p")
+        .style("padding", "0px")
+        .style("margin", "0px")
+        .style("line-height", "13px");
 
-  handleKeyDown(event) {
-    this.currentlyPressedKeys[event.keyCode] = true;
-
-    if (event.keyCode == 69) this.change_z(1); // e key
-    if (event.keyCode == 81) this.change_z(-1); // q key
-    if (event.keyCode == 32) this.re_center(); // space bar
-  }
-  handleKeyUp(event) {
-    this.currentlyPressedKeys[event.keyCode] = false;
-  }
-  handleMouseWheel(event) {
-    this.change_zoom(event.deltaY / 100);
-  }
-
-  start_drag(event) {
-    this.dragX = event.stageX;
-    this.dragY = event.stageY;
-  }
-
-  handle_drag(event) {
-    if (this.dragX === undefined || this.dragY === undefined) {
       return;
     }
 
-    this.pan(event.stageX - this.dragX, event.stageY - this.dragY);
+    let new_framerate = 1000 / dt;
+    this.framerates.push(new_framerate);
+    this.framerate_sum += new_framerate;
 
-    this.dragX = event.stageX;
-    this.dragY = event.stageY;
-  }
-
-  stop_drag(event) {
-    this.dragX = undefined;
-    this.dragY = undefined;
-  }
-
-  handle_click(event) {
-
-    var x = event.stageX;
-    var y = event.stageY;
-
-    if (this.login_prompt) {
-      this.login_prompt.active = false;
+    if (this.framerates.length > 60) {
+      this.framerate_sum -= this.framerates.shift();
     }
 
-    if (this.cell_cursor) {
-      var pos = this.pos_from_coord(x, y);
-      this.cell_cursor(pos);
-    } else if (this.wall_cursor) {
-      var wall_pos = this.wall_pos_from_coord(x, y);
-      this.wall_cursor(wall_pos);
-    } else {
-      if (this.space.hitTest(x, y)) {
-
-        var target = event.target;
-        if (event.target.is_highlight) {
-          target = this.ship.current_selection;
-        }
-        while (!("pos" in target)) target = target.parent;
-        this.ship.select(target);
-
-      } else {
-        this.ship.clear_selection();
-      }
-    }
-  }
-
-  click_pos_from_coord(stageX, stageY) {
-    var centerX = this.canvas.width / 2;
-    var centerY = this.canvas.height / 2;
-
-    var grid = this.ship.graphics.grid_width + (this.ship.graphics.padding * 2);
-    var x = (stageX - centerX - this.pan_x * this.zoom_multiplier) / (grid * this.zoom_multiplier);
-    var y = (stageY - centerY - this.pan_y * this.zoom_multiplier) / (grid * this.zoom_multiplier);
-    var px = (x % 1) + (x < 0 ? 1 : 0);
-    var py = (y % 1) + (y < 0 ? 1 : 0);
-    var padding = this.ship.graphics.padding / grid;
-
-    var small = Math.min(px, py);
-    var large = Math.max(px, py);
-
-    if (small < padding || large > 1 - padding) {
-      return this.wall_pos_from_coord(stageX, stageY);
-    } else {
-      return this.pos_from_coord(stageX, stageY);
-    }
-  }
-
-  pos_from_coord(stageX, stageY) {
-    var centerX = this.canvas.width / 2;
-    var centerY = this.canvas.height / 2;
-
-    var grid = this.ship.graphics.grid_width + (this.ship.graphics.padding * 2);
-    var x = Math.floor((stageX - centerX - this.pan_x * this.zoom_multiplier) / (grid * this.zoom_multiplier));
-    var y = Math.floor((stageY - centerY - this.pan_y * this.zoom_multiplier) / (grid * this.zoom_multiplier));
-
-    var pos = {
-      "x": x,
-      "y": y,
-      "z": this.z_level
-    };
-    return pos;
-  }
-
-  wall_pos_from_coord(stageX, stageY) {
-    var centerX = this.canvas.width / 2;
-    var centerY = this.canvas.height / 2;
-
-    var grid = this.ship.graphics.grid_width + (this.ship.graphics.padding * 2);
-    var x = (stageX - centerX - this.pan_x * this.zoom_multiplier) / (grid * this.zoom_multiplier);
-    var y = (stageY - centerY - this.pan_y * this.zoom_multiplier) / (grid * this.zoom_multiplier);
-
-    var rx = Math.floor(x - y);
-    var ry = Math.floor(x + y);
-    x = Math.floor((rx + ry) / 2);
-    y = Math.floor((ry - rx) / 2);
-
-    if ((rx + ry) % 2 != 0) {
-      var ori = "|";
-    } else {
-      var ori = "-";
-      y -= 1;
+    document.getElementById("fps").innerHTML = "FPS " + Math.round(this.framerate_sum / this.framerates.length);
+    document.getElementById("triangles").innerHTML = this.renderer.info.render.triangles + " triangles rendered";
+    document.getElementById("calls").innerHTML = this.renderer.info.render.calls + " draw calls";
+    document.getElementById("debug").innerHTML = Math.round(this.camera.position.x*10)/10 + " " + Math.round(this.camera.position.y*10)/10 + " " + Math.round(this.camera.position.z*10)/10;
     }
 
-    var pos = {
-      "x": x,
-      "y": y,
-      "z": this.z_level,
-      "ori": ori
-    };
-    return pos;
-  }
+
 
   pause(mode) {
     this.paused = mode;
