@@ -81,7 +81,7 @@ class Game {
     light.position.set(0.5, 1, 0.75);
     this.scene.add(light);
 
-    let directionalLight = new THREE.DirectionalLight(0x555555, 0.5);
+    let directionalLight = new THREE.DirectionalLight(0x808080, 0.5);
     directionalLight.position.set(1, 1, 1);
     this.scene.add(directionalLight);
 
@@ -100,7 +100,6 @@ class Game {
     this.scene.add(this.ship);
 
     this.camera_euler = new THREE.Euler(0, 0, 0, 'YXZ');
-
 
     this.phisics_state = {
       timeStep: 5,

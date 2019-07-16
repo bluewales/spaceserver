@@ -8,82 +8,82 @@
     "grid": [
       [
         [
-          {"walls":{"n": true, "s": false, "e": false, "w": true}},
-          {"walls":{"n": false, "s": true, "e": false, "w": true}},
-          {"walls":{"n": true, "s": false, "e": false, "w": true}},
-          {"walls":{"n": false, "s": false, "e": false, "w": true}},
-          {"walls":{"n": false, "s": true, "e": false, "w": true}}
+          {"cell":"true", "walls":{"t":1, "b":1, "n": 1, "s": 0, "e": 0, "w": 1}},
+          {"cell":"true", "walls":{"t":1, "b":1, "n": 0, "s": 1, "e": 0, "w": 1}},
+          {"cell":"true", "walls":{"t":1, "b":1, "n": 1, "s": 0, "e": 0, "w": 1}},
+          {"cell":"true", "walls":{"t":1, "b":1, "n": 0, "s": 0, "e": 0, "w": 1}},
+          {"cell":"true", "walls":{"t":1, "b":1, "n": 0, "s": 1, "e": 0, "w": 1}}
         ],
         [
-          {"walls":{"n": true, "s": false, "e": false, "w": true}},
-          {"walls":{"n": false, "s": true, "e": false, "w": true}},
-          {"walls":{"n": true, "s": false, "e": false, "w": true}},
-          {"walls":{"n": false, "s": false, "e": false, "w": true}},
-          {"walls":{"n": false, "s": true, "e": false, "w": true}}
+          {"cell":"true", "walls":{"t":1, "b":1, "n": 1, "s": 0, "e": 0, "w": 1}},
+          {"cell":"true", "walls":{"t":1, "b":1, "n": 0, "s": 1, "e": 0, "w": 1}},
+          {"cell":"true", "walls":{"t":1, "b":1, "n": 1, "s": 0, "e": 0, "w": 1}},
+          {"cell":"true", "walls":{"t":1, "b":1, "n": 0, "s": 0, "e": 0, "w": 1}},
+          {"cell":"true", "walls":{"t":1, "b":1, "n": 0, "s": 1, "e": 0, "w": 1}}
         ]
       ],
       [
         [
-          {"walls":{"n": true, "s": false, "e": false, "w": false}},
-          {"walls":{"n": false, "s": true, "e": true, "w": false}},
-          {"walls":{"n": true, "s": false, "e": false, "w": false}},
-          {"walls":{"n": false, "s": false, "e": false, "w": false}},
-          {"walls":{"n": false, "s": true, "e": false, "w": false}}
+          {"cell":"true", "walls":{"t":1, "b":1, "n": 1, "s": 0, "e": 0, "w": 0}},
+          {"cell":"true", "walls":{"t":1, "b":1, "n": 0, "s": 1, "e": 1, "w": 0}},
+          {"cell":"true", "walls":{"t":1, "b":1, "n": 1, "s": 0, "e": 0, "w": 0}},
+          {"cell":"true", "walls":{"t":1, "b":1, "n": 0, "s": 0, "e": 0, "w": 0}},
+          {"cell":"true", "walls":{"t":1, "b":1, "n": 0, "s": 1, "e": 0, "w": 0}}
         ],
         [
-          {"walls":{"n": true, "s": false, "e": false, "w": false}},
-          {"walls":{"n": false, "s": true, "e": true, "w": false}},
-          {"walls":{"n": true, "s": false, "e": false, "w": false}},
-          {"walls":{"n": false, "s": false, "e": false, "w": false}},
-          {"walls":{"n": false, "s": true, "e": false, "w": false}}
+          {"cell":"true", "walls":{"t":1, "b":1, "n": 1, "s": 0, "e": 0, "w": 0}},
+          {"cell":"true", "walls":{"t":1, "b":1, "n": 0, "s": 1, "e": 1, "w": 0}},
+          {"cell":"true", "walls":{"t":1, "b":1, "n": 1, "s": 1, "e": 1, "w": 0}},
+          {"cell":"true", "walls":{"t":1, "b":1, "n": 1, "s": 0, "e": 0, "w": 0}},
+          {"cell":"true", "walls":{"t":1, "b":1, "n": 0, "s": 1, "e": 0, "w": 0}}
         ]
       ],
       [
         [
-          {"walls":{"n": true, "s": false, "e": false, "w": false}},
-          {"walls":{"n": false, "s": false, "e": true, "w": true}},
-          {"walls":{"n": false, "s": false, "e": false, "w": false}},
-          {"walls":{"n": false, "s": false, "e": false, "w": false}},
-          {"walls":{"n": false, "s": true, "e": false, "w": false}}
+          {"cell":"true", "walls":{"t":1, "b":1, "n": 1, "s": 0, "e": 0, "w": 0}},
+          {"cell":"true", "walls":{"t":1, "b":1, "n": 0, "s": 0, "e": 0, "w": 1}},
+          {"cell":"true", "walls":{"t":1, "b":1, "n": 0, "s": 0, "e": 0, "w": 0}},
+          {"cell":"true", "walls":{"t":1, "b":1, "n": 0, "s": 0, "e": 0, "w": 0}},
+          {"cell":"true", "walls":{"t":1, "b":1, "n": 0, "s": 1, "e": 0, "w": 0}}
         ],
         [
-          {"walls":{"n": true, "s": false, "e": false, "w": false}},
-          {"walls":{"n": false, "s": false, "e": true, "w": true}},
-          {"walls":{"n": false, "s": false, "e": false, "w": false}},
-          {"walls":{"n": false, "s": false, "e": false, "w": false}},
-          {"walls":{"n": false, "s": true, "e": false, "w": false}}
+          {"cell":"true", "walls":{"t":1, "b":1, "n": 1, "s": 0, "e": 0, "w": 0}},
+          {"cell":"true", "walls":{"t":1, "b":1, "n": 0, "s": 0, "e": 0, "w": 1}},
+          {"cell":"true", "walls":{"t":1, "b":1, "n": 0, "s": 0, "e": 0, "w": 1}},
+          {"cell":"true", "walls":{"t":1, "b":1, "n": 0, "s": 0, "e": 0, "w": 0}},
+          {"cell":"true", "walls":{"t":1, "b":1, "n": 0, "s": 1, "e": 0, "w": 0}}
         ]
       ],
       [
         [
-          {"walls":{"n": true, "s": false, "e": false, "w": false}},
-          {"walls":{"n": false, "s": true, "e": false, "w": true}},
-          {"walls":{"n": true, "s": false, "e": false, "w": false}},
-          {"walls":{"n": false, "s": false, "e": false, "w": false}},
-          {"walls":{"n": false, "s": true, "e": false, "w": false}}
+          {"cell":"true", "walls":{"t":1, "b":1, "n": 1, "s": 1, "e": 0, "w": 0}},
+          {"cell":"true", "walls":{"t":1, "b":1, "n": 1, "s": 0, "e": 1, "w": 0}},
+          {"cell":"true", "walls":{"t":1, "b":1, "n": 0, "s": 0, "e": 1, "w": 0}},
+          {"cell":"true", "walls":{"t":1, "b":1, "n": 0, "s": 0, "e": 0, "w": 0}},
+          {"cell":"true", "walls":{"t":1, "b":1, "n": 0, "s": 1, "e": 0, "w": 0}}
         ],
         [
-          {"walls":{"n": true, "s": false, "e": false, "w": false}},
-          {"walls":{"n": false, "s": true, "e": false, "w": true}},
-          {"walls":{"n": true, "s": false, "e": false, "w": false}},
-          {"walls":{"n": false, "s": false, "e": false, "w": false}},
-          {"walls":{"n": false, "s": true, "e": false, "w": false}}
+          {"cell":"true", "walls":{"t":1, "b":1, "n": 1, "s": 0, "e": 0, "w": 0}},
+          {"cell":"true", "walls":{"t":1, "b":1, "n": 0, "s": 0, "e": 1, "w": 0}},
+          {"cell":"true", "walls":{"t":1, "b":1, "n": 0, "s": 0, "e": 1, "w": 0}},
+          {"cell":"true", "walls":{"t":1, "b":1, "n": 0, "s": 0, "e": 0, "w": 0}},
+          {"cell":"true", "walls":{"t":1, "b":1, "n": 0, "s": 1, "e": 0, "w": 0}}
         ]
       ],
       [
         [
-          {"walls":{"n": true, "s": false, "e": true, "w": false}},
-          {"walls":{"n": false, "s": true, "e": true, "w": false}},
-          {"walls":{"n": true, "s": false, "e": true, "w": false}},
-          {"walls":{"n": false, "s": false, "e": true, "w": false}},
-          {"walls":{"n": false, "s": true, "e": true, "w": false}}
+          {"cell":"true", "walls":{"t":1, "b":1, "n": 1, "s": 0, "e": 1, "w": 0}},
+          {"cell": "true", "walls":{"t":0, "b":1, "n": 0, "s": 0, "e": 1, "w": 1}},
+          {"cell": "true", "walls":{"t":0, "b":1, "n": 0, "s": 1, "e": 1, "w": 1}},
+          {"cell":"true", "walls":{"t":1, "b":1, "n": 1, "s": 0, "e": 1, "w": 0}},
+          {"cell":"true", "walls":{"t":1, "b":1, "n": 0, "s": 1, "e": 1, "w": 0}}
         ],
         [
-          {"walls":{"n": true, "s": false, "e": true, "w": false}},
-          {"walls":{"n": false, "s": true, "e": true, "w": false}},
-          {"walls":{"n": true, "s": false, "e": true, "w": false}},
-          {"walls":{"n": false, "s": false, "e": true, "w": false}},
-          {"walls":{"n": false, "s": true, "e": true, "w": false}}
+          {"cell": "true", "walls":{"t":1, "b":1, "n": 1, "s": 1, "e": 1, "w": 0}},
+          {"cell": "true", "walls":{"t":1, "b":0, "n": 1, "s": 0, "e": 1, "w": 1}},
+          {"cell": "true", "contents": {"dir": "n", "type":"stairs"},  "walls":{"t":1, "b":0, "n": 0, "s": 0, "e": 1, "w": 1}},
+          {"cell": "true", "walls":{"t":1, "b":1, "n": 0, "s": 0, "e": 1, "w": 0}},
+          {"cell":"true", "walls":{"t":1, "b":1, "n": 0, "s": 1, "e": 1, "w": 0}}
         ]
       ]
     ]

@@ -4,11 +4,13 @@ class SpaceLoader {
       /* javascript */
       "three": { "source": "js/lib/three.min.js" },
       "api": { "source": "js/api.js" },
+      "crown": { "source": "js/models/Crown.js" },
       "gridCube": { "source": "js/models/GridCube.js" },
       "market": { "source": "js/market.js" },
       "pointerLockControls": { "source": "js/lib/PointerLockControls.js"},
       "panel": { "source": "js/models/Panel.js"},
       "ship": { "source": "js/models/Ship.js"},
+      "stairs": { "source": "js/models/Stairs.js" },
       "wall": { "source": "js/models/Wall.js"},
       "game": { "source": "js/Game.js" }
     };
