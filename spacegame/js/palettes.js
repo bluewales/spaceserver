@@ -31,7 +31,7 @@ var color_palettes = [
     ['#E84D6A', '#C93A78', '#A33181', '#752F83', '#3F2E7E', '#9BCBB2', '#DBD6E7']
 ];
 
-var ship_palette = color_palettes[0];
+var ship_palette = color_palettes[23];
 var menu_palette = color_palettes[9];
 //var menu_palette = color_palettes[18];
 

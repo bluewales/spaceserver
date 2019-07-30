@@ -43,7 +43,7 @@
           {"cell":"true", "walls":{"t":1, "b":1, "n": 1, "s": 0, "e": 0, "w": 0}},
           {"cell":"true", "walls":{"t":1, "b":1, "n": 0, "s": 0, "e": 0, "w": 1}},
           {"cell":"true", "walls":{"t":1, "b":1, "n": 0, "s": 0, "e": 0, "w": 0}},
-          {"cell":"true", "walls":{"t":1, "b":1, "n": 0, "s": 0, "e": 0, "w": 0}},
+          {"cell":"true", "contents": {"dir": "n", "type":"console"}, "walls":{"t":1, "b":1, "n": 0, "s": 0, "e": 0, "w": 0}},
           {"cell":"true", "walls":{"t":1, "b":1, "n": 0, "s": 1, "e": 0, "w": 0}}
         ],
         [

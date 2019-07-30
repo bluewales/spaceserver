@@ -28,15 +28,12 @@ body {
     height: 100%;
 }
 h1 {
-    position: absolute;
-    left:10px;
-    top:0px;
     color: white;
     z-index:100;
 }
 
 html, body { margin:0; padding:0; overflow:hidden; }
-#game, canvas, svg { position:fixed; top:0; bottom:0; left:0; right:0; height:100%; width:100%; }
+#game, canvas { position:fixed; top:0; bottom:0; left:0; right:0; height:100%; width:100%; }
 
 #menus ul{
     position: absolute;
@@ -105,12 +102,10 @@ h6 {
     color: white;
 }
 
-#ui {
+.ui {
   position: absolute;
   z-index:1000;
-  width: 100%;
-  top:50%;
-  margin-top: -100px;
+  top:0;
 }
 
 .prompt {
@@ -136,4 +131,22 @@ h6 {
 
 .prompt.error_message {
     color: red;
+}
+
+.unselectable {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.center {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
 }

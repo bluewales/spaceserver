@@ -6,14 +6,16 @@ class Ship extends THREE.Object3D {
     this.panel_size = 2;
     this.corner_padding = 0.1;
     this.grid_size = this.panel_size + this.corner_padding * 4;
+    this.touch_padding = 0.01;
 
     this.curve_detail = 4;
 
-    this.decoration_color = new THREE.Color(0x57f4f5);
+    this.palette = ship_palette;
+    this.base_color = this.palette[5];
+    this.decoration_color = new THREE.Color(this.palette[0]);
 
-    this.base_material = new THREE.MeshToonMaterial({ color: 0xffffff, side: THREE.DoubleSide, vertexColors: THREE.VertexColors });
-    this.trim_material = new THREE.MeshToonMaterial({ color: 0x57f4f5, side: THREE.DoubleSide });
-    this.window_material = new THREE.MeshPhongMaterial({ color: 0xffffff, side: THREE.DoubleSide, transparent: true, opacity: 0.5 });
+    this.base_material = new THREE.MeshPhongMaterial({ color: this.base_color, side: THREE.DoubleSide, vertexColors: THREE.VertexColors });
+    this.window_material = new THREE.MeshPhongMaterial({ color: this.base_color, side: THREE.DoubleSide, transparent: true, opacity: 0.5 });
     
 
     // Positive x is east
@@ -64,19 +66,23 @@ class Ship extends THREE.Object3D {
           }
 
           if (ship_data.grid[grid_x][grid_y][grid_z].contents) {
-            let object = ship_data.grid[grid_x][grid_y][grid_z].contents;
+            let contents = ship_data.grid[grid_x][grid_y][grid_z].contents;
             let dirs = {"n": Math.PI, "s":0, "e": Math.PI / 2, "w": -Math.PI / 2}
-            if (object.type == "stairs") {
+            let object = null;
+            if (contents.type == "stairs") {
+              object = new Stairs(this, contents);
+            } else if (contents.type == "console") {
+              object = new Console(this, contents);
+            }
 
-              let stairs = new Stairs(this, object);
+            if(object) {
+              object.position.x = ship_x * this.grid_size;
+              object.position.y = ship_y * this.grid_size;
+              object.position.z = ship_z * this.grid_size;
 
-              stairs.position.x = ship_x * this.grid_size;
-              stairs.position.y = ship_y * this.grid_size;
-              stairs.position.z = ship_z * this.grid_size;
+              object.rotation.y = dirs[contents.dir];
 
-              stairs.rotation.y = dirs[object.dir];
-
-              this.add(stairs);
+              this.add(object);
             }
           }
         }

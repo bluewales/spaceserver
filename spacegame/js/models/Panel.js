@@ -16,7 +16,7 @@ class Panel extends THREE.Mesh {
     var edges = [{x: 1, y: 0},{x: -1, y: 0},{x: 0, y: 1},{x: 0, y: -1}];
 
     var boarder_width = ship.corner_padding;
-    var boarder_height = 0.01;
+    var boarder_height = ship.touch_padding;
 
 
     for (var i = 0; i < 4; i++) {
@@ -46,7 +46,7 @@ class PanelCorner extends THREE.Mesh {
     corner_geometry.mergeMesh(cylinder);
 
     var boarder_width = ship.corner_padding;
-    var boarder_height = 0.01;
+    var boarder_height = ship.touch_padding;
 
     var decoration_geometry = new THREE.Geometry();
 

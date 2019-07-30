@@ -3,16 +3,30 @@ class SpaceLoader {
     this.sources = {
       /* javascript */
       "three": { "source": "js/lib/three.min.js" },
+      "effectComposer": { "source": "js/lib/EffectComposer.js" },
+      "copyShader": { "source": "js/lib/CopyShader.js" },
+      "SSAARenderPass": { "source": "js/lib/SSAARenderPass.js" },
+      "shaderPass": { "source": "js/lib/ShaderPass.js" },
+      "renderPass": { "source": "js/lib/RenderPass.js" },
+      "outlinePass": { "source": "js/lib/OutlinePass.js" },
+      "FXAAShader": { "source": "js/lib/FXAAShader.js" },
+      "SMAAShader": { "source": "js/lib/SMAAShader.js" },
+      "SMAAPass": { "source": "js/lib/SMAAPass.js" },
       "api": { "source": "js/api.js" },
+      "console": { "source": "js/models/Console.js" },
       "crown": { "source": "js/models/Crown.js" },
       "gridCube": { "source": "js/models/GridCube.js" },
       "market": { "source": "js/market.js" },
-      "pointerLockControls": { "source": "js/lib/PointerLockControls.js"},
+      "palettes": { "source": "js/palettes.js" },
       "panel": { "source": "js/models/Panel.js"},
+      "pointerLockControls": { "source": "js/lib/PointerLockControls.js"},
       "ship": { "source": "js/models/Ship.js"},
       "stairs": { "source": "js/models/Stairs.js" },
       "wall": { "source": "js/models/Wall.js"},
-      "game": { "source": "js/Game.js" }
+      "game": { "source": "js/Game.js" },
+      "overlay": { "source": "js/ui/Overlay.js" },
+      "engineerinConsole": { "source": "js/ui/EngineeringConsole.js" },
+      "menu": { "source": "js/ui/Menu.js" },
     };
 
     this.manifest = [];

@@ -14,8 +14,6 @@ class Stairs extends THREE.Mesh {
     let tread_depth = (ship.grid_size * 2 - ship.corner_padding * 2) / treads;
     let stair_width = ship.panel_size;
 
-    console.log("height " + tread_height);
-
     for(let i = 0; i < treads; i++) {
       let tread_width = (i == 0 || i == treads - 1) ? stair_width : stair_width - ship.corner_padding * 2;
       let cube_geometry = new THREE.BoxGeometry(tread_width, tread_height * 0.9, tread_depth);
@@ -33,7 +31,6 @@ class Stairs extends THREE.Mesh {
       cube_geometry.vertices[0].x = stair_width / 2;
       cube_geometry.vertices[0].y = -ship.grid_size + tread_height * 0.95;
       cube_geometry.vertices[0].z = -ship.panel_size / 2 + tread_depth * (treads);
-      
 
       cube_geometry.vertices[1].x = stair_width / 2;
       cube_geometry.vertices[1].y = -tread_height * 0.05;
