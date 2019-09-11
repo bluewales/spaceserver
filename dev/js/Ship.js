@@ -6,7 +6,7 @@ class Ship extends THREE.Object3D {
 
     this.panel_size = 2;
     this.corner_padding = 0.25;
-    this.void_padding = 0.5;
+    this.void_padding = this.corner_padding * 2;
     this.grid_size = this.panel_size + this.corner_padding * 2 + this.void_padding;
 
     this.curve_detail = 5;

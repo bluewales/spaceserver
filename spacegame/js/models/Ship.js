@@ -3,6 +3,8 @@ class Ship extends THREE.Object3D {
   constructor(ship_data) {
     super();
 
+    this.data = ship_data;
+
     this.panel_size = 2;
     this.corner_padding = 0.1;
     this.grid_size = this.panel_size + this.corner_padding * 4;

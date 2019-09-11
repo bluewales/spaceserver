@@ -137,7 +137,7 @@ class Console extends THREE.Mesh {
     console_geometry.mergeVertices(); // optional
     super(console_geometry, ship.base_material);
 
-    this.overlay = new EngineeringConsole();
+    this.overlay = new EngineeringConsole(ship);
   }
 
   select() {

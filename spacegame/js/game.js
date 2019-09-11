@@ -71,7 +71,7 @@ class Game {
     d3.select(document)
       .on("click", this.onclick.bind(this));
 
-    this.keys = { SP: 32, W: 87, A: 65, S: 83, D: 68, UP: 38, LT: 37, DN: 40, RT: 39 };
+    this.keys = { SP: 32, W: 87, A: 65, S: 83, D: 68, R: 82, F: 70, UP: 38, LT: 37, DN: 40, RT: 39 };
     window.keysPressed = {};
     var watchedKeyCodes = [this.keys.SP, this.keys.W, this.keys.A, this.keys.S, this.keys.D, this.keys.UP, this.keys.LT, this.keys.DN, this.keys.RT];
 
@@ -81,7 +81,8 @@ class Game {
         if (index >= 0) {
           window.keysPressed[watchedKeyCodes[index]] = down;
           e.preventDefault();
-        } else if(down) {
+        }
+        if(down) {
           game.onkey(e.keyCode);
         }
       };
@@ -201,6 +202,10 @@ class Game {
           this.pointer_controls.lock();
         }
       }
+    } else {
+      if (this.active_overlay && this.active_overlay.keypress) {
+        this.active_overlay.keypress(keyCode);
+      }
     }
   }
 
@@ -241,6 +246,10 @@ class Game {
       this.outlinePass.selectedObjects = [];
     }
 
+    if(this.active_overlay && this.active_overlay.tick) {
+      this.active_overlay.tick();
+    }
+
     this.composer.render();
 
     this.stats(timeElapsed, performance.now() - start_time);
@@ -267,6 +276,10 @@ class Game {
 
     this.motion.rotation.y = 0;
     this.motion.rotation.normalize();
+
+    if(this.active_overlay) {
+      return;
+    }
 
     // move around
     this.forward.set(this.motion.rotation.x, 0, this.motion.rotation.z);
@@ -399,12 +412,16 @@ class Game {
     this.active_overlay = overlay;
     d3.select("#game").node().appendChild(overlay.dom);
     this.active_overlay.update_size(this.width, this.height);
+
+    this.active_overlay.focus = true;
   }
 
   hide_overlay() {
     if (this.active_overlay) {
       d3.select("#game").node().removeChild(this.active_overlay.dom);
       this.pointer_controls.lock();
+
+      this.active_overlay.focus = false;
       this.active_overlay = undefined;
     }
   }
