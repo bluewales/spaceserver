@@ -134,26 +134,6 @@ class CrownMultiCorner extends THREE.Mesh {
       crown_geometry.mergeMesh(shoe);
     }
 
-    if (c.forward_wall && c.left_wall ){
-      let cylinder_geometry = new THREE.CylinderGeometry(ship.corner_padding, ship.corner_padding, ship.corner_padding * 2, ship.curve_detail, 1, true, 0, Math.PI / 2);
-      let cylinder = new THREE.Mesh(cylinder_geometry);
-      cylinder.position.x = ship.panel_size / 2;
-      cylinder.position.y = ship.panel_size + ship.corner_padding*2;
-      cylinder.position.z = ship.panel_size / 2;
-      crown_geometry.mergeMesh(cylinder);
-    }
-
-    if (!c.top_cell_forward_wall && c.top_cell_left_wall && c.top_forward_cell_left_wall && c.top_forward_cell_bottom_wall && !c.top_forward_cell_near_wall) {
-      let cylinder_geometry = new THREE.CylinderGeometry(ship.corner_padding, ship.corner_padding, ship.corner_padding * 2, ship.curve_detail, 1, true, 0, Math.PI / 2);
-      let cylinder = new THREE.Mesh(cylinder_geometry);
-      cylinder.position.x = ship.panel_size / 2;
-      cylinder.position.y = ship.panel_size + ship.corner_padding * 5;
-      cylinder.position.z = ship.panel_size / 2 + ship.corner_padding * 3;
-      cylinder.rotation.x = Math.PI / 2;
-      crown_geometry.mergeMesh(cylinder);
-
-    }
-
     if (c.forward_wall && c.left_wall && c.top_cell_forward_wall && !c.top_cell_left_wall) {
       let shoe = new ColumnShoe(ship, ship.corner_padding, ship.corner_padding);
       shoe.position.x = ship.panel_size / 2 + ship.corner_padding * 2;
@@ -162,6 +142,19 @@ class CrownMultiCorner extends THREE.Mesh {
       shoe.rotation.y = Math.PI / 2;
       shoe.rotation.z = -Math.PI / 2;
       crown_geometry.mergeMesh(shoe);
+    }
+    
+    if (c.forward_wall && c.left_wall && c.top_cell_forward_wall && !c.top_cell_left_wall && c.top_left_cell_forward_wall && !c.top_left_cell_near_wall && c.top_left_cell_bottom_wall) {
+
+
+      let cylinder_geometry = new THREE.CylinderGeometry(ship.corner_padding, ship.corner_padding, ship.corner_padding * 2, ship.curve_detail, 1, true, 0, Math.PI / 2);
+      let cylinder = new THREE.Mesh(cylinder_geometry);
+      cylinder.position.x = ship.panel_size / 2 + ship.corner_padding * 3;
+      cylinder.position.y = ship.panel_size + ship.corner_padding * 5;
+      cylinder.position.z = ship.panel_size / 2;
+      cylinder.rotation.x = Math.PI / 2;
+      cylinder.rotation.z = Math.PI / 2;
+      crown_geometry.mergeMesh(cylinder);
     }
 
     if (c.top_cell_forward_wall && !c.top_cell_left_wall && !c.top_left_cell_forward_wall && !c.top_left_cell_near_wall) {
@@ -180,6 +173,44 @@ class CrownMultiCorner extends THREE.Mesh {
       shoe.position.z = ship.panel_size / 2 + ship.corner_padding * 2;
       shoe.rotation.z = Math.PI / 2;
       crown_geometry.mergeMesh(shoe);
+    }
+
+    if (!c.forward_wall && c.left_wall && !c.forward_cell_left_wall && c.forward_cell_top_wall && !c.forward_cell_near_wall) {
+      let shoe = new ColumnShoe(ship, ship.corner_padding, ship.corner_padding);
+      shoe.position.x = ship.panel_size / 2 + ship.corner_padding * 2;
+      shoe.position.y = ship.panel_size + ship.corner_padding;
+      shoe.position.z = ship.panel_size / 2 + ship.corner_padding * 2;
+      shoe.rotation.x = Math.PI;
+      crown_geometry.mergeMesh(shoe);
+    }
+
+    if (c.forward_wall && c.left_wall) {
+      let cylinder_geometry = new THREE.CylinderGeometry(ship.corner_padding, ship.corner_padding, ship.corner_padding * 2, ship.curve_detail, 1, true, 0, Math.PI / 2);
+      let cylinder = new THREE.Mesh(cylinder_geometry);
+      cylinder.position.x = ship.panel_size / 2;
+      cylinder.position.y = ship.panel_size + ship.corner_padding * 2;
+      cylinder.position.z = ship.panel_size / 2;
+      crown_geometry.mergeMesh(cylinder);
+    }
+
+    if (!c.top_cell_forward_wall && c.top_cell_left_wall && c.top_forward_cell_left_wall && c.top_forward_cell_bottom_wall && !c.top_forward_cell_near_wall) {
+      let cylinder_geometry = new THREE.CylinderGeometry(ship.corner_padding, ship.corner_padding, ship.corner_padding * 2, ship.curve_detail, 1, true, 0, Math.PI / 2);
+      let cylinder = new THREE.Mesh(cylinder_geometry);
+      cylinder.position.x = ship.panel_size / 2;
+      cylinder.position.y = ship.panel_size + ship.corner_padding * 5;
+      cylinder.position.z = ship.panel_size / 2 + ship.corner_padding * 3;
+      cylinder.rotation.x = Math.PI / 2;
+      crown_geometry.mergeMesh(cylinder);
+    }
+
+    if (!c.forward_wall && !c.forward_cell_near_wall && c.forward_cell_top_wall && c.left_wall && c.top_cell_left_wall && c.top_cell_forward_wall) {
+      let cylinder_geometry = new THREE.CylinderGeometry(ship.corner_padding, ship.corner_padding, ship.corner_padding * 2, ship.curve_detail, 1, true, 0, Math.PI / 2);
+      let cylinder = new THREE.Mesh(cylinder_geometry);
+      cylinder.position.x = ship.panel_size / 2;
+      cylinder.position.y = ship.panel_size + ship.corner_padding * 1;
+      cylinder.position.z = ship.panel_size / 2 + ship.corner_padding * 3;
+      cylinder.rotation.x = -Math.PI / 2;
+      crown_geometry.mergeMesh(cylinder);
     }
 
     if (c.top_cell_forward_wall && c.top_cell_left_wall) {
@@ -208,15 +239,6 @@ class CrownMultiCorner extends THREE.Mesh {
       cylinder.position.z = ship.panel_size / 2;
       cylinder.rotation.z = Math.PI / 2;
       crown_geometry.mergeMesh(cylinder);
-    }
-
-    if (!c.forward_wall && c.left_wall && !c.forward_cell_left_wall && c.forward_cell_top_wall && !c.forward_cell_near_wall) {
-      let shoe = new ColumnShoe(ship, ship.corner_padding, ship.corner_padding);
-      shoe.position.x = ship.panel_size / 2 + ship.corner_padding * 2;
-      shoe.position.y = ship.panel_size + ship.corner_padding;
-      shoe.position.z = ship.panel_size / 2 + ship.corner_padding * 2;
-      shoe.rotation.x = Math.PI;
-      crown_geometry.mergeMesh(shoe);
     }
 
     if (c.forward_left_cell_back_wall && c.forward_left_cell_top_wall && !c.forward_left_cell_right_wall && !c.forward_cell_near_wall) {

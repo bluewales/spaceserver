@@ -32,76 +32,34 @@ class Panel extends THREE.Mesh {
     }
 
     panel_geometry.mergeVertices(); // optional
-    super(panel_geometry, ship.base_material);
+    super(panel_geometry, material);
   }
 }
 
 class PanelCorner extends THREE.Mesh {
-  constructor(ship) {
+  constructor(ship, length=undefined, radius=undefined) {
+
+    if(length === undefined) {
+      length = ship.panel_size;
+    }
+
+    if (radius === undefined) {
+      radius = ship.corner_padding;
+    }
 
     var corner_geometry = new THREE.Geometry();
 
-    var cylinder_geometry = new THREE.CylinderGeometry(ship.corner_padding, ship.corner_padding, ship.panel_size, ship.curve_detail, 1, true, 0, Math.PI / 2);
+    var cylinder_geometry = new THREE.CylinderGeometry(radius, radius, length, ship.curve_detail, 1, true, 0, Math.PI / 2);
     var cylinder = new THREE.Mesh(cylinder_geometry);
     corner_geometry.mergeMesh(cylinder);
 
-    var boarder_width = ship.corner_padding;
-    var boarder_height = ship.touch_padding;
-
-    var decoration_geometry = new THREE.Geometry();
-
-    var end_ring_geometry = new THREE.RingGeometry(ship.corner_padding - boarder_height / 2, ship.corner_padding + boarder_height / 2, ship.curve_detail, 1, 0, Math.PI / 2);
-    var end_ring = new THREE.Mesh(end_ring_geometry);
-    end_ring.position.y = ship.panel_size / 2 - boarder_width;
-    end_ring.rotation.x = Math.PI / 2;
-    decoration_geometry.mergeMesh(end_ring);
-
-    var end_ring = new THREE.Mesh(end_ring_geometry);
-    end_ring.position.y = ship.panel_size / 2;
-    end_ring.rotation.x = Math.PI / 2;
-    decoration_geometry.mergeMesh(end_ring);
-
-    var inner_end_curve_geometry = new THREE.CylinderGeometry(ship.corner_padding - boarder_height / 2, ship.corner_padding - boarder_height / 2, boarder_width, ship.curve_detail, 1, true, 0, Math.PI / 2);
-    var end_curve = new THREE.Mesh(inner_end_curve_geometry);
-    end_curve.position.y = ship.panel_size / 2 - boarder_width / 2;
-    decoration_geometry.mergeMesh(end_curve);
-
-    var outer_end_curve_geometry = new THREE.CylinderGeometry(ship.corner_padding + boarder_height / 2, ship.corner_padding + boarder_height / 2, boarder_width, ship.curve_detail, 1, true, 0, Math.PI / 2);
-    var end_curve = new THREE.Mesh(outer_end_curve_geometry);
-    end_curve.position.y = ship.panel_size / 2 - boarder_width / 2;
-    decoration_geometry.mergeMesh(end_curve);
-
-    var end_ring = new THREE.Mesh(end_ring_geometry);
-    end_ring.position.y = -ship.panel_size / 2;
-    end_ring.rotation.x = Math.PI / 2;
-    decoration_geometry.mergeMesh(end_ring);
-
-    var end_ring = new THREE.Mesh(end_ring_geometry);
-    end_ring.position.y = -ship.panel_size / 2 + boarder_width;
-    end_ring.rotation.x = Math.PI / 2;
-    decoration_geometry.mergeMesh(end_ring);
-
-    var end_curve = new THREE.Mesh(inner_end_curve_geometry);
-    end_curve.position.y = -ship.panel_size / 2 + boarder_width / 2;
-    decoration_geometry.mergeMesh(end_curve);
-
-    var end_curve = new THREE.Mesh(outer_end_curve_geometry);
-    end_curve.position.y = -ship.panel_size / 2 + boarder_width / 2;
-    decoration_geometry.mergeMesh(end_curve);
-
-    for (var index in decoration_geometry.faces) {
-      decoration_geometry.faces[index].color = ship.decoration_color;
-    }
-
-    var decoration = new THREE.Mesh(decoration_geometry);
-    corner_geometry.mergeMesh(decoration);
 
     corner_geometry.mergeVertices(); // optional
     super(corner_geometry, ship.base_material);
   }
 }
 
-class PanelLink extends THREE.Mesh {
+class PanelLink extends MixedMesh {
   constructor(ship, ceiling, floor) {
     var link_geometry = new THREE.Geometry();
 
@@ -158,7 +116,6 @@ class ColumnShoe extends THREE.Mesh {
     var normal = new THREE.Vector3();
     var plane_geometry = new THREE.PlaneGeometry(1, 1, ship.curve_detail, ship.curve_detail + 1);
 
-    //var positions = plane_geometry.attributes.position;
     var normals = [];
 
     for(let row = 0; row <= ship.curve_detail; row++) {

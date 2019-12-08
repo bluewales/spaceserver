@@ -1,4 +1,4 @@
-class Console extends THREE.Mesh {
+class ConsolePodium extends THREE.Mesh {
 
   constructor(ship, console_data) {
 
@@ -141,6 +141,6 @@ class Console extends THREE.Mesh {
   }
 
   select() {
-    game.show_overlay(this.overlay);
+    game.view.show_overlay(this.overlay);
   }
 }

@@ -13,8 +13,9 @@ class SpaceLoader {
       "SMAAShader": { "source": "js/lib/SMAAShader.js" },
       "SMAAPass": { "source": "js/lib/SMAAPass.js" },
       "api": { "source": "js/api.js" },
-      "console": { "source": "js/models/Console.js" },
+      "consolePodium": { "source": "js/models/ConsolePodium.js" },
       "crown": { "source": "js/models/Crown.js" },
+      "mixedMesh": { "source": "js/models/MixedMesh.js" },
       "gridCube": { "source": "js/models/GridCube.js" },
       "market": { "source": "js/market.js" },
       "palettes": { "source": "js/palettes.js" },
@@ -22,11 +23,16 @@ class SpaceLoader {
       "pointerLockControls": { "source": "js/lib/PointerLockControls.js"},
       "ship": { "source": "js/models/Ship.js"},
       "stairs": { "source": "js/models/Stairs.js" },
+      "script": { "source": "js/script.js" },
       "wall": { "source": "js/models/Wall.js"},
+      "door": { "source": "js/models/Door.js" },
       "game": { "source": "js/Game.js" },
       "overlay": { "source": "js/ui/Overlay.js" },
-      "engineerinConsole": { "source": "js/ui/EngineeringConsole.js" },
+      "console": { "source": "js/ui/console/Console.js" },
+      "engineerinConsole": { "source": "js/ui/console/EngineeringConsole.js" },
       "menu": { "source": "js/ui/Menu.js" },
+      "view": { "source": "js/View.js" },
+      "button": { "source": "js/models/Button.js" },
     };
 
     this.manifest = [];
@@ -82,7 +88,7 @@ class SpaceLoader {
       .style("height", "25px");
 
     this.loader.on("progress", (function (event) {
-      console.log(Math.round(event.progress * 100) + " % loaded");
+      console.log(Math.round(event.progress * 100) + " %");
       d3.select("#loading_bar").style("width", (event.progress * 100) + "%");
     }).bind(this));
 
@@ -94,7 +100,7 @@ class SpaceLoader {
     this.api.download_save_state((function (game_state) {
       var loading_div = d3.select("#loading").remove();
 
-      window.game = new Game(game_state);
+      init(game_state);
     }).bind(this));
   }
 }

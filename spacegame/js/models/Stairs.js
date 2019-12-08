@@ -19,7 +19,7 @@ class Stairs extends THREE.Mesh {
       let cube_geometry = new THREE.BoxGeometry(tread_width, tread_height * 0.9, tread_depth);
       let cube = new THREE.Mesh(cube_geometry);
 
-      cube.position.z = -ship.panel_size / 2 + tread_depth * (i + 0.5);
+      cube.position.z = -ship.panel_size / 2 + tread_depth * (i + 0.5) - ship.corner_padding;
       cube.position.y = -tread_height * i - tread_height / 2;
 
       stairs_geometry.mergeMesh(cube);
@@ -30,35 +30,35 @@ class Stairs extends THREE.Mesh {
       
       cube_geometry.vertices[0].x = stair_width / 2;
       cube_geometry.vertices[0].y = -ship.grid_size + tread_height * 0.95;
-      cube_geometry.vertices[0].z = -ship.panel_size / 2 + tread_depth * (treads);
+      cube_geometry.vertices[0].z = -ship.panel_size / 2 + tread_depth * (treads) - ship.corner_padding;
 
       cube_geometry.vertices[1].x = stair_width / 2;
       cube_geometry.vertices[1].y = -tread_height * 0.05;
-      cube_geometry.vertices[1].z = -ship.panel_size / 2 + tread_depth;
+      cube_geometry.vertices[1].z = -ship.panel_size / 2 + tread_depth - ship.corner_padding;
 
       cube_geometry.vertices[2].x = stair_width / 2;
       cube_geometry.vertices[2].y = -ship.grid_size + tread_height * 0.95;
-      cube_geometry.vertices[2].z = -ship.panel_size / 2 + tread_depth * (treads - 1);
+      cube_geometry.vertices[2].z = -ship.panel_size / 2 + tread_depth * (treads - 1) - ship.corner_padding;
 
       cube_geometry.vertices[3].x = stair_width / 2;
       cube_geometry.vertices[3].y = -tread_height * 0.95;
-      cube_geometry.vertices[3].z = -ship.panel_size / 2 + tread_depth;
+      cube_geometry.vertices[3].z = -ship.panel_size / 2 + tread_depth - ship.corner_padding;
 
       cube_geometry.vertices[4].x = stair_width / 2 - ship.corner_padding;
       cube_geometry.vertices[4].y = -tread_height * 0.05;
-      cube_geometry.vertices[4].z = -ship.panel_size / 2 + tread_depth;
+      cube_geometry.vertices[4].z = -ship.panel_size / 2 + tread_depth - ship.corner_padding;
 
       cube_geometry.vertices[5].x = stair_width / 2 - ship.corner_padding;
       cube_geometry.vertices[5].y = -ship.grid_size + tread_height * 0.95;
-      cube_geometry.vertices[5].z = -ship.panel_size / 2 + tread_depth * (treads);
+      cube_geometry.vertices[5].z = -ship.panel_size / 2 + tread_depth * (treads) - ship.corner_padding;
 
       cube_geometry.vertices[6].x = stair_width / 2 - ship.corner_padding;
       cube_geometry.vertices[6].y = -tread_height * 0.95;
-      cube_geometry.vertices[6].z = -ship.panel_size / 2 + tread_depth;
+      cube_geometry.vertices[6].z = -ship.panel_size / 2 + tread_depth - ship.corner_padding;
 
       cube_geometry.vertices[7].x = stair_width / 2 - ship.corner_padding;
       cube_geometry.vertices[7].y = -ship.grid_size + tread_height * 0.95;
-      cube_geometry.vertices[7].z = -ship.panel_size / 2 + tread_depth * (treads - 1);
+      cube_geometry.vertices[7].z = -ship.panel_size / 2 + tread_depth * (treads - 1) - ship.corner_padding;
 
       cube_geometry.computeFlatVertexNormals();
 

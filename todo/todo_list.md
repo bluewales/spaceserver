@@ -1,51 +1,86 @@
 # Todo List
 
- - Saving
-   - &#10004; Jobs should be saved
-   - &#10004; A button to force a save
-   - An indication that saving is happening
- - Trading
-   - Economy
-     - &#10004; The economy simulation generates prices
-     - &#10004; Prices can be loaded through the API
-     - Player trades are submitted to the economy
-     - Player trades are resolved against citizen trades
-   - &#10004; Ship has a certain amount of money
-   - Some way to tell what items are on the ship and available to sell
-   - Show which items are for sale and their prices
-   - How the heck do shuttles work?
-     - Deliver purchased items to ship by shuttle
-       - Delivered items must be stored by crew
-     - Sold items need to be picked up by the shuttle
-       - Crew must take sold items to shuttle
+ - Graphics
+   - &#10004; Doors
+     - &#10004; Doors open and close
+     - &#10004; Both sides of doors move together
+     - &#10004; A button to open doors 
+     - &#10004; Doors close after a time
+   - Windows   
+     - Windows are represented in engineering console
+     - Windows are represented in save data
+     - Windows are transparent
+   - Rooms
+     - Ship is divided up into rooms
+     - Only the room the player is in and rooms connected to it by window and open doors are rendered
+   - Textures and normal maps for panels instead of 3D trim pieces
+ - Stop walking through walls
+ - User accounts
+   - Saving the game
+     - Saving should happen automatically on a regular basis
+     - A button to force a save in the pause menu
+     - Save should happen on window close
+     - Structure of ship should be saved
+     - Position of character should be saved
+     - Jobs should be saved
+     - An indication that saving is happening
+   - Login page
+   - Account creation
+     - New accounts get default ship
+     - Reasonable error messages
+   - On load dialog box works
+     - *Login button*
+     - *Create Account* button
+     - *Continue Without Login* button
+   - If you're not logged in, give options to Login/Create Account in game
+     - Button in top bar that changes between Login/Logout base on current login status
+ - Engineering Console
+   - Create rooms by dragging
+   - Distinguish between actual structure and planned structure
+   - Create construction jobs based on changes made in console
+   - Clicking on things should bring up info in the side panel
+     - Highlight the thing that was clicked on
+     - Clear highlights on new click
+     - Give the name of what is highlighted
+     - Displays progress of planned construction and deconstruction jobs pertaining to that structure
+     - Option to cancel planned construction
+ - Construction
+   - Don't allow illegal build commands
+     - Not where there is already a thing
+     - Furniture must be built on floors
+   - Building doors and windows
+   - Building furniture like console and stairs
+   - Building should consumer materials which must be brought to the site by crew
+     - Materials are claimed by the job at the time the structure is planned
+     - If materials are not available, the structure is not planned
+   - Deconstruct structures
+     - Spawn materials that were used to create the structure
+     - Deconstruction job is saved
+     - Structures with contents (crates) spawn all contents when deconstructed
+   - Cancel construction jobs that are in progress
+   - Construction bot
+     - Engineering console creates construction jobs
+     - Construction bots on the ship run around and fulfill construction jobs
+     - Robot charging pad
+       - Robot runs out of charge
+       - Robot returns to pad when low on energy
+       - Will the robot be stuck forever if it doesn't charge in time?
+   - Keep the ship connected.  Structure building, planning, and deconstruction need to keep the ship in one piece at all times
  - Production server
- - Robot charging pad
-   - Robot runs out of charge
-   - Robot returns to pad when low on energy
-   - Will the robot be stuck forever if it doesn't charge in time?
- - Keep the ship connected.  Structure building, planning, and deconstruction need to keep the ship in one piece at all times
  - Time management
-   - &#10004; Pause time
    - A concept of absolute time that is saved
-   - Let time advance at different speeds
- - Crafting
- - Travel
+   - Let time advance at different speeds; fast forward in console or by sleeping
  - Atmosphere
-   - Pressure and composition, maybe saved as attributes on the graph
-   - Spreading throughout a chamber
-     - Pressure should equalize almost immediately,
-     - Composition should take a little longer to propagate
+   - Rooms and groups of rooms are hydrostatically connected nodes that should have single values for air pressure, composition, and temperature
+   - Atmosphere in a room is uniform.
+   - When doors open, atmosphere equalized instantly between them
    - Escaping into space
    - Maintained by machine(s)
      - Unwanted gasses must be removed (carbon dioxide, ammonia, acetone)
      - Keep all necessary gasses at correct levels
      - Decide whether to have a lot of filters and tanks, or just one machine that monitors everything
      - There needs to be some sort of ventilation management system.  Should air just go through doors?  Does every room need an atmosphere monitoring machine?  Are there vents?
-   - Leaks through open doors
-     - Enough atmosphere should escape through a door while a crew member is passing through to empty a room
-   - If atmosphere can't move through closed doors normally, then we need some other kind of ventilation
-   - Rooms and groups of rooms are hydrostatically connected nodes that should have single values for air pressure, composition, and temperature
- - Temperature should conduct through walls
+       - There should be pipes running bellow floors and between walls to circulate air
  - Airlocks.  How do they work? Are they a special piece of furniture, or are they a collection of walls and doors that somehow function as an airlock?
    - Since pathfinding will ignore locked doors, how does a crew member decide to use an airlock?
  - Fluid storage, tanks of liquids and gasses
@@ -53,72 +88,21 @@
    - Water for everything
    - Fuel and oxygen for propellant and power generation
    - All those same substances and more as cargo to sell at the next port. Maybe even dangerous chemicals like acids or explosives
- - Power generation and consumption
- - Find a way to draw lower levels.  I'd like to make them darker
- - &#10004; Some scheme for marking items done on this list
- - &#10004; Open/Close animations for doors and hatches
-   - &#10004; Hatches spin open like a mechanical iris
-     - &#10004; Create new vector art for hatches, replace sprite
-   - &#10004; Doors open for crew, crew do not open doors.  The crew doesn't need to check if the door is open, only if it is unlocked
-   - &#10004; Invent doors (create art for doors)
-     - &#10004; Doors should have the same profile as walls
-     - &#10004; Doors slide open like grocery store doors
- - &#10004; User accounts
-   - &#10004; Saving the game
-   - &#10004; Login page
-   - &#10004; Account creation
-     - &#10004; New accounts get default ship
-     - &#10004; Reasonable error messages
-   - &#10004; Source control for server side code
- - &#10004; Interface
-   - &#10004; Heads Up Display
-     - &#10004; Level indicator top, center, and big
-     - &#10004; Top and bottom bars for buttons
-   - &#10004; Card system
-     - &#10004; Cards pop up and disappear
-     - &#10004; Cards can be pinned
-     - &#10004; Cards can be moved
-     - &#10004; Cards are pinned when they are moved
-     - &#10004; Cards disappear when unfocused, unless they are pinned
-     - &#10004; Pinned cards move to top of other cards when focused
-     - &#10004; Active cards should be kept on screen after a resize
-   - &#10004; Make it more obvious which wall you're interacting with, perhaps by highlighting the one you select or are hovering over
-   - &#10004; Instructions for basic controls
- - &#10004; Loose items are scooped up by crew and stored in crates
- - &#10004; Click and drag to pan
- - &#10004; Rework login prompt
-   - &#10004; On load dialog box works
-     - &#10004; *Login button*
-     - &#10004; *Create Account* button
-     - &#10004; *Continue Without Login* button
-   - &#10004; If you're not logged in, give options to Login/Create Account in game
-     - &#10004; Button in top bar that changes between Login/Logout base on current login status
-   - &#10004; Cards like login prompt should be able to pause the game and disable everything in the background
- - &#10004; Put logo in top bar and level indicator in bottom bar
- - &#10004; Make the top and bottom bar instances of the same class since there's so much similar code between them 
- - &#10004; Clicking on things should bring up an info card
-   - &#10004; Distinguish between clicking on cells and clicking on walls
-   - &#10004; Highlight the thing that was clicked on
-   - &#10004; Clear highlights on new click
-   - &#10004; Give the name of what is highlighted
-   - &#10004; Reposition card to mouse
-   - &#10004; Option to deconstruct structures
-   - &#10004; Displays contents of crates
-   - &#10004; Show current job of crew
-   - &#10004; Show item crew is carrying
-   - &#10004; Displays progress of planned construction and deconstruction jobs
-   - &#10004; Option to cancel planned construction
- - &#10004; Construction
-   - &#10004; Knowing where to build things
-     - &#10004; Not where there is already a thing
-     - &#10004; Furniture must be built on floors
-   - &#10004; Building hatches and doors
-   - &#10004; Building furniture
-   - &#10004; Building should consumer materials which must be brought to the site by crew
-     - &#10004; Materials are claimed by the job at the time the structure is planned
-     - &#10004; If materials are not available, the structure is not planned
-   - &#10004; Deconstruct structures
-     - &#10004; Spawn materials that were used to create the structure
-     - &#10004; Deconstruction job is saved
-     - &#10004; Structures with contents (crates) spawn all contents when deconstructed
-   - &#10004; Cancel construction jobs that are in progress
+ - Loose items are scooped up by crew and stored in crates
+ - Trading
+   - Economy
+     - The economy simulation generates prices
+     - Prices can be loaded through the API
+     - Player trades are submitted to the economy
+     - Player trades are resolved against citizen trades eventually
+   - Ship has a certain amount of money
+   - Some way to tell what items are on the ship and available to sell
+   - Show which items are for sale and their prices
+   - How the heck do shuttles work?
+     - Deliver purchased items to ship by shuttle
+       - Delivered items must be stored by crew
+     - Sold items need to be picked up by the shuttle
+       - Crew must take sold items to shuttle
+ - Power generation
+ - Crafting
+ - Travel

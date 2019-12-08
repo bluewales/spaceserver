@@ -1,4 +1,4 @@
-class Wall extends THREE.Mesh {
+class Wall extends MixedMesh {
 
   constructor(ship, ceiling, floor) {
 

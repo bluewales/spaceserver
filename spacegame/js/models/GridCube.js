@@ -1,9 +1,11 @@
-class GridCube extends THREE.Mesh {
+class GridCube extends MixedMesh {
 
   constructor(ship, cube_data) {
     var cube_geometry = new THREE.Geometry();
 
-    let cell = cube_data.cube;
+    let objects = [];
+
+    let cell = cube_data.center;
     let top_wall = cell.walls['t'];
     let bottom_wall = cell.walls['b'];
 
@@ -22,7 +24,8 @@ class GridCube extends THREE.Mesh {
 
     //   An array of directions to iterate through.  At each dir we look at the forward wall and the forward-left corner
     //
-    var dirs = ["s", "e", "n", "w", "s", "e", "n"];
+    let dirs = ["s", "e", "n", "w", "s", "e", "n"];
+    let walls = {};
 
     //   Rotate through the 4 directions
     //
@@ -81,15 +84,21 @@ class GridCube extends THREE.Mesh {
       //   handle straight on
       //
       let wall = false;
-      if (c.forward_wall) {
+      if (c.forward_wall == "wall") {
         wall = new Wall(ship, c.top_wall, c.bottom_wall);
+      } else if (c.forward_wall == "door") {
+        wall = new Door(ship, c.top_wall, c.bottom_wall);
       } else {
         wall = new PanelLink(ship, c.top_wall && c.forward_cell_top_wall, c.bottom_wall && c.forward_cell_bottom_wall);
       }
       if (wall) {
+        wall.mesh.rotation.y = rotation;
         wall.rotation.y = rotation;
-        cube_geometry.mergeMesh(wall);
+        cube_geometry.mergeMesh(wall.mesh);
+
+        objects.push(wall);
       }
+      walls[f] = wall;
 
       //   then handle the corner
       //
@@ -106,12 +115,6 @@ class GridCube extends THREE.Mesh {
         corner = new WallEndLeft(ship, c.top_wall && c.forward_cell_top_wall, c.bottom_wall && c.forward_cell_bottom_wall);
       } else if (c.forward_wall && c.left_cell && !c.left_wall && !c.left_cell_near_wall && !c.left_cell_forward_wall && c.forward_cell_near_wall && !c.forward_cell_left_wall) {
         corner = new WallEndRight(ship, c.top_wall && c.left_cell_top_wall, c.bottom_wall && c.left_cell_bottom_wall);
-
-
-
-        // var sphere_geometry = new THREE.SphereGeometry(0.1, 32, 32);
-        // var sphere = new THREE.Mesh(sphere_geometry);
-        // cube_geometry.mergeMesh(sphere);
       }
       if (corner) {
         corner.rotation.y = rotation;
@@ -164,5 +167,12 @@ class GridCube extends THREE.Mesh {
 
     cube_geometry.mergeVertices(); // optional
     super(cube_geometry, ship.base_material);
+    this.add(this.mesh);
+
+    this.walls = walls;
+
+    for(let ix in objects) {
+      this.add(objects[ix]);
+    }
   }
 }

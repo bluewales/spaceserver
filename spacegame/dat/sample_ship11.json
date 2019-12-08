@@ -8,82 +8,82 @@
     "grid": [
       [
         [
-          {"cell":"true", "walls":{"t":1, "b":1, "n": 1, "s": 0, "e": 0, "w": 1}},
-          {"cell":"true", "walls":{"t":1, "b":1, "n": 0, "s": 1, "e": 0, "w": 1}},
-          {"cell":"true", "walls":{"t":1, "b":1, "n": 1, "s": 0, "e": 0, "w": 1}},
-          {"cell":"true", "walls":{"t":1, "b":1, "n": 0, "s": 0, "e": 0, "w": 1}},
-          {"cell":"true", "walls":{"t":1, "b":1, "n": 0, "s": 1, "e": 0, "w": 1}}
+          {"cell":true, "walls":{"t":"ceiling", "b":"floor", "n": "wall", "s": 0, "e": 0, "w": "wall"}},
+          {"cell":true, "walls":{"t":"ceiling", "b":"floor", "n": 0, "s": "wall", "e": 0, "w": "wall"}},
+          {"cell":true, "walls":{"t":"ceiling", "b":"floor", "n": "wall", "s": 0, "e": 0, "w": "wall"}},
+          {"cell":true, "walls":{"t":"ceiling", "b":"floor", "n": 0, "s": 0, "e": 0, "w": "wall"}},
+          {"cell":true, "walls":{"t":"ceiling", "b":"floor", "n": 0, "s": "wall", "e": 0, "w": "wall"}}
         ],
         [
-          {"cell":"true", "walls":{"t":1, "b":1, "n": 1, "s": 0, "e": 0, "w": 1}},
-          {"cell":"true", "walls":{"t":1, "b":1, "n": 0, "s": 1, "e": 0, "w": 1}},
-          {"cell":"true", "walls":{"t":1, "b":1, "n": 1, "s": 0, "e": 0, "w": 1}},
-          {"cell":"true", "walls":{"t":1, "b":1, "n": 0, "s": 0, "e": 0, "w": 1}},
-          {"cell":"true", "walls":{"t":1, "b":1, "n": 0, "s": 1, "e": 0, "w": 1}}
+          {"cell":true, "walls":{"t":"ceiling", "b":"floor", "n": "wall", "s": 0, "e": 0, "w": "wall"}},
+          {"cell":true, "walls":{"t":"ceiling", "b":"floor", "n": 0, "s": "wall", "e": 0, "w": "wall"}},
+          {"cell":true, "walls":{"t":"ceiling", "b":"floor", "n": "wall", "s": 0, "e": 0, "w": "wall"}},
+          {"cell":true, "walls":{"t":"ceiling", "b":"floor", "n": 0, "s": 0, "e": 0, "w": "wall"}},
+          {"cell":true, "walls":{"t":"ceiling", "b":"floor", "n": 0, "s": "wall", "e": 0, "w": "wall"}}
         ]
       ],
       [
         [
-          {"cell":"true", "walls":{"t":1, "b":1, "n": 1, "s": 0, "e": 0, "w": 0}},
-          {"cell":"true", "walls":{"t":1, "b":1, "n": 0, "s": 1, "e": 1, "w": 0}},
-          {"cell":"true", "walls":{"t":1, "b":1, "n": 1, "s": 0, "e": 0, "w": 0}},
-          {"cell":"true", "walls":{"t":1, "b":1, "n": 0, "s": 0, "e": 0, "w": 0}},
-          {"cell":"true", "walls":{"t":1, "b":1, "n": 0, "s": 1, "e": 0, "w": 0}}
+          {"cell":true, "walls":{"t":"ceiling", "b":"floor", "n": "wall", "s": 0, "e": "wall", "w": 0}},
+          {"cell":true, "walls":{"t":"ceiling", "b":"floor", "n": 0, "s": "door", "e": "wall", "w": 0}},
+          {"cell":true, "walls":{"t":"ceiling", "b":"floor", "n": "door", "s": 0, "e": 0, "w": 0}},
+          {"cell":true, "walls":{"t":"ceiling", "b":"floor", "n": 0, "s": 0, "e": 0, "w": 0}},
+          {"cell":true, "walls":{"t":"ceiling", "b":"floor", "n": 0, "s": "wall", "e": 0, "w": 0}}
         ],
         [
-          {"cell":"true", "walls":{"t":1, "b":1, "n": 1, "s": 0, "e": 0, "w": 0}},
-          {"cell":"true", "walls":{"t":1, "b":1, "n": 0, "s": 1, "e": 1, "w": 0}},
-          {"cell":"true", "walls":{"t":1, "b":1, "n": 1, "s": 1, "e": 1, "w": 0}},
-          {"cell":"true", "walls":{"t":1, "b":1, "n": 1, "s": 0, "e": 0, "w": 0}},
-          {"cell":"true", "walls":{"t":1, "b":1, "n": 0, "s": 1, "e": 0, "w": 0}}
+          {"cell":true, "walls":{"t":"ceiling", "b":"floor", "n": "wall", "s": 0, "e": "door", "w": 0}},
+          {"cell":true, "walls":{"t":"ceiling", "b":"floor", "n": 0, "s": "wall", "e": "wall", "w": 0}},
+          {"cell":true, "walls":{"t":"ceiling", "b":"floor", "n": "wall", "s": 0, "e": "wall", "w": 0}},
+          {"cell":true, "walls":{"t":"ceiling", "b":"floor", "n": 0, "s": 0, "e": "door", "w": 0}},
+          {"cell":true, "walls":{"t":"ceiling", "b":"floor", "n": 0, "s": "wall", "e": "wall", "w": 0}}
         ]
       ],
       [
         [
-          {"cell":"true", "walls":{"t":1, "b":1, "n": 1, "s": 0, "e": 0, "w": 0}},
-          {"cell":"true", "walls":{"t":1, "b":1, "n": 0, "s": 0, "e": 0, "w": 1}},
-          {"cell":"true", "walls":{"t":1, "b":1, "n": 0, "s": 0, "e": 0, "w": 0}},
-          {"cell":"true", "contents": {"dir": "n", "type":"console"}, "walls":{"t":1, "b":1, "n": 0, "s": 0, "e": 0, "w": 0}},
-          {"cell":"true", "walls":{"t":1, "b":1, "n": 0, "s": 1, "e": 0, "w": 0}}
+          {"cell":true, "walls":{"t":"ceiling", "b":"floor", "n": "wall", "s": 0, "e": 0, "w": "wall"}},
+          {"cell":true, "walls":{"t":"ceiling", "b":"floor", "n": 0, "s": "door", "e": 0, "w": "wall"}},
+          {"cell":true, "walls":{"t":"ceiling", "b":"floor", "n": "door", "s": 0, "e": 0, "w": 0}},
+          {"cell":true, "walls":{"t":"ceiling", "b":"floor", "n": 0, "s": 0, "e": 0, "w": 0}},
+          {"cell":true, "contents": {"dir": "n", "type":"console"}, "walls":{"t":"ceiling", "b":"floor", "n": 0, "s": "wall", "e": 0, "w": 0}}
         ],
         [
-          {"cell":"true", "walls":{"t":1, "b":1, "n": 1, "s": 0, "e": 0, "w": 0}},
-          {"cell":"true", "walls":{"t":1, "b":1, "n": 0, "s": 0, "e": 0, "w": 1}},
-          {"cell":"true", "walls":{"t":1, "b":1, "n": 0, "s": 0, "e": 0, "w": 1}},
-          {"cell":"true", "walls":{"t":1, "b":1, "n": 0, "s": 0, "e": 0, "w": 0}},
-          {"cell":"true", "walls":{"t":1, "b":1, "n": 0, "s": 1, "e": 0, "w": 0}}
+          {"cell":true, "walls":{"t":"ceiling", "b":"floor", "n": "wall", "s": 0, "e": 0, "w": "door"}},
+          {"cell":true, "walls":{"t":"ceiling", "b":"floor", "n": 0, "s": 0, "e": 0, "w": "wall"}},
+          {"cell":true, "walls":{"t":"ceiling", "b":"floor", "n": 0, "s": 0, "e": 0, "w": "wall"}},
+          {"cell":true, "walls":{"t":"ceiling", "b":"floor", "n": 0, "s": 0, "e": 0, "w": "door"}},
+          {"cell":true, "walls":{"t":"ceiling", "b":"floor", "n": 0, "s": "wall", "e": 0, "w": "wall"}}
         ]
       ],
       [
         [
-          {"cell":"true", "walls":{"t":1, "b":1, "n": 1, "s": 1, "e": 0, "w": 0}},
-          {"cell":"true", "walls":{"t":1, "b":1, "n": 1, "s": 0, "e": 1, "w": 0}},
-          {"cell":"true", "walls":{"t":1, "b":1, "n": 0, "s": 0, "e": 1, "w": 0}},
-          {"cell":"true", "walls":{"t":1, "b":1, "n": 0, "s": 0, "e": 0, "w": 0}},
-          {"cell":"true", "walls":{"t":1, "b":1, "n": 0, "s": 1, "e": 0, "w": 0}}
+          {"cell":true, "walls":{"t":"ceiling", "b":"floor", "n": "wall", "s": 0, "e": "door", "w": 0}},
+          {"cell":true, "walls":{"t":"ceiling", "b":"floor", "n": 0, "s": "wall", "e": "wall", "w": 0}},
+          {"cell":true, "walls":{"t":"ceiling", "b":"floor", "n": "wall", "s": 0, "e": "wall", "w": 0}},
+          {"cell":true, "walls":{"t":"ceiling", "b":"floor", "n": 0, "s": 0, "e": "door", "w": 0}},
+          {"cell":true, "walls":{"t":"ceiling", "b":"floor", "n": 0, "s": "wall", "e": "wall", "w": 0}}
         ],
         [
-          {"cell":"true", "walls":{"t":1, "b":1, "n": 1, "s": 0, "e": 0, "w": 0}},
-          {"cell":"true", "walls":{"t":1, "b":1, "n": 0, "s": 0, "e": 1, "w": 0}},
-          {"cell":"true", "walls":{"t":1, "b":1, "n": 0, "s": 0, "e": 1, "w": 0}},
-          {"cell":"true", "walls":{"t":1, "b":1, "n": 0, "s": 0, "e": 0, "w": 0}},
-          {"cell":"true", "walls":{"t":1, "b":1, "n": 0, "s": 1, "e": 0, "w": 0}}
+          {"cell":true, "walls":{"t":"ceiling", "b":"floor", "n": "wall", "s": 0, "e": "wall", "w": 0}},
+          {"cell":true, "walls":{"t":"ceiling", "b":"floor", "n": 0, "s": 0, "e": "wall", "w": 0}},
+          {"cell":true, "walls":{"t":"ceiling", "b":"floor", "n": 0, "s": 0, "e": "wall", "w": 0}},
+          {"cell":true, "walls":{"t":"ceiling", "b":"floor", "n": 0, "s": 0, "e": "door", "w": 0}},
+          {"cell":true, "walls":{"t":"ceiling", "b":"floor", "n": 0, "s": "wall", "e": "wall", "w": 0}}
         ]
       ],
       [
         [
-          {"cell":"true", "walls":{"t":1, "b":1, "n": 1, "s": 0, "e": 1, "w": 0}},
-          {"cell": "true", "walls":{"t":0, "b":1, "n": 0, "s": 0, "e": 1, "w": 1}},
-          {"cell": "true", "walls":{"t":0, "b":1, "n": 0, "s": 1, "e": 1, "w": 1}},
-          {"cell":"true", "walls":{"t":1, "b":1, "n": 1, "s": 0, "e": 1, "w": 0}},
-          {"cell":"true", "walls":{"t":1, "b":1, "n": 0, "s": 1, "e": 1, "w": 0}}
+          {"cell":true, "walls":{"t":"ceiling", "b":"floor", "n": "wall", "s": 0, "e": "wall", "w": "door"}},
+          {"cell": true, "contents": {"dir": "n", "type":"stairs_base"}, "walls":{"t":0, "b":"floor", "n": 0, "s": 0, "e": "wall", "w": "wall"}},
+          {"cell": true, "walls":{"t":0, "b":"floor", "n": 0, "s": "wall", "e": "wall", "w": "wall"}},
+          {"cell":true, "walls":{"t":"ceiling", "b":"floor", "n": "wall", "s": 0, "e": "wall", "w": "door"}},
+          {"cell":true, "walls":{"t":"ceiling", "b":"floor", "n": 0, "s": "wall", "e": "wall", "w": "wall"}}
         ],
         [
-          {"cell": "true", "walls":{"t":1, "b":1, "n": 1, "s": 1, "e": 1, "w": 0}},
-          {"cell": "true", "walls":{"t":1, "b":0, "n": 1, "s": 0, "e": 1, "w": 1}},
-          {"cell": "true", "contents": {"dir": "n", "type":"stairs"},  "walls":{"t":1, "b":0, "n": 0, "s": 0, "e": 1, "w": 1}},
-          {"cell": "true", "walls":{"t":1, "b":1, "n": 0, "s": 0, "e": 1, "w": 0}},
-          {"cell":"true", "walls":{"t":1, "b":1, "n": 0, "s": 1, "e": 1, "w": 0}}
+          {"cell": false, "walls":{"t":0, "b":0, "n": 0, "s": 0, "e": 0, "w": 0}},
+          {"cell": true, "walls":{"t":"ceiling", "b":0, "n": "wall", "s": 0, "e": "wall", "w": "wall"}},
+          {"cell": true, "contents": {"dir": "n", "type":"stairs"}, "walls":{"t":"ceiling", "b":0, "n": 0, "s": 0, "e": "wall", "w": "wall"}},
+          {"cell": true, "walls":{"t":"ceiling", "b":"floor", "n": 0, "s": "wall", "e": "wall", "w": "door"}},
+          {"cell":false, "walls":{"t":0, "b":0, "n": 0, "s": 0, "e": 0, "w": 0}}
         ]
       ]
     ]

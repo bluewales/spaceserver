@@ -4,7 +4,7 @@ class Ship extends THREE.Object3D {
 
     super();
 
-    this.panel_size = 2;
+    this.panel_size = 50;
     this.corner_padding = 0.25;
     this.void_padding = this.corner_padding * 2;
     this.grid_size = this.panel_size + this.corner_padding * 2 + this.void_padding;
@@ -82,7 +82,7 @@ class Ship extends THREE.Object3D {
                 if (ship_data.grid[grid_y][grid_z + wall_z][grid_x + wall_x] == '-' || ship_data.grid[grid_y][grid_z + wall_z][grid_x + wall_x] == '|') {
                   wall = true;
                 }
-              }
+              } 
               wall_config[wall_z][wall_x] = wall;
             }
           }

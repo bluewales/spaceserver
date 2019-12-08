@@ -28,7 +28,7 @@ class Menu extends Overlay {
       .style("cursor", "pointer")
       .classed('ui', true)
       .on("click", function() {
-        game.hide_overlay();
+        game.view.hide_overlay();
       })
       .append("div")
       .attr("id", "menu");

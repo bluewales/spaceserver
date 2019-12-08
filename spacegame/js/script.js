@@ -38,8 +38,27 @@ Object.defineProperty(Object.prototype, "watch", {
   }
 });
 
-function init() {
-  window.game = new Game();
+
+
+function register_tick(callback) {
+  let id = getUID("callback");
+  while (id in tickable) {
+    id += Math.random().toString(16);
+  }
+  tickable[id] = callback;
+  return id;
+}
+
+function remove_tick(id) {
+  if(id) {
+    delete tickable[id];
+  }
+}
+
+function init(raw) {
+  window.tickable = {};
+
+  window.game = new Game(raw);
 }
 
 function* iterate_3d(place) {
