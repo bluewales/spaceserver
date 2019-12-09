@@ -33,6 +33,7 @@ class SpaceLoader {
       "menu": { "source": "js/ui/Menu.js" },
       "view": { "source": "js/View.js" },
       "button": { "source": "js/models/Button.js" },
+      "window": { "source": "js/models/Window.js" },
     };
 
     this.manifest = [];

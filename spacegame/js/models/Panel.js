@@ -1,11 +1,11 @@
 class Panel extends THREE.Mesh {
-  constructor(ship, transparent=false) {
+  constructor(ship, transparent = false) {
 
     var panel_geometry = new THREE.Geometry();
 
     var geometry = new THREE.PlaneGeometry(ship.panel_size, ship.panel_size);
 
-    if(transparent) {
+    if (transparent) {
       var material = ship.window_material;
     } else {
       var material = ship.base_material;
@@ -13,7 +13,7 @@ class Panel extends THREE.Mesh {
 
     panel_geometry.mergeMesh(new THREE.Mesh(geometry));
 
-    var edges = [{x: 1, y: 0},{x: -1, y: 0},{x: 0, y: 1},{x: 0, y: -1}];
+    var edges = [{ x: 1, y: 0 }, { x: -1, y: 0 }, { x: 0, y: 1 }, { x: 0, y: -1 }];
 
     var boarder_width = ship.corner_padding;
     var boarder_height = ship.touch_padding;
@@ -37,9 +37,9 @@ class Panel extends THREE.Mesh {
 }
 
 class PanelCorner extends THREE.Mesh {
-  constructor(ship, length=undefined, radius=undefined) {
+  constructor(ship, length = undefined, radius = undefined) {
 
-    if(length === undefined) {
+    if (length === undefined) {
       length = ship.panel_size;
     }
 
@@ -112,13 +112,13 @@ class PanelFloorFill extends THREE.Mesh {
 class ColumnShoe extends THREE.Mesh {
   constructor(ship, inner_radius, slope_radius) {
 
-    
+
     var normal = new THREE.Vector3();
     var plane_geometry = new THREE.PlaneGeometry(1, 1, ship.curve_detail, ship.curve_detail + 1);
 
     var normals = [];
 
-    for(let row = 0; row <= ship.curve_detail; row++) {
+    for (let row = 0; row <= ship.curve_detail; row++) {
       for (let column = 0; column <= ship.curve_detail; column++) {
 
         i = row * (ship.curve_detail + 1) + column;
@@ -140,7 +140,7 @@ class ColumnShoe extends THREE.Mesh {
 
         normal.sub(vertex);
         normal.normalize();
-        
+
         normals[i] = new THREE.Vector3(normal.x, normal.y, normal.z);
       }
     }
@@ -160,7 +160,7 @@ class ColumnShoe extends THREE.Mesh {
       normals[i] = new THREE.Vector3(normal.x, normal.y, normal.z);
     }
 
-    for(var i = 0; i < plane_geometry.faces.length; i++) {
+    for (var i = 0; i < plane_geometry.faces.length; i++) {
       var a = plane_geometry.faces[i].a;
       var b = plane_geometry.faces[i].b;
       var c = plane_geometry.faces[i].c;

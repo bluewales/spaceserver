@@ -13,8 +13,8 @@
     <li><a href="/journal">Journal</a></li>
     <li><a href="/todo">To-do List</a></li>
   </ul>
-  <p>I want to make a computer game about a space ship.</p>
-  <p>You can login and run around and try it out.  There's not much to see or do, yet.  Development is ongoing, so check back later.</p>
+  <p>I'm working on a video game that takes place on a space ship.</p>
+  <p>There's not much to see or do yet, but if you click play you can and run around and see how it's coming.</p>
   <hr noshade/>
   <h2>How to contact me:</h2>
   <p>Email<?php if(isset($_COOKIE['auth_token'])) echo " at <a href='mailto:developer@safiina.com'>developer@safiina.com</a>";?>.</p>

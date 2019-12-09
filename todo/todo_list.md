@@ -1,18 +1,9 @@
-# Todo List
+# Todo
 
  - Graphics
-   - &#10004; Doors
-     - &#10004; Doors open and close
-     - &#10004; Both sides of doors move together
-     - &#10004; A button to open doors 
-     - &#10004; Doors close after a time
-   - Windows   
-     - Windows are represented in engineering console
-     - Windows are represented in save data
-     - Windows are transparent
    - Rooms
      - Ship is divided up into rooms
-     - Only the room the player is in and rooms connected to it by window and open doors are rendered
+     - Only the room the player is in and rooms connected to it by windows and open doors are rendered
    - Textures and normal maps for panels instead of 3D trim pieces
  - Stop walking through walls
  - User accounts
@@ -103,6 +94,6 @@
        - Delivered items must be stored by crew
      - Sold items need to be picked up by the shuttle
        - Crew must take sold items to shuttle
+ - Travel
  - Power generation
  - Crafting
- - Travel

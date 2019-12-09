@@ -2,7 +2,7 @@ class Button extends THREE.Mesh {
   get is_door() { return true; }
   constructor(ship) {
 
-    let cube_geometry = new THREE.BoxGeometry(ship.corner_padding, ship.corner_padding, ship.corner_padding);
+    let cube_geometry = new THREE.BoxGeometry(ship.corner_padding, ship.corner_padding, ship.corner_padding/2);
     
     for (var index in cube_geometry.faces) {
       cube_geometry.faces[index].color = ship.decoration_color;

@@ -11,6 +11,7 @@
 include '../journal/Parsedown.php';
 $Parsedown = new Parsedown();
 echo $Parsedown->text(file_get_contents("todo_list.md"));
+echo $Parsedown->text(file_get_contents("done.md"));
 ?>
 </div>
 </body>

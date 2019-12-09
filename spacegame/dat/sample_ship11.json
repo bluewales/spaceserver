@@ -15,11 +15,11 @@
           {"cell":true, "walls":{"t":"ceiling", "b":"floor", "n": 0, "s": "wall", "e": 0, "w": "wall"}}
         ],
         [
-          {"cell":true, "walls":{"t":"ceiling", "b":"floor", "n": "wall", "s": 0, "e": 0, "w": "wall"}},
-          {"cell":true, "walls":{"t":"ceiling", "b":"floor", "n": 0, "s": "wall", "e": 0, "w": "wall"}},
-          {"cell":true, "walls":{"t":"ceiling", "b":"floor", "n": "wall", "s": 0, "e": 0, "w": "wall"}},
-          {"cell":true, "walls":{"t":"ceiling", "b":"floor", "n": 0, "s": 0, "e": 0, "w": "wall"}},
-          {"cell":true, "walls":{"t":"ceiling", "b":"floor", "n": 0, "s": "wall", "e": 0, "w": "wall"}}
+          {"cell":true, "walls":{"t":"ceiling", "b":"floor", "n": "window", "s": 0, "e": 0, "w": "window"}},
+          {"cell":true, "walls":{"t":"ceiling", "b":"floor", "n": 0, "s": "wall", "e": 0, "w": "window"}},
+          {"cell":true, "walls":{"t":"ceiling", "b":"floor", "n": "wall", "s": 0, "e": 0, "w": "window"}},
+          {"cell":true, "walls":{"t":"ceiling", "b":"floor", "n": 0, "s": 0, "e": 0, "w": "window"}},
+          {"cell":true, "walls":{"t":"ceiling", "b":"floor", "n": 0, "s": "window", "e": 0, "w": "window"}}
         ]
       ],
       [
@@ -31,11 +31,11 @@
           {"cell":true, "walls":{"t":"ceiling", "b":"floor", "n": 0, "s": "wall", "e": 0, "w": 0}}
         ],
         [
-          {"cell":true, "walls":{"t":"ceiling", "b":"floor", "n": "wall", "s": 0, "e": "door", "w": 0}},
+          {"cell":true, "walls":{"t":"ceiling", "b":"floor", "n": "window", "s": 0, "e": "door", "w": 0}},
           {"cell":true, "walls":{"t":"ceiling", "b":"floor", "n": 0, "s": "wall", "e": "wall", "w": 0}},
           {"cell":true, "walls":{"t":"ceiling", "b":"floor", "n": "wall", "s": 0, "e": "wall", "w": 0}},
           {"cell":true, "walls":{"t":"ceiling", "b":"floor", "n": 0, "s": 0, "e": "door", "w": 0}},
-          {"cell":true, "walls":{"t":"ceiling", "b":"floor", "n": 0, "s": "wall", "e": "wall", "w": 0}}
+          {"cell":true, "walls":{"t":"ceiling", "b":"floor", "n": 0, "s": "window", "e": "wall", "w": 0}}
         ]
       ],
       [
@@ -76,7 +76,7 @@
           {"cell": true, "contents": {"dir": "n", "type":"stairs_base"}, "walls":{"t":0, "b":"floor", "n": 0, "s": 0, "e": "wall", "w": "wall"}},
           {"cell": true, "walls":{"t":0, "b":"floor", "n": 0, "s": "wall", "e": "wall", "w": "wall"}},
           {"cell":true, "walls":{"t":"ceiling", "b":"floor", "n": "wall", "s": 0, "e": "wall", "w": "door"}},
-          {"cell":true, "walls":{"t":"ceiling", "b":"floor", "n": 0, "s": "wall", "e": "wall", "w": "wall"}}
+          {"cell":true, "walls":{"t":"ceiling", "b":"floor", "n": 0, "s": "window", "e": "window", "w": "wall"}}
         ],
         [
           {"cell": false, "walls":{"t":0, "b":0, "n": 0, "s": 0, "e": 0, "w": 0}},

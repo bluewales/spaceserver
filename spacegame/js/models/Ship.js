@@ -21,7 +21,7 @@ class Ship extends THREE.Object3D {
     this.decoration_color = new THREE.Color(this.palette[0]);
 
     this.base_material = new THREE.MeshLambertMaterial({ color: this.base_color, side: THREE.DoubleSide, vertexColors: THREE.VertexColors });
-    this.window_material = new THREE.MeshPhongMaterial({ color: this.base_color, side: THREE.DoubleSide, transparent: true, opacity: 0.5 });
+    this.window_material = new THREE.MeshPhongMaterial({ color: this.base_color, side: THREE.DoubleSide, transparent: true, opacity: 0.15 });
     
 
     // Positive x is east

@@ -111,18 +111,32 @@ class EngineeringConsole extends Console {
         let x = x_transform(ship, d.x);
         let y = y_transform(ship, d.z);
         if (d.walls.n == "door") {
-          return [(x - v) + "," + (y - v), (x + p + v) + "," + (y - v), (x + p + v) + "," + (y),
-          (x + p * 3 / 4) + "," + (y),
-          (x + p * 3 / 4 - c) + "," + (y - v),
-          (x + p / 4 + c) + "," + (y - v),
-          (x + p / 4) + "," + (y),
-          (x - v) + "," + (y)].join(" ");
+          return [
+            (x - v) + "," + (y - v),
+            (x + p + v) + "," + (y - v),
+            (x + p + v) + "," + (y),
+            (x + p * 3 / 4) + "," + (y),
+            (x + p * 3 / 4 - c) + "," + (y - v),
+            (x + p / 4 + c) + "," + (y - v),
+            (x + p / 4) + "," + (y),
+            (x - v) + "," + (y)
+          ].join(" ");
         } else if (d.walls.n == "wall") {
           return [(x - v) + "," + (y - v), (x + p + v) + "," + (y - v), (x + p + v) + "," + (y), (x - v) + "," + (y)].join(" ");
+        } else if (d.walls.n == "window") {
+          return [
+            (x - v) + "," + (y - v),
+            (x + p + v) + "," + (y - v),
+            (x + p + v) + "," + (y),
+            (x + p - c) + "," + (y),
+            (x + p - c) + "," + (y - v / 2),
+            (x + c) + "," + (y - v / 2),
+            (x + c) + "," + (y),
+            (x - v) + "," + (y)
+          ].join(" ");
         } else {
           return [(x - v) + "," + (y - v), (x + p + v) + "," + (y - v)].join(" ");
         }
-
       });
 
     this.grid.append("polygon")
@@ -130,14 +144,29 @@ class EngineeringConsole extends Console {
         let x = x_transform(ship, d.x);
         let y = y_transform(ship, d.z);
         if (d.walls.w == "door") {
-          return [(x - v) + "," + (y - v), (x) + "," + (y - v),
-          (x) + "," + (y + p / 4),
-          (x - v) + "," + (y + p / 4 + c),
-          (x - v) + "," + (y + p * 3 / 4 - c),
-          (x) + "," + (y + p * 3 / 4),
-          (x) + "," + (y + p + v), (x - v) + "," + (y + p + v)].join(" ");
+          return [
+            (x - v) + "," + (y - v),
+            (x) + "," + (y - v),
+            (x) + "," + (y + p / 4),
+            (x - v) + "," + (y + p / 4 + c),
+            (x - v) + "," + (y + p * 3 / 4 - c),
+            (x) + "," + (y + p * 3 / 4),
+            (x) + "," + (y + p + v),
+            (x - v) + "," + (y + p + v)
+          ].join(" ");
         } else if (d.walls.w == "wall") {
           return [(x - v) + "," + (y - v), (x) + "," + (y - v), (x) + "," + (y + p + v), (x - v) + "," + (y + p + v)].join(" ");
+        } else if (d.walls.w == "window") {
+          return [
+            (x - v) + "," + (y - v),
+            (x) + "," + (y - v),
+            (x) + "," + (y + c),
+            (x - v / 2) + "," + (y + c),
+            (x - v / 2) + "," + (y + p - c),
+            (x) + "," + (y + p - c),
+            (x) + "," + (y + p + v),
+            (x - v) + "," + (y + p + v)
+          ].join(" ");
         } else {
           return [(x - v) + "," + (y - v), (x - v) + "," + (y + p + v)].join(" ");
         }
@@ -148,14 +177,29 @@ class EngineeringConsole extends Console {
         let x = x_transform(ship, d.x);
         let y = y_transform(ship, d.z);
         if (d.walls.s == "door") {
-          return [(x - v) + "," + (y + p),
-          (x + p / 4) + "," + (y + p),
-          (x + p / 4 + c) + "," + (y + p + v),
-          (x + p * 3 / 4 - c) + "," + (y + p + v),
-          (x + p * 3 / 4) + "," + (y + p),
-          (x + p + v) + "," + (y + p), (x + p + v) + "," + (y + p + v), (x - v) + "," + (y + p + v)].join(" ");
+          return [
+            (x - v) + "," + (y + p),
+            (x + p / 4) + "," + (y + p),
+            (x + p / 4 + c) + "," + (y + p + v),
+            (x + p * 3 / 4 - c) + "," + (y + p + v),
+            (x + p * 3 / 4) + "," + (y + p),
+            (x + p + v) + "," + (y + p),
+            (x + p + v) + "," + (y + p + v),
+            (x - v) + "," + (y + p + v)
+          ].join(" ");
         } else if (d.walls.s == "wall") {
           return [(x - v) + "," + (y + p), (x + p + v) + "," + (y + p), (x + p + v) + "," + (y + p + v), (x - v) + "," + (y + p + v)].join(" ");
+        } else if (d.walls.s == "window") {
+          return [
+            (x - v) + "," + (y + p),
+            (x + c) + "," + (y + p),
+            (x + c) + "," + (y + p + v / 2),
+            (x + p - c) + "," + (y + p + v / 2),
+            (x + p - c) + "," + (y + p),
+            (x + p + v) + "," + (y + p),
+            (x + p + v) + "," + (y + p + v),
+            (x - v) + "," + (y + p + v)
+          ].join(" ");
         } else {
           return [(x + p + v) + "," + (y + p + v), (x - v) + "," + (y + p + v)].join(" ");
         }
@@ -166,14 +210,29 @@ class EngineeringConsole extends Console {
         let x = x_transform(ship, d.x);
         let y = y_transform(ship, d.z);
         if (d.walls.e == "door") {
-          return [(x + p) + "," + (y - v),
-          (x + p) + "," + (y + p / 4),
-          (x + p + v) + "," + (y + p / 4 + c),
-          (x + p + v) + "," + (y + p * 3 / 4 - c),
-          (x + p) + "," + (y + p * 3 / 4),
-          (x + p) + "," + (y + p + v), (x + p + v) + "," + (y + p + v), (x + p + v) + "," + (y - v)].join(" ");
+          return [
+            (x + p) + "," + (y - v),
+            (x + p) + "," + (y + p / 4),
+            (x + p + v) + "," + (y + p / 4 + c),
+            (x + p + v) + "," + (y + p * 3 / 4 - c),
+            (x + p) + "," + (y + p * 3 / 4),
+            (x + p) + "," + (y + p + v),
+            (x + p + v) + "," + (y + p + v),
+            (x + p + v) + "," + (y - v)
+          ].join(" ");
         } else if (d.walls.e == "wall") {
           return [(x + p) + "," + (y - v), (x + p) + "," + (y + p + v), (x + p + v) + "," + (y + p + v), (x + p + v) + "," + (y - v)].join(" ");
+        } else if (d.walls.e == "window") {
+          return [
+            (x + p) + "," + (y - v),
+            (x + p) + "," + (y + c),
+            (x + p + v / 2) + "," + (y + c),
+            (x + p + v / 2) + "," + (y + p - c),
+            (x + p) + "," + (y + p - c),
+            (x + p) + "," + (y + p + v),
+            (x + p + v) + "," + (y + p + v),
+            (x + p + v) + "," + (y - v)
+          ].join(" ");
         } else {
           return [(x + p + v) + "," + (y + p + v), (x + p + v) + "," + (y - v)].join(" ");
         }

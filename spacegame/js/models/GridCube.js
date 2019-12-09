@@ -88,6 +88,8 @@ class GridCube extends MixedMesh {
         wall = new Wall(ship, c.top_wall, c.bottom_wall);
       } else if (c.forward_wall == "door") {
         wall = new Door(ship, c.top_wall, c.bottom_wall);
+      } else if (c.forward_wall == "window") {
+        wall = new Window(ship, c.top_wall, c.bottom_wall);
       } else {
         wall = new PanelLink(ship, c.top_wall && c.forward_cell_top_wall, c.bottom_wall && c.forward_cell_bottom_wall);
       }
