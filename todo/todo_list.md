@@ -1,11 +1,11 @@
 # Todo
 
+ - Stop walking through walls
  - Graphics
    - Rooms
      - Ship is divided up into rooms
      - Only the room the player is in and rooms connected to it by windows and open doors are rendered
    - Textures and normal maps for panels instead of 3D trim pieces
- - Stop walking through walls
  - User accounts
    - Saving the game
      - Saving should happen automatically on a regular basis
