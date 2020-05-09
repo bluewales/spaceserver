@@ -2,56 +2,114 @@ class EngineeringConsole extends Console {
   constructor(ship) {
     super(ship);
 
-    
+    this.mode = "None";
 
     this.pan_x = 0;
     this.pan_y = 0;
+    this.zoom_level = 0;
 
-    this.viewbox_size = 20;
+    this.min_zoom = -8;
+    this.max_zoom = 7;
 
-
+    this.default_viewbox_size = 40;
+    this.viewbox_size = this.default_viewbox_size;
+  //   The sidebar header
+    //
     this.sidebar = this.frame.append("div")
       .style("width", "25%")
       .style("height", "100%")
       .style("position", "absolute");
 
+    //   The sidebar Header
+    //
     this.sidebar.append("h1")
       .text("Engineering")
       .style("padding", "5px")
       .style("font-size", "125%");
 
-    this.sidebar.append("p")
-      .text("Pan: W,A,S,D")
+    this.instructions = [
+      "Controls",
+      "Pan: W,A,S,D",
+      "Up Level: R",
+      "Down Level: F",
+      "Re-Center: Space",
+      "Quit: Q"
+    ];
+
+    this.sidebar.selectAll("p")
+      .data(this.instructions)
+      .enter()
+      .append("p")
+      .text(function (d) { return d; })
       .style("padding", "5px");
 
-    this.sidebar.append("p")
-      .text("Up Level: R")
-      .style("padding", "5px");
+    this.sidebar.append("hr");
 
-    this.sidebar.append("p")
-      .text("Down Level: F")
-      .style("padding", "5px");
+    this.buttons = [
+      { "label": "Room", "parent": this, "mode": "make-room" },
+      { "label": "Door", "parent": this, "mode": "make-door" },
+      { "label": "Stairs", "parent": this, "mode": "make-stairs" }
+    ]
 
-    this.sidebar.append("p")
-      .text("Re-Center: Space")
-      .style("padding", "5px");
+    //   The "Make Room" button
+    //
+    this.sidebar.selectAll("div")
+      .data(this.buttons)
+      .enter()
+      .append("div")
+      .classed("button", true)
+      .style("width", "80%")
+      .style("margin", "5px auto 5px auto")
+      .on("click", function (d) {
+        if(d['parent'].mode == d['mode']) {
+          d['parent'].mode = "None";
+        } else {
+          d['parent'].mode = "None";
+          d['parent'].mode = d['mode'];
+          d3.select(this).classed("active", true);
+        }
+        
+      })
+      .append("p").text(function (d) { return d['label']; });
 
-    this.sidebar.append("p")
-      .text("Quit: Q")
-      .style("padding", "5px");
-
-
+    //   The screen where we show the ship
+    //
     this.screen = this.frame.append("svg")
       .style("background-color", "#1122FF")
       .style("margin-left", "25%")
       .style("width", "75%")
       .style("height", "100%")
-      .attr("viewBox", this.viewbox_string);
+      .attr("viewBox", this.get_viewbox_string());
 
     this.draw();
 
-    this.screen
-      .on("click", this.on_click.bind(this));
+    this.screen.on("mousemove", this.on_mousemove.bind(this));
+    this.screen.on("mousedown", this.on_mousedown.bind(this));
+    this.screen.on("mouseup", this.on_mouseup.bind(this));
+    this.screen.on("mouseleave", this.on_mouseout.bind(this));
+    this.screen.on("wheel", this.on_wheel.bind(this));
+  }
+
+  set mode(value) {
+    if(value == this._mode) {
+      return;
+    }
+
+    console.log("set mode to " + value);
+
+    if(value == "None") {
+      //   Clear any active buttons
+      //
+      d3.selectAll(".button.active").classed("active", false);
+
+      //   Clear any active highlights
+      //
+    }
+    this._mode = value;
+  }
+
+  get mode() {
+    return this._mode
   }
 
   x_transform(ship, x) {
@@ -268,7 +326,7 @@ class EngineeringConsole extends Console {
       .attr("width", p + "px");
   }
 
-  get viewbox_string() {
+  get_viewbox_string() {
     let x = (this.pan_x - this.viewbox_size / 2);
     let y = (this.pan_y - this.viewbox_size / 2);
     return x + " " + y + " " + this.viewbox_size + " " + this.viewbox_size;
@@ -277,7 +335,21 @@ class EngineeringConsole extends Console {
   pan(dx, dy) {
     this.pan_x += dx;
     this.pan_y += dy;
-    this.screen.attr("viewBox", this.viewbox_string);
+    this.screen.attr("viewBox", this.get_viewbox_string());
+  }
+
+  zoom(dz) {
+    this.zoom_level += dz;
+
+    if (this.zoom_level < this.min_zoom) {
+      this.zoom_level = this.min_zoom;
+    }
+    if (this.zoom_level > this.max_zoom) {
+      this.zoom_level = this.max_zoom;
+    }
+    this.viewbox_size = this.default_viewbox_size * Math.pow(1.2, this.zoom_level);
+
+    this.screen.attr("viewBox", this.get_viewbox_string());
   }
 
   change_level(dlevel) {
@@ -286,14 +358,13 @@ class EngineeringConsole extends Console {
   }
 
   tick() {
-
     if(this.r == undefined) {
       this.r = 1;
     } else {
       this.r += 1;
     }
 
-    let dpan = 0.1;
+    let dpan = 0.1 * Math.pow(1.2, this.zoom_level);
     if (window.keysPressed[window.game.keys.W]) {
       this.pan(0, dpan);
     } else if (window.keysPressed[window.game.keys.S]) {
@@ -306,35 +377,129 @@ class EngineeringConsole extends Console {
     }
   }
 
-  on_click() {
+  page_to_grid(pageX, pageY) {
     let ship = this.ship;
 
-    let rect = this.screen.node().getBoundingClientRect()
+    let rect = this.screen.node().getBoundingClientRect();
 
     let g = ship.grid_size;
     let p = ship.panel_size;
     let v = ship.corner_padding * 2;
 
-    // return (x + ship.data.grid_offset.x - 0.5) * g;
+    let x = Math.floor((((pageX - rect.x) / rect.width - 0.5) * this.viewbox_size + this.pan_x) / g + 0.5) - ship.data.grid_offset.x;
+    let y = Math.floor((((pageY - rect.y) / rect.height - 0.5) * this.viewbox_size + this.pan_y) / g + 0.5) - ship.data.grid_offset.z;
 
-    let x = Math.floor((((d3.event.pageX - rect.x) / rect.width - 0.5) * this.viewbox_size + this.pan_x) / g + 0.5) - ship.data.grid_offset.x;
-    let y = Math.floor((((d3.event.pageY - rect.y) / rect.height - 0.5) * this.viewbox_size + this.pan_y) / g + 0.5) - ship.data.grid_offset.z;
+    return {"x": x, "y": y};
+  }
 
-    console.log(rect);
-    console.log(x);
-    console.log(y);
+  is_on_screen(pageX, pageY) {
+    let rect = this.screen.node().getBoundingClientRect();
+    if (pageX < rect.x || pageX > rect.x + rect.width) {
+      return false;
+    }
+    if (pageY < rect.y || pageY > rect.y + rect.height) {
+      return false;
+    }
+    return true;
+  }
 
-    // this.screen.append("rect")
-    //   .attr("width", ship.panel_size)
-    //   .attr("height", ship.panel_size)
-    //   .attr("x", this.x_transform(ship, x))
-    //   .attr("y", this.y_transform(ship, y))
-    //   .style("fill", function (d) { return "#abcdef"; });
+  start_dragging() {
+    this.dragging = true;
+    this.start_drag_location = this.page_to_grid(d3.event.pageX, d3.event.pageY);
+    this.last_drag = { "x": d3.event.pageX, "y": d3.event.pageY };
+  }
+
+  cancel_dragging() {
+    this.dragging = false;
+  }
+
+  on_mousemove() {
+    if(this.dragging) {
+      if(this.mode == "None") {
+        let dx = d3.event.pageX - this.last_drag.x;
+        let dy = d3.event.pageY - this.last_drag.y;
+
+        let rect = this.screen.node().getBoundingClientRect();
+
+        let x_drag_scale = (this.viewbox_size / rect.width);
+        let y_drag_scale = (this.viewbox_size / rect.height);
+
+        this.pan(-dx * x_drag_scale, -dy * y_drag_scale);
+
+        this.last_drag = { "x": d3.event.pageX, "y": d3.event.pageY };
+      } else if(this.mode == "make-stairs") {
+
+      } else if (this.mode == "make-room") {
+        
+      } else if (this.mode == "make-door") {
+
+      }
+    }
+  }
+
+  on_mousedown() {
+    this.start_dragging();
+  }
+
+  on_mouseup() {
+    if(this.dragging) {
+      this.stop_drag_location = this.page_to_grid(d3.event.pageX, d3.event.pageY);
+
+      if (this.stop_drag_location.x == this.start_drag_location.x && this.stop_drag_location.y == this.start_drag_location.y) {
+        this.on_click();
+      }
+
+      this.cancel_dragging();
+    }
+  }
+
+  on_mouseout() {
+    //   we get mouse out events every time the cursors crosses an entity, most events are meaningless
+    //
+    if (!this.is_on_screen(d3.event.pageX, d3.event.pageY)) {
+      //   If we are really out of the screen
+      //
+      this.cancel_dragging();
+    }
+  }
+
+  on_wheel() {
+    let dy = d3.event.deltaY > 0 ? 1 : -1;
+    this.zoom(dy);
+  }
+
+  on_click() {
+    // let ship = this.ship;
+    // let click_location = this.page_to_grid(d3.event.pageX, d3.event.pageY);
+    // let rect_id = "rect_" + click_location.x + "_" + click_location.y;
+    // let rect = d3.select("#" + rect_id);
+    // console.log("CLICK: " + click_location.x + " " + click_location.y);
+    // if (rect.empty()) {
+    //   this.screen.append("rect")
+    //     .attr("width", ship.panel_size)
+    //     .attr("height", ship.panel_size)
+    //     .attr("x", this.x_transform(ship, click_location.x))
+    //     .attr("y", this.y_transform(ship, click_location.y))
+    //     .style("fill", function (d) { return "#abcdef"; })
+    //     .attr("id", rect_id);
+    // } else {
+    //   rect.remove();
+    // }
   }
 
   keypress(keycode) {
+    if (keycode == window.game.keys.Q) {
+
+      //   If we are in a mode, then 'Q' quits the mode
+      //
+      if(this.mode != "None") {
+        this.mode = "None";
+        return true;
+      }
+    }
     if (keycode == window.game.keys.SP) {
       this.pan(-this.pan_x, -this.pan_y);
+      this.zoom(-this.zoom_level);
       this.change_level(-this.level);
     }
     if (keycode == window.game.keys.R) {

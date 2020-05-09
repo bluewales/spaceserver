@@ -1,5 +1,6 @@
 # Done
 
+ - Stop walking through walls
  - Graphics
    - Doors
      - Doors open and close

@@ -1,0 +1,35 @@
+:root {
+  --menu_foreground_color: rgb(81, 45, 76);
+  --menu_alt_foreground_color: rgb(99, 74, 100);
+  --menu_contrast_color: rgb(184, 107, 71);
+  --menu_background_color:rgb(240, 238, 236);
+  
+}
+
+.ui {
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
+}
+
+.ui .button {
+    background-color: var(--menu_foreground_color);
+}
+
+.ui .button:hover {
+    background-color: var(--menu_alt_foreground_color);
+}
+
+.ui .button.active {
+    background-color: var(--menu_contrast_color);
+}
+
+.ui .button p {
+    color: var(--menu_background_color);
+    padding: 10px;
+    font-size: 20px;
+    text-align: center;
+}

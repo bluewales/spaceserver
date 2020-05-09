@@ -1,11 +1,5 @@
 # Todo
 
- - Stop walking through walls
- - Graphics
-   - Rooms
-     - Ship is divided up into rooms
-     - Only the room the player is in and rooms connected to it by windows and open doors are rendered
-   - Textures and normal maps for panels instead of 3D trim pieces
  - User accounts
    - Saving the game
      - Saving should happen automatically on a regular basis
@@ -25,6 +19,11 @@
      - *Continue Without Login* button
    - If you're not logged in, give options to Login/Create Account in game
      - Button in top bar that changes between Login/Logout base on current login status
+ - Graphics
+   - Rooms
+     - Ship is divided up into rooms
+     - Only the room the player is in and rooms connected to it by windows and open doors are rendered
+   - Textures and normal maps for panels instead of 3D trim pieces
  - Engineering Console
    - Create rooms by dragging
    - Distinguish between actual structure and planned structure
@@ -38,7 +37,7 @@
  - Construction
    - Don't allow illegal build commands
      - Not where there is already a thing
-     - Furniture must be built on floors
+     - Furniture must be built on floors and not open space
    - Building doors and windows
    - Building furniture like console and stairs
    - Building should consumer materials which must be brought to the site by crew

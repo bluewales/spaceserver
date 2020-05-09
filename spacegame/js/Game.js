@@ -13,7 +13,8 @@ class Game {
     d3.select(document)
       .on("click", this.onclick.bind(this));
 
-    this.keys = { SP: 32, W: 87, A: 65, S: 83, D: 68, R: 82, F: 70, UP: 38, LT: 37, DN: 40, RT: 39 };
+
+    this.keys = { Q: 81, SP: 32, W: 87, A: 65, S: 83, D: 68, R: 82, F: 70, UP: 38, LT: 37, DN: 40, RT: 39 };
     window.keysPressed = {};
     var watchedKeyCodes = [this.keys.SP, this.keys.W, this.keys.A, this.keys.S, this.keys.D, this.keys.UP, this.keys.LT, this.keys.DN, this.keys.RT];
 
@@ -40,7 +41,9 @@ class Game {
       timeLeft: 6,
       camera_height: 1.6,
       kneeDeep: 0.3,
+      head_radius: 0.3,
       raycaster: new THREE.Raycaster(new THREE.Vector3(0, 0, 0), new THREE.Vector3(0, - 1, 0)),
+      head_raycaster: new THREE.Raycaster(new THREE.Vector3(0, 0, 0), new THREE.Vector3(0, - 1, 0)),
       angles: new THREE.Vector2(),
       displacement: new THREE.Vector3(),
     };
@@ -49,8 +52,7 @@ class Game {
       airborne: false,
       position: new THREE.Vector3(0, -1500, 0),
       velocity: new THREE.Vector3(),
-      rotation: new THREE.Vector3(),
-      spinning: new THREE.Vector2()
+      rotation: new THREE.Vector3()
     }
 
 
@@ -86,7 +88,19 @@ class Game {
   }
 
   onkey(keyCode) {
-    if (keyCode == 81) { // q
+    //   first, let the overlay handle the keypress, if there is one
+    if (this.view.active_overlay && this.view.active_overlay.keypress) {
+      //   If the overlay consumed the keypress, 
+      //
+      if(this.view.active_overlay.keypress(keyCode)) {
+        //   ... don't let the game level have it
+        return;
+      }
+    }
+
+    //   This is where the game level key action go
+    //
+    if (keyCode == this.keys.Q) {
       if(this.view.active_overlay) {
         this.view.hide_overlay();
       } else {
@@ -95,10 +109,6 @@ class Game {
         } else {
           this.view.pointer_controls.lock();
         }
-      }
-    } else {
-      if (this.view.active_overlay && this.view.active_overlay.keypress) {
-        this.view.active_overlay.keypress(keyCode);
       }
     }
   }
@@ -116,9 +126,9 @@ class Game {
     this.view.updateCamera(this.motion);
 
 
-    this.forward_raycaster.setFromCamera(this.mouse, this.view.camera);
+    // this.forward_raycaster.setFromCamera(this.mouse, this.view.camera);
 
-    var intersects = this.forward_raycaster.intersectObjects([this.ship], true);
+    // var intersects = this.forward_raycaster.intersectObjects([this.ship], true);
 
     if(this.view.active_overlay && this.view.active_overlay.tick) {
       this.view.active_overlay.tick();
@@ -127,8 +137,6 @@ class Game {
     this.view.render();
 
     this.view.stats(timeElapsed, performance.now() - start_time);
-
-    
 
     for(let key in tickable) {
       let callback = tickable[key];
@@ -143,14 +151,15 @@ class Game {
     var sx = window.keysPressed[this.keys.UP] ? 0.03 : (window.keysPressed[this.keys.DN] ? - 0.03 : 0);
     var sy = window.keysPressed[this.keys.LT] ? 0.03 : (window.keysPressed[this.keys.RT] ? - 0.03 : 0);
 
-    if (Math.abs(sx) >= Math.abs(this.motion.spinning.x)) this.motion.spinning.x = sx;
-    if (Math.abs(sy) >= Math.abs(this.motion.spinning.y)) this.motion.spinning.y = sy;
-
     this.motion.rotation.set(0, 0, 1);
     this.motion.rotation.applyEuler(this.view.camera.rotation);
 
     this.motion.rotation.y = 0;
     this.motion.rotation.normalize();
+
+    
+
+    
 
     if(this.view.active_overlay) {
       return;
@@ -158,7 +167,7 @@ class Game {
 
     // move around
     this.forward.set(this.motion.rotation.x, 0, this.motion.rotation.z);
-    this.sideways.set(this.forward.z, 0, - this.forward.x);
+    this.sideways.set(this.forward.z, 0, -this.forward.x);
 
     this.forward.multiplyScalar(window.keysPressed[this.keys.W] ? - 0.044 : (window.keysPressed[this.keys.S] ? 0.044 : 0));
     this.sideways.multiplyScalar(window.keysPressed[this.keys.A] ? - 0.044 : (window.keysPressed[this.keys.D] ? 0.044 : 0));
@@ -170,10 +179,11 @@ class Game {
 
     if (!this.motion.airborne) {
       //jump
-      var vy = window.keysPressed[this.keys.SP] ? 0.1 : 0;
-      //this.motion.velocity.y += vy;
+      // var vy = window.keysPressed[this.keys.SP] ? 0.1 : 0;
+      // this.motion.velocity.y += vy;
 
     }
+
   }
 
 
@@ -190,6 +200,8 @@ class Game {
 
 
   applyPhysics(dt) {
+    if(dt > 100) dt = 100;
+
     this.phisics_state.timeLeft += dt;
 
     // run several fixed-step iterations to approximate varying-step
@@ -221,13 +233,26 @@ class Game {
 
       if (this.motion.airborne) this.motion.velocity.y -= gravity;
 
-      this.phisics_state.angles.copy(this.motion.spinning).multiplyScalar(time);
-      this.motion.spinning.multiplyScalar(damping);
+      //   Check the direction we're going, make sure we're not running through a wall
+      //
+      var max_displacement = undefined;
+      this.phisics_state.displacement.copy(this.motion.velocity).normalize();
+      this.phisics_state.head_raycaster.set(this.motion.position, this.phisics_state.displacement);
+      this.phisics_state.head_raycaster.ray.origin.y += this.phisics_state.camera_height;
+      var hits = this.phisics_state.head_raycaster.intersectObject(this.ship, true);
+      if (hits.length > 0) {
+        max_displacement = hits[0].distance - this.phisics_state.head_radius;
+      }
 
+      
       this.phisics_state.displacement.copy(this.motion.velocity).multiplyScalar(time);
       if (!this.motion.airborne) this.motion.velocity.multiplyScalar(damping);
 
-      this.motion.rotation.add(this.phisics_state.angles);
+      var displacement_length = this.phisics_state.displacement.length();
+      if (max_displacement && max_displacement < displacement_length) {
+        this.phisics_state.displacement.multiplyScalar(0);
+      }
+
       this.motion.position.add(this.phisics_state.displacement);
 
       this.phisics_state.timeLeft -= dt;
