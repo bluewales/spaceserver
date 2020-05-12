@@ -1,0 +1,17 @@
+#console-frame {
+  background-color: rgb(52, 146, 199);
+}
+
+#console-frame #console-bezel {
+  border-style: solid;
+  border-width: 15px 20px;
+  border-color: rgb(39, 99, 146) rgb(60, 159, 221) rgb(64, 175, 240) rgb(43, 114, 164);
+  background-color: black;
+}
+
+#engineering-console-screen .cell-border {
+  stroke: black;
+  stroke-width: 0.1%;
+  fill: black;
+  fill-opacity: 1;
+}

@@ -7,59 +7,14 @@ class View {
     let width = window.innerWidth;
     let height = window.innerHeight;
 
+    //   Set up 3D render stuff
+    //
     this.renderer = new THREE.WebGLRenderer({antialias:true});
     // this.renderer = new THREE.WebGLRenderer();
     this.renderer.setPixelRatio(window.devicePixelRatio);
     this.canvas = this.renderer.domElement;
     document.getElementById('game').appendChild(this.canvas);
-
     this.camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 9000);
-
-    this.pointer_controls = new THREE.PointerLockControls(this.camera);
-
-    this.blocker = d3.select("#game")
-      .style("width", "100%")
-      .style("height", "100%")
-      .append("div")
-      .attr("id", "blocker")
-      .style("position", "absolute")
-      .style("width", "100%")
-      .style("height", "100%")
-      .style("background-color", "rgba(0, 0, 0, 0.5)")
-      .on("click", function () {
-        this.pointer_controls.lock();
-      }.bind(this));
-
-    this.menu = new Menu();
-
-    this.pointer_controls.addEventListener('lock', function () {
-      this.blocker.attr("hidden", true);
-      this.reticle.attr("hidden", null);
-      this.hide_overlay();
-    }.bind(this));
-
-    this.pointer_controls.addEventListener('unlock', function () {
-      this.blocker.attr("hidden", null);
-      this.reticle.attr("hidden", true);
-      if (!this.active_overlay) {
-        this.show_overlay(this.menu);
-      }
-    }.bind(this));
-
-    this.reticle = d3.select("#game")
-      .append("div")
-      .attr("id", "reticle")
-      .style("position", "absolute")
-      .style("width", "4px")
-      .style("height", "4px")
-      .style("top", "50%")
-      .style("left", "50%")
-      .style("margin-left", "-2px")
-      .style("margin-top", "-2px")
-      .style("border", "1px solid black")
-      .style("background-color", "white")
-      .style("border-radius", "4px")
-      .attr("hidden", true);
 
     this.scene = new THREE.Scene();
 
@@ -70,32 +25,6 @@ class View {
     let directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
     directionalLight.position.set(1, 1, 1);
     this.scene.add(directionalLight);
-
-
-    // postprocessing
-    this.composer = new THREE.EffectComposer(this.renderer);
-
-    let renderPass = new THREE.RenderPass(this.scene, this.camera);
-    renderPass.renderToScreen = true;
-    this.composer.addPass(renderPass);
-
-    let ssaaRenderPass = new THREE.SSAARenderPass(this.scene, this.camera);
-    ssaaRenderPass.unbiased = true;
-    ssaaRenderPass.sampleLevel = 2;
-    this.composer.addPass(ssaaRenderPass);
-
-    this.outlinePass = new THREE.OutlinePass(new THREE.Vector2(window.innerWidth, window.innerHeight), this.scene, this.camera);
-    this.outlinePass.visibleEdgeColor = new THREE.Color('#ffff00');
-    this.outlinePass.edgeGlow = 0.5;
-    this.composer.addPass(this.outlinePass);
-
-    let copyPass = new THREE.ShaderPass(THREE.CopyShader);
-    //this.composer.addPass(copyPass);
-
-
-    window.addEventListener('resize', this.resize.bind(this), false);
-    this.resize();
-
 
     let envMap = new THREE.CubeTextureLoader().load([
       'img/cube/dark-s_px.jpg', // right
@@ -112,10 +41,83 @@ class View {
 
     this.camera_euler = new THREE.Euler(0, 0, 0, 'YXZ');
 
+    //   Set up UI elements
+    //
+    this.menu = new Menu();
+    this.pointer_controls = new THREE.PointerLockControls(this.camera);
+
+    this.pointer_controls.addEventListener('lock', function () {
+      this.blocker.attr("hidden", true);
+      this.reticle.attr("hidden", null);
+      this.hide_overlay();
+    }.bind(this));
+
+    this.pointer_controls.addEventListener('unlock', function () {
+      this.blocker.attr("hidden", null);
+      this.reticle.attr("hidden", true);
+      if (!this.active_overlay) {
+        this.show_overlay(this.menu);
+      }
+    }.bind(this));
+
+    this.active_overlay = undefined;
+
+    this.vue = new Vue({
+      el: "#ui",
+      data: this
+    });
+
+    //   The transparent blocker to hide the 3D canvas when an overlay is active
+    //
+    this.blocker = d3.select("#game").append("div")
+      .attr("id", "blocker")
+      .on("click", function () {
+        this.pointer_controls.lock();
+      }.bind(this));
+
+    //   The little dot in the middle of the screen
+    //
+    this.reticle = d3.select("#game").append("div")
+      .attr("id", "reticle")
+      .attr("hidden", true);
+
+    //   The status window in the corner
+    //
+    this.statses = {
+      "fps_out": "",
+      "render_time_out": "",
+      "triangle_count": "",
+      "render_calls": "",
+    };
+
+    let statuses = [
+      '{{ fps_out }}',
+      '{{ render_time_out }}',
+      '{{ triangle_count }}',
+      '{{ render_calls }}',
+    ];
+
+    this.status_div = d3.select("body").append("div")
+      .attr("id", "status")
+      .classed('unselectable', true)
+      .selectAll("p")
+        .data(statuses)
+        .enter()
+        .append("p")
+        .text(function (d, i) {
+          return d;
+        });
+
+    new Vue({
+      el: "#status",
+      data: this.statses
+    });
+
+    window.addEventListener('resize', this.resize.bind(this), false);
+    this.resize();
   }
 
   render() {
-    //this.composer.render();
     this.renderer.render(this.scene, this.camera);
   }
 
@@ -127,8 +129,6 @@ class View {
     this.renderer.setSize(this.width, this.height);
     this.camera.aspect = this.width / this.height;
     this.camera.updateProjectionMatrix();
-
-    this.composer.setSize(this.width, this.height);
 
     if (this.active_overlay) {
       this.active_overlay.update_size(this.width, this.height);
@@ -143,22 +143,11 @@ class View {
   }
 
   stats(dt, execution_time) {
-    if (dt == 0) {
-      this.framerate_sum = 0;
+    if(dt == 0) {
       this.framerates = [];
-
-      this.execution_sum = 0;
+      this.framerate_sum = 0;
       this.execution_times = [];
-
-      this.status_div = d3.select("body")
-        .append("div")
-        .attr("id", "status")
-        .style("position", "absolute")
-        .style("color", "#ffffff")
-        .style("background-color", "rgba(0, 0, 0, 0.5)")
-        .style("padding", "3px")
-        .classed('unselectable', true);
-
+      this.execution_sum = 0;
       return;
     }
 
@@ -176,23 +165,10 @@ class View {
       this.execution_sum -= this.execution_times.shift();
     }
 
-    let status = [
-      "FPS " + Math.round(this.framerate_sum / this.framerates.length),
-      Math.round(this.execution_sum / this.execution_times.length) + "ms",
-      this.renderer.info.render.triangles + " triangles",
-      this.renderer.info.render.calls + " draws",
-    ];
-
-    this.status_div.selectAll("p").remove();
-    this.status_div.selectAll("p")
-      .data(status)
-      .enter()
-      .append("p")
-      .text(function (d, i) {
-        return d;
-      });
-
-    //this.status_div.selectAll("p").exit().remove();
+    this.statses.fps_out = "FPS " + Math.round(this.framerate_sum / this.framerates.length);
+    this.statses.render_time_out = Math.round(this.execution_sum / this.execution_times.length) + "ms";
+    this.statses.triangle_count = this.renderer.info.render.triangles + " triangles";
+    this.statses.render_calls = this.renderer.info.render.calls + " draws";
   }
 
 
@@ -202,7 +178,6 @@ class View {
     this.hide_overlay();
 
     this.active_overlay = overlay;
-    d3.select("#game").node().appendChild(overlay.dom);
     this.active_overlay.update_size(this.width, this.height);
 
     this.active_overlay.focus = true;
@@ -210,7 +185,6 @@ class View {
 
   hide_overlay() {
     if (this.active_overlay) {
-      d3.select("#game").node().removeChild(this.active_overlay.dom);
       this.pointer_controls.lock();
 
       this.active_overlay.focus = false;

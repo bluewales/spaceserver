@@ -6,7 +6,7 @@
   
 }
 
-.ui {
+#ui {
     -webkit-user-select: none; /* Safari */
      -khtml-user-select: none; /* Konqueror HTML */
        -moz-user-select: none; /* Old versions of Firefox */
@@ -15,21 +15,20 @@
                                   supported by Chrome, Edge, Opera and Firefox */
 }
 
-.ui .button {
+#ui button {
     background-color: var(--menu_foreground_color);
+    color: var(--menu_background_color);
+    font-size: 20px;
+    text-align: center;
+    display: block;
+    margin: 10px auto;
+    width: 80%;
 }
 
-.ui .button:hover {
+#ui button:hover {
     background-color: var(--menu_alt_foreground_color);
 }
 
-.ui .button.active {
+#ui button.active {
     background-color: var(--menu_contrast_color);
-}
-
-.ui .button p {
-    color: var(--menu_background_color);
-    padding: 10px;
-    font-size: 20px;
-    text-align: center;
 }

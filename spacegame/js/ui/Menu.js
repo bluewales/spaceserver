@@ -5,6 +5,17 @@ class Menu extends Overlay {
     this.dom = document.createElement("div");
     this.selection = d3.select(this.dom);
 
+    this.vue = Vue.component("menu-overlay", {
+      template: `
+        <div id="menu-overlay" class="ui" v-on:click="$emit('overlay-close')" >
+           <div id="menu">
+              <h1 style="padding: 20px;">Safiina</h1>
+              <p>Click to play</p>
+           </div>
+        </div>
+      `
+    });
+
     this.menu = this.selection
       .style("width", "100%")
       .style("height", "100%")

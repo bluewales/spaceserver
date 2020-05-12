@@ -4,13 +4,8 @@
   <meta charset="utf-8" />
   <title>Safiina</title>
 
-  
-
   <link rel="stylesheet" type="text/css" href="style/core.css">
-  <link rel="stylesheet" type="text/css" href="style/ui_style.css">
-
   <link rel="stylesheet" type="text/css" href="/css/style.css">
-
   <link rel="icon" type="image/png" href="constructor.png">
 
   <script src="js/SpaceLoader.js<?php echo "?a=".rand();?>" type="text/javascript"></script>
@@ -20,6 +15,9 @@
 </head>
 <body>
   <div id="game"></div>
+  <div id="ui">
+    <component v-bind:is="active_overlay?active_overlay.vue:null" v-on:overlay-close="$data.hide_overlay()"></component>
+  </div>
   <div id="debug"></div>
 </body>
 </html>

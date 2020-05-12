@@ -29,14 +29,27 @@ class SpaceLoader {
       "game": { "source": "js/Game.js" },
       "overlay": { "source": "js/ui/Overlay.js" },
       "console": { "source": "js/ui/console/Console.js" },
-      "engineerinConsole": { "source": "js/ui/console/EngineeringConsole.js" },
+      "engineeringConsole": { "source": "js/ui/console/EngineeringConsole.js" },
       "menu": { "source": "js/ui/Menu.js" },
       "view": { "source": "js/View.js" },
       "button": { "source": "js/models/Button.js" },
       "window": { "source": "js/models/Window.js" },
+      "vue": { "source": "https://cdn.jsdelivr.net/npm/vue/dist/vue.js" },
+      
+    };
+
+    this.styles = {
+      "engineeringConsole": { "source": "style/engineering_console.css" },
+      "ui": { "source": "style/ui_style.css" },
     };
 
     this.manifest = [];
+
+    for (var name in this.styles) {
+      var style = this.styles[name];
+      this.manifest.push({ src: style.source + "?a=" + Math.random(), id: name });
+      //this.manifest.push({ src: source.source, id: name });
+    }
 
     for (var name in this.sources) {
       var source = this.sources[name];

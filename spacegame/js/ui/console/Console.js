@@ -4,25 +4,40 @@ class Console extends Overlay {
 
     this.ship = ship;
 
-    this.dom = document.createElement("div");
-    this.selection = d3.select(this.dom);
 
     this.aspect_ratio = 4 / 3;
-
     this.level = 0;
 
-    this.frame = this.selection
-      .style("background-color", ship_palette[2])
-      .classed("ui", true)
-      .append("div")
-      .attr("id", "console_frame")
-      .style("width", "1000px")
-      .style("height", "500px")
-      .style("border-style", "solid")
-      .style("border-width", "15px 20px")
-      .style("border-color", "#276392 #3C9FDD #40AFF0 #2B72A4")
-      .style("background-color", "blue")
-      .classed("center", true)
-      .style("background-color", "black");
+    this.width = 100;
+    this.height = 100;
+    this.center = 50;
+
+    this.screen = null;
+
+    this.vue = Vue.component("menu-overlay", {
+      data: (function () { return this; }).bind(this),
+      template: `
+        <div id="console-frame" class="center" v-bind:style="{'width':(width)+'px', 'height':(height)+'px'}">
+          <div id="console-bezel" class="center" v-bind:style="{'width':(width-80)+'px', 'height':(height-60)+'px'}" >
+            <component v-bind:is="screen" ></component>
+          </div>
+        </div>
+      `
+    });
+  }
+
+  update_size(width, height) {
+    this.center = width / 2;
+
+    if (height > width / this.aspect_ratio) {
+      height = width / this.aspect_ratio;
+    }
+
+    if (width > height * this.aspect_ratio) {
+      width = height * this.aspect_ratio;
+    }
+
+    this.width = width;
+    this.height = height;
   }
 }

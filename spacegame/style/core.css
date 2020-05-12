@@ -35,52 +35,31 @@ h1 {
 html, body { margin:0; padding:0; overflow:hidden; }
 #game, canvas { position:fixed; top:0; bottom:0; left:0; right:0; height:100%; width:100%; }
 
-#menus ul{
+#blocker {
     position: absolute;
-    padding: 3px;
-
-}
-
-#menus ul li {
-    color: #F0EEEC;
-    background-color: #B86B47;
-    padding: 3px 10px;
     width: 100%;
-    cursor: pointer;
-    white-space: nowrap;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
 }
 
-#menus ul li:hover {
-    background-color: #512D4C;
-
+#reticle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    top: 50%;
+    left: 50%;
+    margin-left: -2px;
+    margin-top: -2px;
+    border: 1px solid black;
+    background-color: white;
+    border-radius: 4px;
 }
 
-#menus ul li.header {
-    border: 1px solid #F0EEEC;
-    background-color: #B86B47;
-    font-weight: bold;
-    font-size: 1.1em;
-}
-#menus ul li.header:hover {
-    background-color: #B86B47;
-    cursor: move;
-}
-
-#menus ul li.info {
-    background-color: #716f73;
-    cursor: default;
-}
-#menus ul li.info:hover {
-    background-color: #716f73;
-}
-
-.triangle {
-    height:0px;
-    width:0px;
-    border-top: 8px solid transparent;
-    border-bottom: 8px solid transparent;
-    border-left: 10px solid #C2A39B;
-    float:right;
+#status {
+    position: absolute;
+    color: #ffffff;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 3px;
 }
 
 
@@ -92,11 +71,6 @@ h6 {
     color: white;
 }
 
-.ui {
-  position: absolute;
-  z-index:1000;
-  top:0;
-}
 
 .prompt {
     color: black;

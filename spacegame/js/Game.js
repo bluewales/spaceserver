@@ -70,6 +70,7 @@ class Game {
     this.lastTimeStamp;
     requestAnimationFrame(this.loop.bind(this));
 
+
   }
 
   onclick() {
@@ -189,7 +190,7 @@ class Game {
 
   resetPlayer() {
     if (this.motion.position.y < - 123) {
-      this.motion.position.set(0, 0, 0);
+      this.motion.position.set(0, 0, 4);
       this.motion.velocity.multiplyScalar(0);
 
       this.view.camera.rotation.y = Math.PI;
