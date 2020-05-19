@@ -31,6 +31,13 @@ class EngineeringConsole extends Console {
       { "label": "Stairs", "mode": "make-stairs" }
     ];
 
+    this.icons = {
+      "console": "img/items/console.png",
+      "stairs": "img/items/stairs_down.png",
+      "stairs_base": "img/items/stairs_up.png",
+      "default": "img/items/gear.png"
+    };
+
     this.screen = Vue.component("engineering-console-screen", {
       data: (function () { return this; }).bind(this),
       template: `
@@ -88,14 +95,9 @@ class EngineeringConsole extends Console {
       props: ['x', 'y', 'grid'],
       template: `
       <g>
-        <rect 
-          v-bind:width="ship.grid_size"
-          v-bind:height="ship.grid_size"
-          v-bind:x="x"
-          v-bind:y="y"
-          fill="white"
-        ></rect>
+        <rect v-bind:width="ship.grid_size" v-bind:height="ship.grid_size" v-bind:x="x" v-bind:y="y" fill="white"></rect>
         <polygon class="cell-border" v-bind:points="$data.get_wall(x, y, grid)"></polygon>
+        <image v-if="grid.contents" v-bind:href="icons[grid.contents.type]" v-bind:x="x" v-bind:y="y" v-bind:width="ship.grid_size +'px'"></image>
       </g>
       `
     });
@@ -135,7 +137,6 @@ class EngineeringConsole extends Console {
     let v = ship.corner_padding * 2;
 
     let result = [];
-
 
     result = result.concat([(x)+','+(y), (x+g)+','+(y), (x+g)+','+(y+g), (x)+','+(y+g), (x)+','+(y)]);
 

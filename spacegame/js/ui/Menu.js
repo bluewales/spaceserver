@@ -7,10 +7,10 @@ class Menu extends Overlay {
 
     this.vue = Vue.component("menu-overlay", {
       template: `
-        <div id="menu-overlay" class="ui" v-on:click="$emit('overlay-close')" >
-           <div id="menu">
+        <div id="menu-overlay" v-on:click="$emit('overlay-close')">
+           <div id="menu" class="center">
               <h1 style="padding: 20px;">Safiina</h1>
-              <p>Click to play</p>
+              <p style="text-align: center">Click to play</p>
            </div>
         </div>
       `

@@ -47,13 +47,11 @@ class View {
     this.pointer_controls = new THREE.PointerLockControls(this.camera);
 
     this.pointer_controls.addEventListener('lock', function () {
-      this.blocker.attr("hidden", true);
       this.reticle.attr("hidden", null);
       this.hide_overlay();
     }.bind(this));
 
     this.pointer_controls.addEventListener('unlock', function () {
-      this.blocker.attr("hidden", null);
       this.reticle.attr("hidden", true);
       if (!this.active_overlay) {
         this.show_overlay(this.menu);
@@ -66,14 +64,6 @@ class View {
       el: "#ui",
       data: this
     });
-
-    //   The transparent blocker to hide the 3D canvas when an overlay is active
-    //
-    this.blocker = d3.select("#game").append("div")
-      .attr("id", "blocker")
-      .on("click", function () {
-        this.pointer_controls.lock();
-      }.bind(this));
 
     //   The little dot in the middle of the screen
     //

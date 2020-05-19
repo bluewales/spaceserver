@@ -15,8 +15,9 @@
 </head>
 <body>
   <div id="game"></div>
-  <div id="ui">
-    <component v-bind:is="active_overlay?active_overlay.vue:null" v-on:overlay-close="$data.hide_overlay()"></component>
+  <div id="ui" >
+    <div id="blocker" v-on:click="$data.hide_overlay()"></div>
+    <component class="overlay" v-bind:is="active_overlay?active_overlay.vue:null" v-on:overlay-close="$data.hide_overlay()"></component>
   </div>
   <div id="debug"></div>
 </body>
