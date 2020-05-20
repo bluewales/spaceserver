@@ -6,24 +6,52 @@ class Console extends Overlay {
 
 
     this.aspect_ratio = 4 / 3;
-    this.level = 0;
 
-    this.width = 100;
-    this.height = 100;
-    this.center = 50;
-
-    this.screen = null;
+    //   A steralized data container for handing to Vue.  
+    // Things inside have getters and setters defined below
+    //
+    this.data = {
+      width: 100,
+      height: 100,
+      center: 50,
+      screen: null
+    };
 
     this.vue = Vue.component("menu-overlay", {
-      data: (function () { return this; }).bind(this),
+      data: (function () { return this.data; }).bind(this),
       template: `
         <div id="console-frame" class="center" v-bind:style="{'width':(width)+'px', 'height':(height)+'px'}">
           <div id="console-bezel" class="center" v-bind:style="{'width':(width-80)+'px', 'height':(height-60)+'px'}" >
-            <component v-bind:is="screen" ></component>
+            <component v-bind:is="screen" v-bind:data="$data"></component>
           </div>
         </div>
       `
     });
+  }
+
+  set width(value) {
+    this.data.width = value;
+  }
+  get width() {
+    return this.data.width;
+  }
+  set height(value) {
+    this.data.height = value;
+  }
+  get height() {
+    return this.data.height;
+  }
+  set center(value) {
+    this.data.center = value;
+  }
+  get center() {
+    return this.data.center;
+  }
+  set screen(value) {
+    this.data.screen = value;
+  }
+  get screen() {
+    return this.data.screen;
   }
 
   update_size(width, height) {

@@ -58,11 +58,18 @@ class View {
       }
     }.bind(this));
 
-    this.active_overlay = undefined;
+    //   A steralized data container for handing to Vue.  
+    //
+    this.overlay_data = {
+      active_overlay: null,
+    };
 
     this.vue = new Vue({
       el: "#ui",
-      data: this
+      data: this.overlay_data,
+      methods: {
+        hide_overlay: this.hide_overlay.bind(this)
+      }
     });
 
     //   The little dot in the middle of the screen
@@ -168,6 +175,7 @@ class View {
     this.hide_overlay();
 
     this.active_overlay = overlay;
+    this.overlay_data.active_overlay = overlay.vue;
     this.active_overlay.update_size(this.width, this.height);
 
     this.active_overlay.focus = true;
@@ -179,6 +187,7 @@ class View {
 
       this.active_overlay.focus = false;
       this.active_overlay = undefined;
+      this.overlay_data.active_overlay = null;
     }
   }
 

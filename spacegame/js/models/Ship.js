@@ -28,7 +28,7 @@ class Ship extends THREE.Object3D {
     // Positive z is south
     // Positive y is up
 
-    // console.log(ship_data.grid);
+    // console.log(JSON.stringify(ship_data));
     let rotations = { "n": Math.PI, "s": 0, "e": Math.PI / 2, "w": -Math.PI / 2 };
     let oposites = { "n": "s", "s": "n", "e": "w", "w": "e" };
     let transforms = {
@@ -38,32 +38,34 @@ class Ship extends THREE.Object3D {
       "w": { "x": -1, "y": 0, "z": 0 },
     };
 
-    for (let grid_x = 0; grid_x < ship_data.grid.length; grid_x += 1) {
-      let ship_x = grid_x + ship_data.grid_offset.x;
-      for (let grid_y = 0; grid_y < ship_data.grid[grid_x].length; grid_y += 1) {
-        let ship_y = grid_y + ship_data.grid_offset.y;
-        for (let grid_z = 0; grid_z < ship_data.grid[grid_x][grid_y].length; grid_z += 1) {
-          let ship_z = grid_z + ship_data.grid_offset.z;
-          if (!ship_data.grid[grid_x][grid_y][grid_z].cell) {
+    this.cube_grid = {};
+
+    for (var x in ship_data.grid) {
+      x *= 1;
+      for (var y in ship_data.grid[x]) {
+        y *= 1;
+        for (var z in ship_data.grid[x][y]) {
+          z *= 1;
+          if (!ship_data.grid[x][y][z].cell) {
             continue;
           }
 
           let wall_config = {
-            "center": ship_data.grid[grid_x][grid_y][grid_z],
-            "n": ship_data.grid[grid_x][grid_y][grid_z - 1],
-            "s": ship_data.grid[grid_x][grid_y][grid_z + 1],
-            "e": (ship_data.grid[grid_x + 1] && ship_data.grid[grid_x + 1][grid_y]) ? ship_data.grid[grid_x + 1][grid_y][grid_z] : undefined,
-            "w": (ship_data.grid[grid_x - 1] && ship_data.grid[grid_x - 1][grid_y]) ? ship_data.grid[grid_x - 1][grid_y][grid_z] : undefined,
-            "t": ship_data.grid[grid_x][grid_y + 1] ? ship_data.grid[grid_x][grid_y + 1][grid_z] : undefined,
-            "b": ship_data.grid[grid_x][grid_y - 1] ? ship_data.grid[grid_x][grid_y - 1][grid_z] : undefined,
-            "tn": ship_data.grid[grid_x][grid_y + 1] ? ship_data.grid[grid_x][grid_y + 1][grid_z - 1] : undefined,
-            "ts": ship_data.grid[grid_x][grid_y + 1] ? ship_data.grid[grid_x][grid_y + 1][grid_z + 1] : undefined,
-            "te": (ship_data.grid[grid_x + 1] && ship_data.grid[grid_x + 1][grid_y + 1]) ? ship_data.grid[grid_x + 1][grid_y + 1][grid_z] : undefined,
-            "tw": (ship_data.grid[grid_x - 1] && ship_data.grid[grid_x - 1][grid_y + 1]) ? ship_data.grid[grid_x - 1][grid_y + 1][grid_z] : undefined,
-            "ne": (ship_data.grid[grid_x + 1] && ship_data.grid[grid_x + 1][grid_y]) ? ship_data.grid[grid_x + 1][grid_y][grid_z - 1] : undefined,
-            "nw": (ship_data.grid[grid_x - 1] && ship_data.grid[grid_x - 1][grid_y]) ? ship_data.grid[grid_x - 1][grid_y][grid_z - 1] : undefined,
-            "se": (ship_data.grid[grid_x + 1] && ship_data.grid[grid_x + 1][grid_y]) ? ship_data.grid[grid_x + 1][grid_y][grid_z + 1] : undefined,
-            "sw": (ship_data.grid[grid_x - 1] && ship_data.grid[grid_x - 1][grid_y]) ? ship_data.grid[grid_x - 1][grid_y][grid_z + 1] : undefined
+            "center": ship_data.grid[x][y][z],
+            "n": ship_data.grid[x][y][z - 1],
+            "s": ship_data.grid[x][y][z + 1],
+            "e": (ship_data.grid[x + 1] && ship_data.grid[x + 1][y]) ? ship_data.grid[x + 1][y][z] : undefined,
+            "w": (ship_data.grid[x - 1] && ship_data.grid[x - 1][y]) ? ship_data.grid[x - 1][y][z] : undefined,
+            "t": ship_data.grid[x][y + 1] ? ship_data.grid[x][y + 1][z] : undefined,
+            "b": ship_data.grid[x][y - 1] ? ship_data.grid[x][y - 1][z] : undefined,
+            "tn": ship_data.grid[x][y + 1] ? ship_data.grid[x][y + 1][z - 1] : undefined,
+            "ts": ship_data.grid[x][y + 1] ? ship_data.grid[x][y + 1][z + 1] : undefined,
+            "te": (ship_data.grid[x + 1] && ship_data.grid[x + 1][y + 1]) ? ship_data.grid[x + 1][y + 1][z] : undefined,
+            "tw": (ship_data.grid[x - 1] && ship_data.grid[x - 1][y + 1]) ? ship_data.grid[x - 1][y + 1][z] : undefined,
+            "ne": (ship_data.grid[x + 1] && ship_data.grid[x + 1][y]) ? ship_data.grid[x + 1][y][z - 1] : undefined,
+            "nw": (ship_data.grid[x - 1] && ship_data.grid[x - 1][y]) ? ship_data.grid[x - 1][y][z - 1] : undefined,
+            "se": (ship_data.grid[x + 1] && ship_data.grid[x + 1][y]) ? ship_data.grid[x + 1][y][z + 1] : undefined,
+            "sw": (ship_data.grid[x - 1] && ship_data.grid[x - 1][y]) ? ship_data.grid[x - 1][y][z + 1] : undefined
           };
 
           wall_config['en'] = wall_config['ne'];
@@ -74,15 +76,22 @@ class Ship extends THREE.Object3D {
           //console.log(grid_x + " " + grid_y + " " + grid_z);
           var cube = new GridCube(this, wall_config);
 
-          cube.position.x = ship_x * (this.grid_size);
-          cube.position.y = ship_y * (this.grid_size);
-          cube.position.z = ship_z * (this.grid_size);
+          cube.position.x = x * (this.grid_size);
+          cube.position.y = y * (this.grid_size);
+          cube.position.z = z * (this.grid_size);
 
-          ship_data.grid[grid_x][grid_y][grid_z].cube = cube;
+          //   Add cube to lookup structure
+          //
+          if (!this.cube_grid[x]) this.cube_grid[x] = {};
+          if (!this.cube_grid[x][y]) this.cube_grid[x][y] = {};
+          this.cube_grid[x][y][z] = cube;
+
+          //   Add cube to container so it gets rendered
+          //
           this.add(cube);
 
-          if (ship_data.grid[grid_x][grid_y][grid_z].contents) {
-            let contents = ship_data.grid[grid_x][grid_y][grid_z].contents;
+          if (ship_data.grid[x][y][z].contents) {
+            let contents = ship_data.grid[x][y][z].contents;
             let object = undefined;
             if (contents.type == "stairs") {
               object = new Stairs(this, contents);
@@ -91,9 +100,9 @@ class Ship extends THREE.Object3D {
             }
 
             if(object) {
-              object.position.x = ship_x * this.grid_size;
-              object.position.y = ship_y * this.grid_size;
-              object.position.z = ship_z * this.grid_size;
+              object.position.x = x * this.grid_size;
+              object.position.y = y * this.grid_size;
+              object.position.z = z * this.grid_size;
 
               object.rotation.y = rotations[contents.dir];
 
@@ -107,27 +116,27 @@ class Ship extends THREE.Object3D {
 
     //   This finds door pairs and links them up
     //
-    for (let grid_x = 0; grid_x < ship_data.grid.length; grid_x += 1) {
-      let ship_x = grid_x + ship_data.grid_offset.x;
-      for (let grid_y = 0; grid_y < ship_data.grid[grid_x].length; grid_y += 1) {
-        let ship_y = grid_y + ship_data.grid_offset.y;
-        for (let grid_z = 0; grid_z < ship_data.grid[grid_x][grid_y].length; grid_z += 1) {
-          let ship_z = grid_z + ship_data.grid_offset.z;
-          if (!ship_data.grid[grid_x][grid_y][grid_z].cell) {
+    for (var x in ship_data.grid) {
+      x *= 1;
+      for (var y in ship_data.grid[x]) {
+        y *= 1;
+        for (var z in ship_data.grid[x][y]) {
+          z *= 1;
+          if (!ship_data.grid[x][y][z].cell) {
             continue;
           }
 
-          let cube = ship_data.grid[grid_x][grid_y][grid_z].cube;
+          let cube = this.cube_grid[x][y][z];
           for(let dir in cube.walls) {
             let wall = cube.walls[dir];
             if(wall.is_door) {
               let door = wall;
               let pair_coord = {
-                "x": grid_x + transforms[dir].x,
-                "y": grid_y + transforms[dir].y,
-                "z": grid_z + transforms[dir].z
+                "x": x + transforms[dir].x,
+                "y": y + transforms[dir].y,
+                "z": z + transforms[dir].z
               };
-              let pair_cube = ship_data.grid[pair_coord.x][pair_coord.y][pair_coord.z].cube;
+              let pair_cube = this.cube_grid[pair_coord.x][pair_coord.y][pair_coord.z];
               let pair_door = pair_cube.walls[oposites[dir]];
               if (pair_door.is_door) {
                 door.link(pair_door);

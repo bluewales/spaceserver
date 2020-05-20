@@ -2,7 +2,7 @@ class EngineeringConsole extends Console {
   constructor(ship) {
     super(ship);
 
-    this.mode = "None";
+    
 
     this.pan_x = 0;
     this.pan_y = 0;
@@ -13,9 +13,12 @@ class EngineeringConsole extends Console {
 
     this.default_viewbox_size = 40;
     this.viewbox_size = this.default_viewbox_size;
-    this.viewbox_string = this.get_viewbox_string();
+    
 
-    this.instructions = [
+    //   A steralized data container for handing to Vue.  
+    // Things inside have getters and setters defined below
+    //
+    this.data.instructions = [
       "Controls",
       "Pan: W,A,S,D",
       "Up Level: R",
@@ -23,109 +26,135 @@ class EngineeringConsole extends Console {
       "Re-Center: Space",
       "Quit: Q"
     ];
-
-    this.buttons = [
+    this.data.buttons= [
       { "label": "Room", "mode": "make-room" },
       { "label": "Door", "mode": "make-door" },
       { "label": "Window", "mode": "make-window" },
       { "label": "Stairs", "mode": "make-stairs" }
     ];
-
-    this.icons = {
+    this.data.icons= {
       "console": "img/items/console.png",
       "stairs": "img/items/stairs_down.png",
       "stairs_base": "img/items/stairs_up.png",
       "default": "img/items/gear.png"
     };
+    this.data.viewbox_string= this.get_viewbox_string();
+    this.data.grid= ship.data.grid;
+    this.data.level= 0;
+    this.data.grid_size= ship.grid_size;
+    this.data.get_wall= this.get_wall.bind(this);
+    this.data.mode = "None";
 
-    this.screen = Vue.component("engineering-console-screen", {
-      data: (function () { return this; }).bind(this),
+    this.data.screen = Vue.component("engineering-console-screen", {
+      props: ["data"],
       template: `
       <div id="engineering-console-screen" style="width: 100%; height: 100%;">
-        <engineering-console-sidebar></engineering-console-sidebar>
-        <engineering-map></engineering-map>
+        <engineering-console-sidebar v-bind:data="data"></engineering-console-sidebar>
+        <engineering-map v-bind:data="data"></engineering-map>
       </div>
       `
     });
 
     this.sidebar = Vue.component("engineering-console-sidebar", {
-      data: (function () { return this; }).bind(this),
+      props: ["data"],
       template: `
       <div style="width: 25%; height: 100%; position: absolute;">
         <h1 style="padding: 5px; font-size: 125%;">Engineering</h1>
-        <p v-for="instruction in instructions" style="padding: 5px;">{{ instruction }}</p>
+        <p v-for="instruction in data.instructions" style="padding: 5px;">{{ instruction }}</p>
         <hr>
-        <button v-for="button in buttons" v-bind:class="{ active: button.mode==$data.mode }" v-on:click="$data.mode=button.mode">
+        <button v-for="button in data.buttons" v-bind:class="{ active: button.mode==data.mode }" v-on:click="change_mode(button.mode)">
           {{ button.label }}
         </button>
       </div>
-      `
+      `,
+      methods: {
+        "change_mode": function (new_mode) { this.mode = new_mode; }.bind(this),
+      }
     });
 
+    
+        
+
     this.map = Vue.component("engineering-map", {
-      data: (function () { return this; }).bind(this),
+      props: ["data"],
       template: `
-      <svg v-bind:viewBox="viewbox_string" 
+      <svg v-bind:viewBox="data.viewbox_string" 
         id="engineering-map"
         style="background-color: rgb(17, 34, 255); margin-left: 25%; width: 75%; height: 100%;"
-        v-on:mousemove="$data.on_mousemove($event)"
-        v-on:mousedown="$data.on_mousedown($event)"
-        v-on:mouseup="$data.on_mouseup($event)"
-        v-on:mouseleave="$data.on_mouseout($event)"
-        v-on:wheel="$data.on_wheel($event)"
+        v-on:mousemove="mousemove"
+        v-on:mousedown="mousedown"
+        v-on:mouseup="mouseup"
+        v-on:mouseleave="mouseout"
+        v-on:wheel="wheel"
       >
-        <g v-for="(x_grid, ix) in ship.data.grid">
-          <engineering-map-cell v-for="(z_grid, iz) in x_grid[level]" v-if="z_grid.cell"
-            v-bind:key="[ix, level, iz].join(',')"
-            v-bind:x="$data.x_transform(ix) - ship.corner_padding * 2"
-            v-bind:y="$data.y_transform(iz) - ship.corner_padding * 2"
-            v-bind:grid="z_grid"
+        <g v-for="(x_grid, ix) in data.grid">
+          <engineering-map-cell v-for="(z_grid, iz) in x_grid[data.level]" v-if="z_grid.cell"
+            v-bind:key="[ix, data.level, iz].join(',')"
+            v-bind:data="data"
+            v-bind:x="(ix - 0.5) * (data.grid_size)"
+            v-bind:y="(iz - 0.5) * (data.grid_size)"
+            v-bind:cell="z_grid"
           ></engineering-map-cell>
           </g>
         </g>
       </svg>
       `,
       methods: {
-        
+        "mousemove": this.on_mousemove.bind(this),
+        "mousedown": this.on_mousedown.bind(this),
+        "mouseup": this.on_mouseup.bind(this),
+        "mouseout": this.on_mouseout.bind(this),
+        "wheel": this.on_wheel.bind(this),
       }
     });
 
     Vue.component("engineering-map-cell", {
-      data: (function () { return this; }).bind(this),
-      props: ['x', 'y', 'grid'],
+      props: ['data', 'x', 'y', 'cell'],
       template: `
       <g>
-        <rect v-bind:width="ship.grid_size" v-bind:height="ship.grid_size" v-bind:x="x" v-bind:y="y" fill="white"></rect>
-        <polygon class="cell-border" v-bind:points="$data.get_wall(x, y, grid)"></polygon>
-        <image v-if="grid.contents" v-bind:href="icons[grid.contents.type]" v-bind:x="x" v-bind:y="y" v-bind:width="ship.grid_size +'px'"></image>
+        <rect v-bind:width="data.grid_size" v-bind:height="data.grid_size" v-bind:x="x" v-bind:y="y" fill="white"></rect>
+        <polygon class="cell-border" v-bind:points="data.get_wall(x, y, cell)"></polygon>
+        <image v-if="cell.contents" v-bind:href="data.icons[cell.contents.type]" v-bind:x="x" v-bind:y="y" v-bind:width="data.grid_size +'px'"></image>
       </g>
       `
     });
-
-    
   }
 
+  //   These getters and setters are for steralized data for vue
+  //
+  set viewbox_string(value) {
+    this.data.viewbox_string = value;
+  }
+  get viewbox_string() {
+    return this.data.viewbox_string;
+  }
+  set level(value) {
+    this.data.level = value;
+  }
+  get level() {
+    return this.data.level;
+  }
   set mode(value) {
     //   If a button is pressed twice, toggle
     //
-    if (this.mode && value == this._mode) {
+    if (value == this.data.mode) {
       value = "None";
     }
 
     console.log("set mode to " + value);
-    this._mode = value;
+    this.data.mode = value;
   }
 
   get mode() {
-    return this._mode
+    return this.data.mode
   }
 
   x_transform(x) {
-    return (x + this.ship.data.grid_offset.x - 0.5) * (this.ship.grid_size) + this.ship.corner_padding * 2;
+    return (x - 0.5) * (this.ship.grid_size) + this.ship.corner_padding * 2;
   }
 
   y_transform(y) {
-    return (y + this.ship.data.grid_offset.z - 0.5) * (this.ship.grid_size) + this.ship.corner_padding * 2;
+    return (y - 0.5) * (this.ship.grid_size) + this.ship.corner_padding * 2;
   }
 
   get_wall(x, y, grid) {
@@ -189,28 +218,6 @@ class EngineeringConsole extends Console {
     }
 
     return result.join(" ");
-
-    this.grid.append("image")
-      .attr("href", function(d) {
-        if(d.contents) {
-          if(d.contents.type == "console") {
-            return "img/items/console.png";
-          } else if (d.contents.type == "stairs") {
-            return "img/items/stairs_down.png";
-          } else if (d.contents.type == "stairs_base") {
-            return "img/items/stairs_up.png";
-          } else {
-            return "img/items/gear.png";
-          }
-        }
-      })
-      .attr("x", function (d) {
-        return x_transform(ship, d.x);
-      })
-      .attr("y", function (d) {
-        return y_transform(ship, d.z);
-      })
-      .attr("width", p + "px");
   }
 
   get_viewbox_string() {
@@ -273,8 +280,8 @@ class EngineeringConsole extends Console {
     let p = ship.panel_size;
     let v = ship.corner_padding * 2;
 
-    let x = Math.floor((((pageX - rect.x) / rect.width - 0.5) * this.viewbox_size + this.pan_x) / g + 0.5) - ship.data.grid_offset.x;
-    let y = Math.floor((((pageY - rect.y) / rect.height - 0.5) * this.viewbox_size + this.pan_y) / g + 0.5) - ship.data.grid_offset.z;
+    let x = Math.floor((((pageX - rect.x) / rect.width - 0.5) * this.viewbox_size + this.pan_x) / g + 0.5);
+    let y = Math.floor((((pageY - rect.y) / rect.height - 0.5) * this.viewbox_size + this.pan_y) / g + 0.5);
 
     return {"x": x, "y": y};
   }
