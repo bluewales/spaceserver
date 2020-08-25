@@ -1,5 +1,72 @@
 # Todo
 
+ - Crew
+   - There is a 3D model for a crew member
+   - Crew exist and can move around
+   - Crew don't move through walls
+   - Crew can path to a desired location
+   - Crew take jobs off the job list and do them
+   - There are robotic crew members
+   - There are organic crew members
+   - Crew members can be hired or dismissed at port or when trading with another ship
+ - Jobs
+   - There should be a job list
+   - Jobs keep track of which resources are required to complete and don't let other jobs claim those same resources
+   - Jobs detect if required resources become unavailable
+   - Jobs are saved and loaded
+ - Items
+   - Solid objects can be loose on the ship, lying on the floor
+   - Items can be in containers
+ - Engineering Console
+   - ✓ Create rooms by dragging
+   - Distinguish between actual structure and planned structure
+   - Indicate when a structure has been marked for deconstruction
+   - Create construction/deconstruction jobs based on changes made in console
+   - Clicking on things should bring up info in the side panel
+     - Highlight the thing that was clicked on
+     - Clear highlights on new click
+     - Give the name of what is highlighted
+     - Displays progress of planned construction and deconstruction jobs pertaining to that structure
+     - Option to cancel planned construction
+   - Show which spaces must be clear for stairs to be placed
+   - Create better 3D model for console.
+ - Construction
+   - ✓ Building doors and windows
+   - Don't allow illegal build commands
+     - ✓ Walls, windows, and doors can only be built next to floors
+     - Not where there is already a thing
+     - Furniture must be built on floors and not open space
+     - Walls or floors cannot be build to block stairs
+     - Furniture cannot block a door or a stair landing
+   - Build stairs
+     - Stairs present a UI problem because they span two floors, but you can only see one floor at a time in the engineering console
+     - Stairs can be placed either from the bottom, or the top
+     - When stairs are placed, they automatically alter the structure around them
+       - Stairs create walls to either side on both levels
+       - Stairs clear any walls inside themselves or blocking their entrances
+   - Building furniture like consoles and machines
+     - Building engineering consoles
+     - Building storage crates
+     - Building other machines like power generators or water purifiers
+     - Only one furniture per cell
+     - Furniture might be larger than a single cell
+     - Stairs count as furniture for purposes of occupying cells
+   - Building should consume materials which must be brought to the site by crew
+     - Materials are claimed by the job at the time the structure is planned
+     - If materials are not available, the structure is not planned
+   - Deconstruct structures
+     - Spawn materials that were used to create the structure
+     - Deconstruction job is saved
+     - Structures with contents (crates) spawn all contents when deconstructed
+   - Cancel construction jobs that are in progress
+   - Construction bot
+     - Engineering console creates construction jobs
+     - Construction bots on the ship run around and fulfill construction jobs
+     - Robot charging pad
+       - Robot runs out of charge
+       - Robot returns to pad when low on energy
+       - Will the robot be stuck forever if it doesn't charge in time?
+   - Keep the ship connected.  Structure building, planning, and deconstruction need to keep the ship in one piece at all times
  - User accounts
    - Saving the game
      - Saving should happen automatically on a regular basis
@@ -24,38 +91,6 @@
      - Ship is divided up into rooms
      - Only the room the player is in and rooms connected to it by windows and open doors are rendered
    - Textures and normal maps for panels instead of 3D trim pieces
- - Engineering Console
-   - Create rooms by dragging
-   - Distinguish between actual structure and planned structure
-   - Create construction jobs based on changes made in console
-   - Clicking on things should bring up info in the side panel
-     - Highlight the thing that was clicked on
-     - Clear highlights on new click
-     - Give the name of what is highlighted
-     - Displays progress of planned construction and deconstruction jobs pertaining to that structure
-     - Option to cancel planned construction
- - Construction
-   - Don't allow illegal build commands
-     - Not where there is already a thing
-     - Furniture must be built on floors and not open space
-   - Building doors and windows
-   - Building furniture like console and stairs
-   - Building should consumer materials which must be brought to the site by crew
-     - Materials are claimed by the job at the time the structure is planned
-     - If materials are not available, the structure is not planned
-   - Deconstruct structures
-     - Spawn materials that were used to create the structure
-     - Deconstruction job is saved
-     - Structures with contents (crates) spawn all contents when deconstructed
-   - Cancel construction jobs that are in progress
-   - Construction bot
-     - Engineering console creates construction jobs
-     - Construction bots on the ship run around and fulfill construction jobs
-     - Robot charging pad
-       - Robot runs out of charge
-       - Robot returns to pad when low on energy
-       - Will the robot be stuck forever if it doesn't charge in time?
-   - Keep the ship connected.  Structure building, planning, and deconstruction need to keep the ship in one piece at all times
  - Production server
  - Time management
    - A concept of absolute time that is saved
@@ -66,20 +101,24 @@
    - When doors open, atmosphere equalized instantly between them
    - Escaping into space
    - Maintained by machine(s)
-     - Unwanted gasses must be removed (carbon dioxide, ammonia, acetone)
+     - Unwanted gasses must be removed (eg. carbon dioxide, ammonia, acetone)
      - Keep all necessary gasses at correct levels
      - Decide whether to have a lot of filters and tanks, or just one machine that monitors everything
      - There needs to be some sort of ventilation management system.  Should air just go through doors?  Does every room need an atmosphere monitoring machine?  Are there vents?
        - There should be pipes running bellow floors and between walls to circulate air
  - Airlocks.  How do they work? Are they a special piece of furniture, or are they a collection of walls and doors that somehow function as an airlock?
    - Since pathfinding will ignore locked doors, how does a crew member decide to use an airlock?
- - Fluid storage, tanks of liquids and gasses
+ - Fluids
+   - Storage, tanks of liquids and gasses
    - Oxygen and nitrogen for atmosphere management
    - Water for everything
    - Fuel and oxygen for propellant and power generation
    - All those same substances and more as cargo to sell at the next port. Maybe even dangerous chemicals like acids or explosives
+   - Pipes, hoses, or ducts for transporting fluids around the ship behind the walls
  - Loose items are scooped up by crew and stored in crates
  - Trading
+   - You can trade at planetary ports
+   - You can trade with other ships you might meet in the void
    - Economy
      - The economy simulation generates prices
      - Prices can be loaded through the API
@@ -95,4 +134,8 @@
        - Crew must take sold items to shuttle
  - Travel
  - Power generation
+   - Cables beneath the floor?
  - Crafting
+ - Gravity
+   - Items, Crew, and the Player should behave differently depending on whether the ship is under thrust or in free fall
+   - Liquids should flow through pipes differently under gravity

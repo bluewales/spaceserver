@@ -5,9 +5,6 @@ class GridCube extends THREE.Object3D {
     super();
 
     this.ship = ship;
-
-
-    
     
     let floor = new Panel(this.ship);
     floor.rotation.x = Math.PI / 2;
@@ -23,7 +20,6 @@ class GridCube extends THREE.Object3D {
       [{ x: 1, z: 0 }, { x: 2, z: -1 }, { x: 1, z: -2 }, { x: 0, z: -1 }],
       [{ x: 0, z: -1 }, { x: -1, z: -2 }, { x: -2, z: -1 }, { x: -1, z: 0 }],
       [{ x: -1, z: 0 }, { x: -2, z: 1 }, { x: -1, z: 2 }, { x: 0, z: 1 }],
-      
     ];
 
 

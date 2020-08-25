@@ -35,6 +35,7 @@ class SpaceLoader {
       "button": { "source": "js/models/Button.js" },
       "window": { "source": "js/models/Window.js" },
       "vue": { "source": "https://cdn.jsdelivr.net/npm/vue/dist/vue.js" },
+      "structure": { "source": "js/structure/Structure.js" },
       
     };
 

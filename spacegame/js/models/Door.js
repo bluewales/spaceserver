@@ -146,6 +146,7 @@ class Door extends MixedMesh {
     this.close_position = door_width / 4;
     this.open_position = door_width * 3 / 4 - ship.corner_padding * 3 / 2;
     this.door_position = this.close_position;
+    this.target_position = this.close_position;
 
     this.open_button = new Button(ship);
     this.add(this.open_button);
@@ -189,43 +190,53 @@ class Door extends MixedMesh {
 
 
   open() {
-    remove_tick(this.current_tick);
-    this.current_tick = register_tick(function (dt) {
-
-      if (this.door_position < this.open_position) {
-        this.door_position += (this.open_position - this.close_position) / this.door_time * dt;
-      }
-      if (this.door_position >= this.open_position) {
-        this.door_position = this.open_position;
-        this.t = 0;
-
-        remove_tick(this.current_tick);
-        this.current_tick = register_tick(function (dt) {
-          this.t += dt;
-          if(this.t > 5000) {
-            this.close();
-          }
-        }.bind(this));
-      }
-      this.linked_door.door_position = this.door_position;
-    }.bind(this));
+    this.stop_moving();
+    this.current_tick = register_tick(this.move.bind(this));
+    this.target_position = this.open_position;
+    if (this.linked_door) this.linked_door.stop_moving();
   }
 
   close() {
-    remove_tick(this.current_tick);
-    this.current_tick = register_tick(function (dt) {
-
-      if (this.door_position > this.close_position) {
-        this.door_position -= (this.open_position - this.close_position) / this.door_time * dt;
-      }
-      if (this.door_position <= this.close_position) {
-        this.door_position = this.close_position;
-        remove_tick(this.current_tick);
-        this.current_tick = undefined;
-      }
-      this.linked_door.door_position = this.door_position;
-    }.bind(this));
+    this.stop_moving();
+    this.current_tick = register_tick(this.move.bind(this));
+    this.target_position = this.close_position;
+    if (this.linked_door) this.linked_door.stop_moving();
   }
 
+  move(dt) {
+    if(this.target_position != this.door_position) {
+      let dif = this.target_position - this.door_position;
+      let delta = (this.open_position - this.close_position) / this.door_time * dt;
 
+      if(dif > 0) {
+        this.door_position += delta;
+        if(this.door_position > this.target_position) {
+          this.door_position = this.target_position;
+        }
+      } else {
+        this.door_position -= delta;
+        if (this.door_position < this.target_position) {
+          this.door_position = this.target_position;
+        }
+      }
+      
+
+      if (this.linked_door) this.linked_door.door_position = this.door_position;
+      this.t = 0;
+    }
+    if(this.door_position == this.open_position){
+      this.t += dt;
+      if (this.t > 5000) {
+        this.target_position = this.close_position;
+      }
+    }
+    if (this.door_position == this.close_position) {
+      this.stop_moving();
+    }
+  }
+
+  stop_moving() {
+    remove_tick(this.current_tick);
+    this.current_tick = undefined;
+  }
 }

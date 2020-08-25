@@ -5,7 +5,7 @@ class GridCube extends MixedMesh {
 
     let objects = [];
 
-    let cell = cube_data.center;
+    let cell = cube_data['0'];
     let top_wall = cell.walls['t'];
     let bottom_wall = cell.walls['b'];
 

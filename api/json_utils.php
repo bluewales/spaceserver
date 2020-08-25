@@ -65,6 +65,7 @@ function indent($json) {
 
 function pretty_json_from_array($array, $pretty=120, $indent="") {
   $assoc = isAssoc($array);
+  $assoc = true;
 
   $next_indent = "  ".$indent;
   $new_line = "\n";

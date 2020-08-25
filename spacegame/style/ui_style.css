@@ -54,3 +54,8 @@
 #ui button.active {
     background-color: var(--menu_contrast_color);
 }
+
+#ui .highlight {
+    opacity: 0.3;
+    fill: yellow;
+}

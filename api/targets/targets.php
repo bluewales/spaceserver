@@ -52,6 +52,22 @@ $targets = array (
 			"goods"
 		),
 		"optional_params" => array ()
+	),
+	"log_exists" => array (
+		"function" => "log_exists",
+		"file" => "log_exists.php",
+		"required_params" => array (
+            "filenames"
+        ),
+		"optional_params" => array ()
+	),
+	"save_log" => array (
+		"function" => "save_log",
+		"file" => "save_log.php",
+		"required_params" => array (
+            "files"
+        ),
+		"optional_params" => array ()
 	)
 );
 ?>

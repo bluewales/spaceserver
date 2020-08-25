@@ -4,6 +4,7 @@ class Ship extends THREE.Object3D {
     super();
 
     this.data = ship_data;
+    this.structure = new Structure(this, ship_data);
 
     this.panel_size = 2.25;
     this.corner_padding = 0.1;
@@ -21,7 +22,7 @@ class Ship extends THREE.Object3D {
     this.decoration_color = new THREE.Color(this.palette[0]);
 
     this.base_material = new THREE.MeshLambertMaterial({ color: this.base_color, side: THREE.DoubleSide, vertexColors: THREE.VertexColors });
-    this.window_material = new THREE.MeshPhongMaterial({ color: this.base_color, side: THREE.DoubleSide, transparent: true, opacity: 0.15 });
+    this.window_material = new THREE.MeshPhongMaterial({ color: this.base_color, side: THREE.DoubleSide, transparent: true, opacity: 0.5 });
     
 
     // Positive x is east
@@ -29,14 +30,32 @@ class Ship extends THREE.Object3D {
     // Positive y is up
 
     // console.log(JSON.stringify(ship_data));
-    let rotations = { "n": Math.PI, "s": 0, "e": Math.PI / 2, "w": -Math.PI / 2 };
-    let oposites = { "n": "s", "s": "n", "e": "w", "w": "e" };
-    let transforms = {
-      "n": { "x": 0, "y": 0, "z": -1 },
-      "s": { "x": 0, "y": 0, "z": 1 },
-      "e": { "x": 1, "y": 0, "z": 0 },
-      "w": { "x": -1, "y": 0, "z": 0 },
+    this.rotations = { "n": Math.PI, "s": 0, "e": Math.PI / 2, "w": -Math.PI / 2 };
+    this.oposites = { "n": "s", "s": "n", "e": "w", "w": "e" };
+    this.wall_transforms = {
+      "n": new THREE.Vector3(0, 0, -1),
+      "s": new THREE.Vector3(0, 0, 1),
+      "e": new THREE.Vector3(1, 0, 0),
+      "w": new THREE.Vector3(-1, 0, 0),
     };
+    this.transforms = {
+      "n": new THREE.Vector3(0, 0, -1),
+      "s": new THREE.Vector3(0, 0, 1),
+      "e": new THREE.Vector3(1, 0, 0),
+      "w": new THREE.Vector3(-1, 0, 0),
+      "t": new THREE.Vector3(0, 1, 0),
+      "b": new THREE.Vector3(0, -1, 0),
+      "0": new THREE.Vector3(0, 0, 0),
+    };
+
+    let dir_pairs = ["ne", "se", "nw", "sw", "tn", "ts","te","tw","bn","bs","be","bw"];
+    for(let ix in dir_pairs) {
+      let dir = dir_pairs[ix];
+      this.transforms[dir] = new THREE.Vector3().addVectors(
+        this.transforms[dir[0]], 
+        this.transforms[dir[1]]
+      );
+    }
 
     this.cube_grid = {};
 
@@ -46,106 +65,108 @@ class Ship extends THREE.Object3D {
         y *= 1;
         for (var z in ship_data.grid[x][y]) {
           z *= 1;
-          if (!ship_data.grid[x][y][z].cell) {
-            continue;
-          }
-
-          let wall_config = {
-            "center": ship_data.grid[x][y][z],
-            "n": ship_data.grid[x][y][z - 1],
-            "s": ship_data.grid[x][y][z + 1],
-            "e": (ship_data.grid[x + 1] && ship_data.grid[x + 1][y]) ? ship_data.grid[x + 1][y][z] : undefined,
-            "w": (ship_data.grid[x - 1] && ship_data.grid[x - 1][y]) ? ship_data.grid[x - 1][y][z] : undefined,
-            "t": ship_data.grid[x][y + 1] ? ship_data.grid[x][y + 1][z] : undefined,
-            "b": ship_data.grid[x][y - 1] ? ship_data.grid[x][y - 1][z] : undefined,
-            "tn": ship_data.grid[x][y + 1] ? ship_data.grid[x][y + 1][z - 1] : undefined,
-            "ts": ship_data.grid[x][y + 1] ? ship_data.grid[x][y + 1][z + 1] : undefined,
-            "te": (ship_data.grid[x + 1] && ship_data.grid[x + 1][y + 1]) ? ship_data.grid[x + 1][y + 1][z] : undefined,
-            "tw": (ship_data.grid[x - 1] && ship_data.grid[x - 1][y + 1]) ? ship_data.grid[x - 1][y + 1][z] : undefined,
-            "ne": (ship_data.grid[x + 1] && ship_data.grid[x + 1][y]) ? ship_data.grid[x + 1][y][z - 1] : undefined,
-            "nw": (ship_data.grid[x - 1] && ship_data.grid[x - 1][y]) ? ship_data.grid[x - 1][y][z - 1] : undefined,
-            "se": (ship_data.grid[x + 1] && ship_data.grid[x + 1][y]) ? ship_data.grid[x + 1][y][z + 1] : undefined,
-            "sw": (ship_data.grid[x - 1] && ship_data.grid[x - 1][y]) ? ship_data.grid[x - 1][y][z + 1] : undefined
-          };
-
-          wall_config['en'] = wall_config['ne'];
-          wall_config['wn'] = wall_config['nw'];
-          wall_config['es'] = wall_config['se'];
-          wall_config['ws'] = wall_config['sw'];
-
-          //console.log(grid_x + " " + grid_y + " " + grid_z);
-          var cube = new GridCube(this, wall_config);
-
-          cube.position.x = x * (this.grid_size);
-          cube.position.y = y * (this.grid_size);
-          cube.position.z = z * (this.grid_size);
-
-          //   Add cube to lookup structure
-          //
-          if (!this.cube_grid[x]) this.cube_grid[x] = {};
-          if (!this.cube_grid[x][y]) this.cube_grid[x][y] = {};
-          this.cube_grid[x][y][z] = cube;
-
-          //   Add cube to container so it gets rendered
-          //
-          this.add(cube);
-
-          if (ship_data.grid[x][y][z].contents) {
-            let contents = ship_data.grid[x][y][z].contents;
-            let object = undefined;
-            if (contents.type == "stairs") {
-              object = new Stairs(this, contents);
-            } else if (contents.type == "console") {
-              object = new ConsolePodium(this, contents);
-            }
-
-            if(object) {
-              object.position.x = x * this.grid_size;
-              object.position.y = y * this.grid_size;
-              object.position.z = z * this.grid_size;
-
-              object.rotation.y = rotations[contents.dir];
-
-              this.add(object);
-            }
-          }
+          this.update_cube(x, y, z);
         }
       }
     }
+  }
 
+  
 
-    //   This finds door pairs and links them up
+  cube_changed(x, y, z) {
+    for (let dir in this.transforms) {
+      let t = this.transforms[dir];
+      this.update_cube(x + t.x, y + t.y, z + t.z);
+    }
+  }
+
+  //   When changing the structure of the ship, make sure the changes are in effect on the ship's grid before calling update cube
+  //
+  update_cube(x, y, z) {
+    let here = new THREE.Vector3(x, y, z);
+
+    //   Remove existing cube from this spot.  This might be problematic.
+    // TODO: Make sure the cube is cleaned up and doesn't lead to avoidable memory leaks.
+    // TODO: In many cases, the cube wont need to be changed at all.  If we can check the 
+    //       existing cube, maybe we can improve performance by leaving it alone.
     //
-    for (var x in ship_data.grid) {
-      x *= 1;
-      for (var y in ship_data.grid[x]) {
-        y *= 1;
-        for (var z in ship_data.grid[x][y]) {
-          z *= 1;
-          if (!ship_data.grid[x][y][z].cell) {
-            continue;
-          }
+    let old_cube = grid_lookup(this.cube_grid, here);
+    if (old_cube) {
+      this.remove(old_cube);
+      this.cube_grid[x][y][z] = undefined;
+    }
 
-          let cube = this.cube_grid[x][y][z];
-          for(let dir in cube.walls) {
-            let wall = cube.walls[dir];
-            if(wall.is_door) {
-              let door = wall;
-              let pair_coord = {
-                "x": x + transforms[dir].x,
-                "y": y + transforms[dir].y,
-                "z": z + transforms[dir].z
-              };
-              let pair_cube = this.cube_grid[pair_coord.x][pair_coord.y][pair_coord.z];
-              let pair_door = pair_cube.walls[oposites[dir]];
-              if (pair_door.is_door) {
-                door.link(pair_door);
-              }
-            }
+    //   If there's not supposed to be a cube here, exit early
+    //
+    if (!grid_lookup(this.data.grid, here)) {
+      return;
+    }
+
+    //   Put together lookup information for figuring out wall stuff
+    //
+    let wall_config = {};
+    for (let dir in this.transforms) {
+      let coord = new THREE.Vector3(x, y, z).add(this.transforms[dir]);
+      wall_config[dir] = grid_lookup(this.data.grid, coord);
+    }
+
+    //   Create the cube mesh
+    //
+    var cube = new GridCube(this, wall_config);
+
+    //   Calculate the position of the cube
+    //
+    cube.position.add(here);
+    cube.position.multiplyScalar(this.grid_size);
+
+    //   Add cube to lookup structure
+    //
+    if (!this.cube_grid[x]) this.cube_grid[x] = {};
+    if (!this.cube_grid[x][y]) this.cube_grid[x][y] = {};
+    if (this.cube_grid[x][y][z]) this.remove(this.cube_grid[x][y][z]);
+    this.cube_grid[x][y][z] = cube;
+
+    //   Add cube to ship container so it gets rendered
+    //
+    this.add(cube);
+
+
+    this.link_doors(x, y, z);
+
+    //   If the grid comes with a content, they are created and added to the ship
+    //
+    if (this.data.grid[x][y][z].contents) {
+      let contents = this.data.grid[x][y][z].contents;
+      let object = undefined;
+      if (contents.type == "stairs") {
+        object = new Stairs(this, contents);
+      } else if (contents.type == "console") {
+        object = new ConsolePodium(this, contents);
+      }
+
+      if (object) {
+        object.rotation.y = this.rotations[contents.dir];
+        cube.add(object);
+      }
+    }
+  }
+
+  link_doors(x, y, z) {
+    let cube = this.cube_grid[x][y][z];
+    for (let dir in cube.walls) {
+      let wall = cube.walls[dir];
+      if (wall.is_door) {
+        let door = wall;
+        let pair_coord = new THREE.Vector3(x,y,z).add(this.transforms[dir]);
+        let pair_cube = grid_lookup(this.cube_grid, pair_coord);
+        if(pair_cube) {
+          let pair_door = pair_cube.walls[this.oposites[dir]];
+          if (pair_door.is_door) {
+            door.link(pair_door);
           }
         }
       }
     }
-
   }
 }
+

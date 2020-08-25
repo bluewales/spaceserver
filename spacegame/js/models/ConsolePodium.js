@@ -137,6 +137,7 @@ class ConsolePodium extends THREE.Mesh {
     console_geometry.mergeVertices(); // optional
     super(console_geometry, ship.base_material);
 
+    this.type = "console";
     this.overlay = new EngineeringConsole(ship);
   }
 

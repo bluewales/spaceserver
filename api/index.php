@@ -15,7 +15,7 @@ function JSON_from_array($array, $pretty) {
   header('Content-type: application/json');
 
 
-  $json = json_encode($array);
+  $json = json_encode($array, JSON_FORCE_OBJECT);
   if($pretty !== false) {
     require_once "json_utils.php";
     if(is_numeric($pretty)) {
@@ -104,7 +104,7 @@ $failed = false;
 
 
 $postdata = file_get_contents("php://input");
-$json_data = json_decode ($postdata);
+$json_data = json_decode ($postdata, true);
 if($json_data) {
   $json_data = (array) $json_data;
 } else {

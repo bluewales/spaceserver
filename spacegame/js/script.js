@@ -90,6 +90,12 @@ function pos_to_index(p) {
   return p.x + dim + p.y + dim + p.z;
 }
 
+function grid_lookup(grid, v) {
+  if(!grid[v.x]) return undefined;
+  if (!grid[v.x][v.y]) return undefined;
+  return grid[v.x][v.y][v.z];
+}
+
 function get_3d(place, p) {
   var index = pos_to_index(p);
   if(place.d === undefined) return undefined;

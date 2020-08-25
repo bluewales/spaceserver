@@ -13,6 +13,16 @@ class EngineeringConsole extends Console {
 
     this.default_viewbox_size = 40;
     this.viewbox_size = this.default_viewbox_size;
+
+    //   Mouse information
+    //
+    this.last_drag = { "x": 0, "y": 0 };
+    this.last_move = { "x": 0, "y": 0 };
+
+    //   Location is mouse information, but in grid-land
+    //
+    this.last_drag_location = { "x": 0, "y": 0 };
+    this.last_move_location = { "x": 0, "y": 0 };
     
 
     //   A steralized data container for handing to Vue.  
@@ -30,7 +40,7 @@ class EngineeringConsole extends Console {
       { "label": "Room", "mode": "make-room" },
       { "label": "Door", "mode": "make-door" },
       { "label": "Window", "mode": "make-window" },
-      { "label": "Stairs", "mode": "make-stairs" }
+      { "label": "Wall", "mode": "make-wall" }
     ];
     this.data.icons= {
       "console": "img/items/console.png",
@@ -38,12 +48,20 @@ class EngineeringConsole extends Console {
       "stairs_base": "img/items/stairs_up.png",
       "default": "img/items/gear.png"
     };
-    this.data.viewbox_string= this.get_viewbox_string();
-    this.data.grid= ship.data.grid;
-    this.data.level= 0;
-    this.data.grid_size= ship.grid_size;
-    this.data.get_wall= this.get_wall.bind(this);
+    this.data.viewbox_string = this.get_viewbox_string();
+    this.data.grid = ship.data.grid;
+    this.data.level = 0;
+    this.data.grid_size = ship.grid_size;
+    this.data.corner_padding = ship.corner_padding;
+    this.data.get_wall = this.get_wall.bind(this);
     this.data.mode = "None";
+    this.data.highlight = {
+      "x1": 0, "y1": 0, "z1": 0,
+      "x2": 0, "y2": 0, "z2": 0,
+      "dir": "n",
+      "ok": true,
+      "pressed": false
+    };
 
     this.data.screen = Vue.component("engineering-console-screen", {
       props: ["data"],
@@ -86,16 +104,32 @@ class EngineeringConsole extends Console {
         v-on:mouseup="mouseup"
         v-on:mouseleave="mouseout"
         v-on:wheel="wheel"
+        :key="data.highlight.ok"
       >
         <g v-for="(x_grid, ix) in data.grid">
-          <engineering-map-cell v-for="(z_grid, iz) in x_grid[data.level]" v-if="z_grid.cell"
+          <engineering-map-cell v-for="(z_grid, iz) in x_grid[data.level]"
             v-bind:key="[ix, data.level, iz].join(',')"
             v-bind:data="data"
-            v-bind:x="(ix - 0.5) * (data.grid_size)"
-            v-bind:y="(iz - 0.5) * (data.grid_size)"
+            v-bind:x="(ix-0.5)*(data.grid_size)"
+            v-bind:y="(iz-0.5)*(data.grid_size)"
             v-bind:cell="z_grid"
           ></engineering-map-cell>
-          </g>
+        </g>
+        <g class="highlight" >
+          <rect id="room-highlight" v-if="data.mode=='make-room'"
+            v-bind:width="data.grid_size*(1 + Math.abs(data.highlight.x2 - data.highlight.x1))"
+            v-bind:height="data.grid_size*(1 + Math.abs(data.highlight.z2 - data.highlight.z1))"
+            v-bind:x="(Math.min(data.highlight.x1, data.highlight.x2)-0.5)*(data.grid_size)"
+            v-bind:y="(Math.min(data.highlight.z1, data.highlight.z2)-0.5)*(data.grid_size)"
+            v-bind:fill="data.highlight.ok?(data.highlight.pressed?'green':'yellow'):'red'"
+          ></rect>
+          <rect id="wall-highlight" v-if="data.mode == 'make-door' || data.mode == 'make-window' || data.mode == 'make-wall'"
+            v-bind:width="(data.highlight.dir=='n'||data.highlight.dir=='s'?data.grid_size:0)+data.corner_padding*4"
+            v-bind:height="(data.highlight.dir=='n'||data.highlight.dir=='s'?0:data.grid_size)+data.corner_padding*4"
+            v-bind:x="(data.highlight.x1+(data.highlight.dir=='e'?+0.5:-0.5))*(data.grid_size)-data.corner_padding*2"
+            v-bind:y="(data.highlight.z1+(data.highlight.dir=='s'?+0.5:-0.5))*(data.grid_size)-data.corner_padding*2"
+            v-bind:fill="data.highlight.ok?(data.highlight.pressed?'green':'yellow'):'red'"
+          ></rect>
         </g>
       </svg>
       `,
@@ -107,6 +141,8 @@ class EngineeringConsole extends Console {
         "wheel": this.on_wheel.bind(this),
       }
     });
+
+  //data.mode == 'make-door' || data.mode == 'make-window' || data.mode == 'make-wall'
 
     Vue.component("engineering-map-cell", {
       props: ['data', 'x', 'y', 'cell'],
@@ -134,17 +170,21 @@ class EngineeringConsole extends Console {
   get level() {
     return this.data.level;
   }
+  set highlight(value) {
+    this.data.highlight = value;
+  }
+  get highlight() {
+    return this.data.highlight;
+  }
   set mode(value) {
     //   If a button is pressed twice, toggle
     //
     if (value == this.data.mode) {
       value = "None";
     }
-
     console.log("set mode to " + value);
     this.data.mode = value;
   }
-
   get mode() {
     return this.data.mode
   }
@@ -277,13 +317,22 @@ class EngineeringConsole extends Console {
     let rect = document.getElementById("engineering-map").getBoundingClientRect();
 
     let g = ship.grid_size;
-    let p = ship.panel_size;
-    let v = ship.corner_padding * 2;
 
-    let x = Math.floor((((pageX - rect.x) / rect.width - 0.5) * this.viewbox_size + this.pan_x) / g + 0.5);
-    let y = Math.floor((((pageY - rect.y) / rect.height - 0.5) * this.viewbox_size + this.pan_y) / g + 0.5);
+    let x = (((pageX - rect.x) / rect.width - 0.5) * this.viewbox_size + this.pan_x) / g + 0.5;
+    let y = (((pageY - rect.y) / rect.height - 0.5) * this.viewbox_size + this.pan_y) / g + 0.5;
 
-    return {"x": x, "y": y};
+    let fx = x - Math.floor(x);
+    let fy = y - Math.floor(y);
+
+    let dir = "t";
+    if (fx > fy) {
+      dir =  (1 - fx > fy) ? "n" : "e";
+    } else {
+      dir = (1 - fx > fy) ? "w" : "s";
+    }
+    
+    let grid_coords = { "x": Math.floor(x), "y": Math.floor(y), "dir": dir };
+    return grid_coords;
   }
 
   is_on_screen(pageX, pageY) {
@@ -300,15 +349,67 @@ class EngineeringConsole extends Console {
   start_dragging(pageX, pageY) {
     this.dragging = true;
     this.start_drag_location = this.page_to_grid(pageX, pageY);
+    this.last_drag_location = this.start_drag_location;
+    this.start_drag = { "x": pageX, "y": pageY };
     this.last_drag = { "x": pageX, "y": pageY };
+
+    this.highlight.pressed = true;
   }
 
   cancel_dragging() {
+
+    if (this.dragging) {
+      if (this.mode == "None") {
+        
+      } else if (this.mode == "make-stairs") {
+
+      } else if (this.mode == "make-room") {
+        this.ship.structure.create_room(this.highlight);
+        this.highlight.ok = this.ship.structure.check_room(this.highlight);
+      } else if (this.mode == "make-wall") {
+        this.ship.structure.create_wall(this.highlight);
+        this.highlight.ok = this.ship.structure.check_wall(this.highlight);
+      } else if (this.mode == "make-door") {
+        this.ship.structure.create_door(this.highlight);
+        this.highlight.ok = this.ship.structure.check_door(this.highlight);
+      } else if (this.mode == "make-window") {
+        this.ship.structure.create_window(this.highlight);
+        this.highlight.ok = this.ship.structure.check_window(this.highlight);
+      }
+    }
+
     this.dragging = false;
+    
+    this.highlight.x1 = this.highlight.x2 = this.last_move_location.x;
+    this.highlight.z1 = this.highlight.z2 = this.last_move_location.y;
+    this.highlight.pressed = false;
   }
 
   on_mousemove(event) {
+    let move_location = this.page_to_grid(event.pageX, event.pageY);
+    
+
+    
+
     if(this.dragging) {
+
+      this.highlight.x1 = this.start_drag_location.x;
+      this.highlight.y1 = this.level;
+      this.highlight.z1 = this.start_drag_location.y;
+      this.highlight.x2 = move_location.x;
+      this.highlight.y2 = this.level;
+      this.highlight.z2 = move_location.y;
+
+      let fx = event.pageX - this.start_drag.x;
+      let fy = event.pageY - this.start_drag.y;
+      if (fx == 0 && fy == 0) {
+        this.highlight.dir = move_location.dir;
+      } else if (fx > fy) {
+        this.highlight.dir = (fx < -fy) ? "n" : "e";
+      } else {
+        this.highlight.dir = (fx < -fy) ? "w" : "s";
+      }
+
       if(this.mode == "None") {
         let dx = event.pageX - this.last_drag.x;
         let dy = event.pageY - this.last_drag.y;
@@ -319,20 +420,38 @@ class EngineeringConsole extends Console {
         let y_drag_scale = (this.viewbox_size / rect.height);
 
         this.pan(-dx * x_drag_scale, -dy * y_drag_scale);
-
-        this.last_drag = { "x": event.pageX, "y": event.pageY };
-      } else if(this.mode == "make-stairs") {
-
-      } else if (this.mode == "make-room") {
-        
-      } else if (this.mode == "make-door") {
-
       }
+
+      this.last_drag = { "x": event.pageX, "y": event.pageY };
+      this.last_drag_location = move_location;
+    } else {
+      this.highlight.x1 = this.highlight.x2 = move_location.x;
+      this.highlight.z1 = this.highlight.z2 = move_location.y;
+      this.highlight.dir = move_location.dir;
+      this.highlight.ok = true;
     }
+
+    if (this.mode == "None") {
+
+    } else if (this.mode == "make-stairs") {
+
+    } else if (this.mode == "make-room") {
+      this.highlight.ok = this.ship.structure.check_room(this.highlight);
+    } else if (this.mode == "make-door") {
+      this.highlight.ok = this.ship.structure.check_door(this.highlight);
+    } else if (this.mode == "make-wall") {
+      this.highlight.ok = this.ship.structure.check_wall(this.highlight);
+    } else if (this.mode == "make-window") {
+      this.highlight.ok = this.ship.structure.check_window(this.highlight);
+    }
+
+    this.last_move = { "x": event.pageX, "y": event.pageY };
+    this.last_move_location = move_location;
   }
 
   on_mousedown(event) {
     this.start_dragging(event.pageX, event.pageY);
+    this.on_mousemove(event);
   }
 
   on_mouseup(event) {
@@ -406,3 +525,4 @@ class EngineeringConsole extends Console {
     }
   }
 }
+
